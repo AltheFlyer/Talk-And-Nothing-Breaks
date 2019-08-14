@@ -18,7 +18,7 @@ public class ButtonModuleScript : HoverGlow
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && base.mouseOver) {
-            animator.Play("PressButton");
+            animator.Play("ButtonDown");
         } else if (Input.GetMouseButtonUp(0) && base.mouseOver) {
             animator.Play("ButtonUp");
         }
