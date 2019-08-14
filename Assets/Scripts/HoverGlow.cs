@@ -7,21 +7,21 @@ public class HoverGlow : MonoBehaviour
 
     public Color startColor;
     public Color mouseOverColor;
-    bool mouseOver = false;
+    public bool mouseOver = false;
     public Material startMaterial;
     public Material mouseOverMaterial;
 
-    void Start() {
+    public void Start() {
         GetComponent<Renderer>().material.SetColor("_Color", startColor);
     }
 
-    void OnMouseEnter() {
+    public void OnMouseEnter() {
         mouseOver = true;
         GetComponent<Renderer>().material = mouseOverMaterial;
         GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
     }
 
-    void OnMouseExit() {
+    public void OnMouseExit() {
         mouseOver = false;
         GetComponent<Renderer>().material = startMaterial;
         GetComponent<Renderer>().material.SetColor("_Color", startColor);
