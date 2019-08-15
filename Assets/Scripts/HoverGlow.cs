@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoverGlow : MonoBehaviour 
+public class HoverGlow : MouseOverScript
 {
 
     public Color startColor;
     public Color mouseOverColor;
-    public bool mouseOver = false;
+    
     public Material startMaterial;
     public Material mouseOverMaterial;
 
@@ -16,13 +16,13 @@ public class HoverGlow : MonoBehaviour
     }
 
     public void OnMouseEnter() {
-        mouseOver = true;
+        base.OnMouseEnter();
         GetComponent<Renderer>().material = mouseOverMaterial;
         GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
     }
 
     public void OnMouseExit() {
-        mouseOver = false;
+        base.OnMouseExit();
         GetComponent<Renderer>().material = startMaterial;
         GetComponent<Renderer>().material.SetColor("_Color", startColor);
     }

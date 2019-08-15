@@ -8,6 +8,7 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject buttonModule;
     public GameObject blankModule;
+    public GameObject booleanModule;
     public int width;
     public int height;
     public int numModules;
@@ -25,7 +26,7 @@ public class LevelGenerator : MonoBehaviour
                 modules.Add(buttonModule);
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
-                modules.Add(blankModule);
+                modules.Add(booleanModule);
             }
         }
 
