@@ -7,22 +7,36 @@ public class ButtonModuleScript : HoverGlow
 
     Animator animator;
 
+    float startX;
+    float startY;
+
+    Vector3 pos;
+
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
-        animator = GetComponentInParent<Animator>();
+        pos = GetComponent<Transform>().position;
+        startY = pos.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && base.mouseOver) {
-            animator.Play("ButtonDown");
-        } else if (Input.GetMouseButtonUp(0) && base.mouseOver) {
-            animator.Play("ButtonUp");
+        bool a = false;
+        if (Input.GetMouseButton(0) && mouseOver) {
+            print(pos);
+            if (pos.y > startY - 0.139974f) {
+                pos.y -= 0.1f * Time.deltaTime;
+            }
+            print(pos);
+            a = true;
+        } else {
+            if (pos.y < startY) {
+                pos.y += 0.1f * Time.deltaTime;
+            }
         }
-
+        transform.position = pos;
     }
 
 }
