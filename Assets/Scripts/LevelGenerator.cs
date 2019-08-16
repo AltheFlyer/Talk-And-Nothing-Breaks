@@ -2,20 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class LevelGenerator : MonoBehaviour
 {
-
+    
+    //Prefabs
     public GameObject buttonModule;
     public GameObject blankModule;
     public GameObject booleanModule;
+
+    //Generator settings
     public int width;
     public int height;
     public int numModules;
 
+    //Strikes
+    public int strikes;
+
     // Start is called before the first frame update
     void Start()
     {
+        strikes = 0;
+
         GameObject tmp;
         System.Random rnd = new System.Random();
         //Generate a list of modules to make
@@ -41,7 +49,10 @@ public class LevelGenerator : MonoBehaviour
 
         for (int x = 0; x < width; ++x) {
             for (int z = 0; z < height; ++z) {
-                Instantiate(modules[x + z * width], new Vector3(x * 2 - (width - 1), 1, z * 2 - (height - 1)), Quaternion.identity);
+                GameObject go = Instantiate(modules[x + z * width], new Vector3(x * 2 - (width - 1), 1, z * 2 - (height - 1)), Quaternion.identity);
+                if (go.GetComponent<Module>() != null) {
+                    go.GetComponent<Module>().bombSource = this;
+                }
             }
         }
     }
@@ -49,6 +60,8 @@ public class LevelGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (strikes >= 3) {
+            //Something about losing
+        }
     }
 }
