@@ -497,9 +497,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3403677995477704968}
-  - component: {fileID: 3403677995477705014}
+  - component: {fileID: 7262135023322585924}
   m_Layer: 0
-  m_Name: BooleanGame
+  m_Name: BooleanModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +525,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3403677995477705014
+--- !u!114 &7262135023322585924
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -534,20 +534,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3403677995477705013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f48ab9851222df499582481104eb3d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bba5b13028701d4f91c6158a6748a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftLight: {fileID: 0}
-  rightLight: {fileID: 0}
-  operationPrompt: {fileID: 0}
-  toggleLight: {fileID: 0}
-  sumbitButton: {fileID: 0}
-  moduleBase: {fileID: 0}
-  trueColor: {r: 0.20132439, g: 0.990566, b: 0.1728818, a: 0}
-  falseColor: {r: 0.9433962, g: 0.12014952, b: 0.12014952, a: 0}
-  solution: 0
-  toggleState: 0
-  moduleActive: 0
+  moduleComplete: 0
+  bombSource: {fileID: 0}
+  trueColor: {r: 0.06170094, g: 1, b: 0, a: 0}
+  falseColor: {r: 1, g: 0, b: 0, a: 0}
 --- !u!1 &3403677995484089203
 GameObject:
   m_ObjectHideFlags: 0

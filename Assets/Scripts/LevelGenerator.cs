@@ -19,6 +19,8 @@ public class LevelGenerator : MonoBehaviour
     //Strikes
     public int strikes;
 
+    public Module[,] modules;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,32 +29,35 @@ public class LevelGenerator : MonoBehaviour
         GameObject tmp;
         System.Random rnd = new System.Random();
         //Generate a list of modules to make
-        List<GameObject> modules = new List<GameObject>();
+        List<GameObject> genModules = new List<GameObject>();
         for (int i = 0; i < width * height; ++i) {
             if (i < numModules) {
                 //Insert some fancy heuristic some other day
-                modules.Add(buttonModule);
+                genModules.Add(booleanModule);
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
-                modules.Add(booleanModule);
+                genModules.Add(blankModule);
             }
         }
 
+
+        modules = new Module[width, height];
         //Shuffle the list
         //WARNING: This needs to be changed if interdependent modules exist
         for (int i = 0; i < width * height; ++i) {
             int j = rnd.Next(i, width * height);
-            tmp = modules[i];
-            modules[i] = modules[j];
-            modules[j] = tmp;
+            tmp = genModules[i];
+            genModules[i] = genModules[j];
+            genModules[j] = tmp;
         }
 
         for (int x = 0; x < width; ++x) {
             for (int z = 0; z < height; ++z) {
-                GameObject go = Instantiate(modules[x + z * width], new Vector3(x * 2 - (width - 1), 1, z * 2 - (height - 1)), Quaternion.identity);
+                GameObject go = Instantiate(genModules[x + z * width], new Vector3(x * 2 - (width - 1), 1, z * 2 - (height - 1)), Quaternion.identity);
                 if (go.GetComponent<Module>() != null) {
                     go.GetComponent<Module>().bombSource = this;
                 }
+                modules[x, z] = go.GetComponent<Module>();
             }
         }
     }
@@ -62,6 +67,21 @@ public class LevelGenerator : MonoBehaviour
     {
         if (strikes >= 3) {
             //Something about losing
+        }
+        
+    }
+
+    public void CheckCompletion() {
+        bool isComplete = true;
+        for (int x = 0; x < width; ++x) {
+            for (int z = 0; z < height; ++z) {
+                if (!modules[x,z].moduleComplete) {
+                    isComplete = false;
+                }
+            }
+        }
+        if (isComplete) {
+            print("Hooray!");
         }
     }
 }

@@ -54,6 +54,7 @@ public class BooleanModuleScript : Module
                     if (trialsLeft == 0) {
                         moduleComplete = true;
                         moduleBase.GetComponent<Renderer>().material.SetColor("_Color", trueColor);
+                        bombSource.GetComponent<LevelGenerator>().CheckCompletion();
                     }
                 } else {
                     bombSource.strikes++;
