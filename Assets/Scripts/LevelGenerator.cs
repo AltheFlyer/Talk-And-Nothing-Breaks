@@ -21,6 +21,10 @@ public class LevelGenerator : MonoBehaviour
 
     public Module[,] modules;
 
+
+    //Rotation animation
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +62,7 @@ public class LevelGenerator : MonoBehaviour
                     go.GetComponent<Module>().bombSource = this;
                 }
                 modules[x, z] = go.GetComponent<Module>();
+                go.transform.parent = this.transform;
             }
         }
     }
@@ -69,6 +74,25 @@ public class LevelGenerator : MonoBehaviour
             //Something about losing
         }
         
+        if (Input.GetKey(KeyCode.Q)) {
+            transform.Rotate(90 * Time.deltaTime, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.E)) {
+            transform.Rotate(-90 * Time.deltaTime, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F)) {
+            transform.Rotate(0, 0, 180);
+        }
+
+        if (Input.GetMouseButton(1)) {
+            float h = Input.GetAxis("Mouse X");
+            float v = Input.GetAxis("Mouse Y");
+            transform.Rotate(3 * v, 0, 3 * -h, Space.Self);
+            Quaternion q = transform.rotation;
+            transform.rotation = Quaternion.Euler(q.eulerAngles.x, 0, q.eulerAngles.z);
+        }
+
     }
 
     public void CheckCompletion() {
