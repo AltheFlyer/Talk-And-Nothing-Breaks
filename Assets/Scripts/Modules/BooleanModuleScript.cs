@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
+using TMPro;
 
 public class BooleanModuleScript : Module
 {
@@ -77,13 +77,13 @@ public class BooleanModuleScript : Module
         //Choose operation
         if (operation == 0) {
             solution = !a;
-            operationPrompt.GetComponent<TextMesh>().text = "!";
+            operationPrompt.GetComponent<TMP_Text>().text = "!";
         } else if (operation == 1) {
             solution = a && b;
-            operationPrompt.GetComponent<TextMesh>().text = "&&";
+            operationPrompt.GetComponent<TMP_Text>().text = "&&";
         } else if (operation == 2) {
             solution = a || b;
-            operationPrompt.GetComponent<TextMesh>().text = "||";
+            operationPrompt.GetComponent<TMP_Text>().text = "||";
         }
 
         //Light up components according to puzzle
