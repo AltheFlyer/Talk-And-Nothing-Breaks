@@ -8,6 +8,9 @@ public class ExpCamera: MonoBehaviour
     private float moveSpeed = 5f;
     private float scrollSpeed = 35f;
 
+    public float lowerBound;
+    public float upperBound;
+
     void Start() 
     {
         //Cursor.lockState = CursorLockMode.Locked;
@@ -40,6 +43,11 @@ public class ExpCamera: MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0) {
             transform.Translate(0, 0, scrollSpeed * Input.GetAxis("Mouse ScrollWheel") *Time.deltaTime);
+            if (transform.position.y < lowerBound) {
+                transform.position = new Vector3(transform.position.x, lowerBound, transform.position.z);
+            } else if (transform.position.y > upperBound) {
+                transform.position = new Vector3(transform.position.x, upperBound, transform.position.z);
+            }
         }
 
         if (Input.GetKey(KeyCode.W)) {
@@ -53,11 +61,6 @@ public class ExpCamera: MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D)) {
             transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
-        }
-
-        if (Input.GetKey("r")) {
-            transform.position = new Vector3(0, 5.75f, -3);
-            transform.rotation = Quaternion.Euler(90, 0, 0);
         }
     }   
 }

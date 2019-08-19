@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class LevelGenerator : MonoBehaviour
 {
     
@@ -20,8 +21,6 @@ public class LevelGenerator : MonoBehaviour
     public int strikes;
 
     public Module[,] modules;
-
-    private IEnumerator flipCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -83,25 +82,7 @@ public class LevelGenerator : MonoBehaviour
             //Something about losing
         }
         
-        if (Input.GetKey(KeyCode.Q)) {
-            transform.Rotate(90 * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.E)) {
-            transform.Rotate(-90 * Time.deltaTime, 0, 0);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F) && flipCoroutine == null) {
-            flipCoroutine = Flip(0);
-            StartCoroutine(flipCoroutine);
-        }
-
-        if (Input.GetMouseButton(1)) {
-            float h = Input.GetAxis("Mouse X");
-            float v = Input.GetAxis("Mouse Y");
-            transform.Rotate(3 * v, 0, 3 * -h, Space.Self);
-            Quaternion q = transform.rotation;
-            transform.rotation = Quaternion.Euler(q.eulerAngles.x, 0, q.eulerAngles.z);
-        }
+        
 
     }
 
@@ -119,23 +100,5 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator Flip(float theta) {
-        float increment;
-        while (theta < 180) {
-            increment = Time.deltaTime * 270;
-            theta += increment;
-
-            //Force an exact 180 degree turn
-            if (theta > 180) {
-                increment -= (theta - 180);
-            }
-
-            transform.Rotate(0, 0, increment);
-
-            //Wait until next frame
-            yield return null;
-        }
-        StopCoroutine(flipCoroutine);
-        flipCoroutine = null;
-    }
+    
 }
