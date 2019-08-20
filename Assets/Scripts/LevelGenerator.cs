@@ -11,6 +11,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject buttonModule;
     public GameObject blankModule;
     public GameObject booleanModule;
+    public GameObject additionModule;
 
     //Generator settings
     public int width;
@@ -34,7 +35,11 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 0; i < width * height * 2; ++i) {
             if (i < numModules) {
                 //Insert some fancy heuristic some other day
-                genModules.Add(booleanModule);
+                if (StaticRandom.Next() < 0.5) {
+                    genModules.Add(additionModule);
+                } else {
+                    genModules.Add(additionModule);
+                }
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
                 genModules.Add(blankModule);
