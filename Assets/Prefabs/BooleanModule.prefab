@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 7011499161592873498}
   - component: {fileID: 8319759128316854535}
   m_Layer: 0
-  m_Name: LeftLightLight
+  m_Name: LeftLightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,7 +1064,7 @@ GameObject:
   - component: {fileID: 2654396117286762633}
   - component: {fileID: 9113897065311198020}
   m_Layer: 0
-  m_Name: RightLightLight
+  m_Name: RightLightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

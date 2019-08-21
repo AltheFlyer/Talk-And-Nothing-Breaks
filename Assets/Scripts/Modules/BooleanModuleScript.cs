@@ -8,8 +8,8 @@ public class BooleanModuleScript : Module
 
     GameObject leftLight;
     GameObject rightLight;
-    GameObject leftLightLight;
-    GameObject rightLightLight;
+    GameObject leftLightSource;
+    GameObject rightLightSource;
     GameObject operationPrompt;
     GameObject toggleLight;
     GameObject sumbitButton;
@@ -34,8 +34,8 @@ public class BooleanModuleScript : Module
         //Find child components
         leftLight = transform.Find("LeftLight").gameObject;
         rightLight = transform.Find("RightLight").gameObject;
-        leftLightLight = transform.Find("LeftLightLight").gameObject;
-        rightLightLight = transform.Find("RightLightLight").gameObject;
+        leftLightSource = transform.Find("LeftLightSource").gameObject;
+        rightLightSource = transform.Find("RightLightSource").gameObject;
         operationPrompt = transform.Find("Prompt").gameObject;
         toggleLight = transform.Find("OutputLight").gameObject;
         sumbitButton = transform.Find("Submit").gameObject;
@@ -119,13 +119,13 @@ public class BooleanModuleScript : Module
         leftLight.GetComponent<Renderer>().material.SetColor("_Color", a ? trueColor : falseColor);
         rightLight.GetComponent<Renderer>().material.SetColor("_Color", b ? trueColor : falseColor);
 
-        leftLightLight.GetComponent<Light>().color = a ? trueColor : falseColor;
-        rightLightLight.GetComponent<Light>().color = b ? trueColor : falseColor;
+        leftLightSource.GetComponent<Light>().color = a ? trueColor : falseColor;
+        rightLightSource.GetComponent<Light>().color = b ? trueColor : falseColor;
 
         if (operation == 0) {
              rightLight.GetComponent<Renderer>().material.SetColor("_Color", inertColor);
              rightLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", inertColor);
-            rightLightLight.GetComponent<Light>().color = inertColor;
+            rightLightSource.GetComponent<Light>().color = inertColor;
         }
 
 
