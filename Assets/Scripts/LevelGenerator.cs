@@ -38,7 +38,7 @@ public class LevelGenerator : MonoBehaviour
                 if (StaticRandom.Next() < 0.5) {
                     genModules.Add(additionModule);
                 } else {
-                    genModules.Add(additionModule);
+                    genModules.Add(booleanModule);
                 }
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
