@@ -15,11 +15,13 @@ public class BooleanModuleScript : Module
 
     public Color trueColor;
     public Color falseColor;
+    public Color inertColor;
 
-    bool solution;
-    bool toggleState;
+    public bool solution;
+    public bool toggleState;
 
     int trialsLeft;
+    public int operation;
 
     // Start is called before the first frame update
     void Start()
@@ -50,11 +52,12 @@ public class BooleanModuleScript : Module
             if (sumbitButton.GetComponent<MouseOverScript>().mouseOver && Input.GetMouseButtonDown(0)) {
                 if (toggleState == solution) {
                     trialsLeft--;
-                    GenerateTrial();
                     if (trialsLeft == 0) {
                         moduleComplete = true;
                         moduleBase.GetComponent<Renderer>().material.SetColor("_Color", trueColor);
                         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
+                    } else {
+                        GenerateTrial();
                     }
                 } else {
                     bombSource.strikes++;
@@ -66,10 +69,17 @@ public class BooleanModuleScript : Module
     void GenerateTrial() {
         bool a, b;
 
-        int operation;
+        //int operation;
 
         //Puzzle and answer are generated
-        operation = StaticRandom.NextInt(3);
+        //The first trial will never have the not combined operators (NOR, NAND, XNOR)
+        if (trialsLeft == 3) {
+            operation = StaticRandom.NextInt(4);
+        } else {
+            operation = StaticRandom.NextInt(7);
+        }
+        //Operations:
+        //NOT, AND, OR, XOR, NAND, NOR, XNOR
 
         a = StaticRandom.Next() < 0.5;
         b = StaticRandom.Next() < 0.5;
@@ -84,6 +94,18 @@ public class BooleanModuleScript : Module
         } else if (operation == 2) {
             solution = a || b;
             operationPrompt.GetComponent<TMP_Text>().text = "||";
+        } else if (operation == 3) {
+            solution = a ^ b;
+            operationPrompt.GetComponent<TMP_Text>().text = "^^";
+        } else if (operation == 4) {
+            solution = !(a && b);
+            operationPrompt.GetComponent<TMP_Text>().text = "!&";
+        } else if (operation == 5) {
+            solution = !(a || b);
+            operationPrompt.GetComponent<TMP_Text>().text = "!|";
+        } else if (operation == 6) {
+            solution = (a == b);
+            operationPrompt.GetComponent<TMP_Text>().text = "!^";
         }
 
         //Light up components according to puzzle
@@ -92,6 +114,12 @@ public class BooleanModuleScript : Module
         
         leftLight.GetComponent<Renderer>().material.SetColor("_Color", a ? trueColor : falseColor);
         rightLight.GetComponent<Renderer>().material.SetColor("_Color", b ? trueColor : falseColor);
+
+        if (operation == 0) {
+             rightLight.GetComponent<Renderer>().material.SetColor("_Color", inertColor);
+             rightLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", inertColor);
+        }
+
 
         //Randomize the toggle light
         toggleState = StaticRandom.Next() < 0.5;
