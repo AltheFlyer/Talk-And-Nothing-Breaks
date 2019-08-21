@@ -10,7 +10,8 @@ public class AdditionModuleScript: Module
     //Prefab for digits
     public GameObject digitPrefab;
 
-    GameObject light;
+    GameObject wire;
+    GameObject lightSource;
     GameObject digitSet;
     GameObject submit;
     GameObject moduleBase;
@@ -34,9 +35,13 @@ public class AdditionModuleScript: Module
         base.Start();
 
         submit = transform.Find("Submit").gameObject;
-        light = transform.Find("Light").gameObject;
+        wire = transform.Find("Wire").gameObject;
+        lightSource = transform.Find("LightSource").gameObject;
         digitSet = transform.Find("ToggleDigits").gameObject;
         moduleBase = transform.Find("Base").gameObject;
+
+        //Light initially off, as no colour has been set yet
+        lightSource.GetComponent<Light>().enabled = false;
 
         operationBits = new GameObject[bitsPerNumber];
         operationState = new bool[bitsPerNumber];
@@ -121,9 +126,12 @@ public class AdditionModuleScript: Module
                 yield return new WaitForSeconds(2);
                 paused = false;
             } else if (currentLight < bitsPerNumber * 2) {
-                light.GetComponent<Renderer>().material.SetColor("_Color", lights[currentLight] ? trueColor: falseColor);
+                wire.GetComponent<Renderer>().material.color = lights[currentLight] ? trueColor : falseColor;
+                lightSource.GetComponent<Light>().color = lights[currentLight] ? trueColor : falseColor;
+                lightSource.GetComponent<Light>().enabled = true;
                 yield return new WaitForSeconds(0.5f);
-                light.GetComponent<Renderer>().material.SetColor("_Color", inertColor);
+                wire.GetComponent<Renderer>().material.color = Color.white; 
+                lightSource.GetComponent<Light>().enabled = false;
                 yield return new WaitForSeconds(0.25f);
                 currentLight++;
             } else {
