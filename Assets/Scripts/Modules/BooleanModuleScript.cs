@@ -39,7 +39,7 @@ public class BooleanModuleScript : Module
         //Find child components
         leftLight = transform.Find("LeftLight").gameObject;
         rightLight = transform.Find("RightLight").gameObject;
-        completionLED = transform.Find("CompletionLED").gameObject;
+        completionLED = transform.Find("CompletionLightbulb").Find("LED").gameObject;
         leftLightSource = transform.Find("LeftLightSource").gameObject;
         rightLightSource = transform.Find("RightLightSource").gameObject;
         completionLightSource = transform.Find("CompletionLightSource").gameObject;
@@ -48,9 +48,8 @@ public class BooleanModuleScript : Module
         submitButton = transform.Find("Submit").gameObject;
         moduleBase = transform.Find("Base").gameObject;
         rounds = new GameObject[TOTAL_TRIALS];
-        for (int i = 0; i < 3; ++i) {
-            int roundNumber = i + 1;
-            rounds[i] = transform.Find("Round" + roundNumber.ToString()).gameObject;
+        for (int i = 0; i < TOTAL_TRIALS; ++i) {
+            rounds[i] = transform.Find("RoundCounter").Find("Round" + (i + 1)).gameObject;
         }
 
         //Turn off completion light

@@ -326,7 +326,6 @@ Transform:
   - {fileID: 1353210267655583638}
   - {fileID: 9151607032031337582}
   - {fileID: 4547380905212534303}
-  - {fileID: 86362461808942348}
   - {fileID: 6605163025143175406}
   - {fileID: 6746189679458278454}
   m_Father: {fileID: 0}
@@ -460,7 +459,7 @@ GameObject:
   - component: {fileID: 3492472635583999774}
   - component: {fileID: 6457104747336558145}
   m_Layer: 0
-  m_Name: CompletionLED
+  m_Name: LED
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -474,11 +473,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5159327685915173637}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0.72, y: 0.549, z: 0.64}
-  m_LocalScale: {x: 31.25, y: 31.249992, z: 24}
+  m_LocalPosition: {x: 0, y: 0.09800005, z: 0}
+  m_LocalScale: {x: 62.5, y: 62.49997, z: 47.999985}
   m_Children: []
-  m_Father: {fileID: 1332715082834315333}
-  m_RootOrder: 6
+  m_Father: {fileID: 6605163025143175406}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3492472635583999774
 MeshFilter:
@@ -555,7 +554,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1332715082834315333}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &69549077555784764
 Light:
@@ -675,8 +674,9 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1365596435209935701}
+  - {fileID: 86362461808942348}
   m_Father: {fileID: 1332715082834315333}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8493213696426849735
 GameObject:

@@ -12,6 +12,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject blankModule;
     public GameObject booleanModule;
     public GameObject additionModule;
+    public GameObject brightModule;
 
     //Generator settings
     public int width;
