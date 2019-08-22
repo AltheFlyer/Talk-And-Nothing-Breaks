@@ -43,7 +43,7 @@ public class AdditionModuleScript: Module
         wire = transform.Find("Wire").gameObject;
         lightSource = transform.Find("LightSource").gameObject;
         completionLightSource = transform.Find("CompletionLightSource").gameObject;
-        completionLED = transform.Find("CompletionLED").gameObject;
+        completionLED = transform.Find("CompletionLightbulb").Find("LED").gameObject;
         digitSet = transform.Find("ToggleDigits").gameObject;
         moduleBase = transform.Find("Base").gameObject;
 
