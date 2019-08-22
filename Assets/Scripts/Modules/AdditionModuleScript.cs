@@ -114,6 +114,13 @@ public class AdditionModuleScript: Module
                         completionLED.GetComponent<Renderer>().material.SetColor("_EmissionColor", completionColor);
                         completionLED.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
+
+                        //Disable hover glow
+                        for (int i = 0; i < bitsPerNumber; ++i) {
+                            operationBits[i].GetComponent<HoverGlow>().enabled = false;
+                        }
+                        submit.GetComponent<HoverGlow>().enabled = false;
+                        
                         print(sum);
                     } else {
                         bombSource.strikes++;
