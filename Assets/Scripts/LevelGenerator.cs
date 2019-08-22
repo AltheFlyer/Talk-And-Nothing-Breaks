@@ -84,11 +84,8 @@ public class LevelGenerator : MonoBehaviour
     void Update()
     {
         if (strikes >= 3) {
-            //Something about losing
+            SceneManager.LoadScene("GameMenuScene");
         }
-        
-        
-
     }
 
     public void CheckCompletion() {
