@@ -100,6 +100,7 @@ public class AdditionModuleScript: Module
                     if (sum == answer) {
                         moduleComplete = true;
                         moduleBase.GetComponent<Renderer>().material.SetColor("_Color", trueColor);
+                        bombSource.GetComponent<LevelGenerator>().CheckCompletion();
                     } else {
                         bombSource.strikes++;
                         print(sum);

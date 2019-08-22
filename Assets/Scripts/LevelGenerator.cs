@@ -26,7 +26,38 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GenerateBomb();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (strikes >= 3) {
+            SceneManager.LoadScene("GameMenuScene");
+        }
+    }
+
+    public void CheckCompletion() {
+        bool isComplete = true;
+        for (int x = 0; x < width; ++x) {
+            for (int z = 0; z < height; ++z) {
+                if (!modules[x,z].moduleComplete) {
+                    isComplete = false;
+                }
+            }
+        }
+        if (isComplete) {
+            print("Hooray!");
+            SceneManager.LoadScene("GameMenuScene");
+        }
+    }
+
+    public void GenerateBomb() {
         strikes = 0;
+
+        width = LevelData.width;
+        height = LevelData.height;
+        numModules = LevelData.numModules;
 
         GameObject tmp;
         System.Random rnd = new System.Random();
@@ -79,28 +110,4 @@ public class LevelGenerator : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (strikes >= 3) {
-            SceneManager.LoadScene("GameMenuScene");
-        }
-    }
-
-    public void CheckCompletion() {
-        bool isComplete = true;
-        for (int x = 0; x < width; ++x) {
-            for (int z = 0; z < height; ++z) {
-                if (!modules[x,z].moduleComplete) {
-                    isComplete = false;
-                }
-            }
-        }
-        if (isComplete) {
-            print("Hooray!");
-        }
-    }
-
-    
 }
