@@ -33,14 +33,15 @@ public class LevelGenerator : MonoBehaviour
     void Update()
     {
         if (strikes >= 3) {
-            SceneManager.LoadScene("GameMenuScene");
+            //SceneManager.LoadScene("GameMenuScene");
         }
     }
 
     public void CheckCompletion() {
         bool isComplete = true;
         for (int x = 0; x < width; ++x) {
-            for (int z = 0; z < height; ++z) {
+            for (int z = 0; z < height * 2; ++z) {
+                print("Z:" + z.ToString());
                 if (!modules[x,z].moduleComplete) {
                     isComplete = false;
                 }
@@ -77,7 +78,6 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-
         modules = new Module[width, height * 2];
         //Shuffle the list
         //WARNING: This needs to be changed if interdependent modules exist
@@ -100,8 +100,8 @@ public class LevelGenerator : MonoBehaviour
         }
 
         for (int x = 0; x < width; ++x) {
-            for (int z = 0; z < height; ++z) {
-                GameObject go = Instantiate(genModules[(width * height) + x + z * width], new Vector3(x * 2 - (width - 1), -0.5f, z * 2 - (height - 1)), Quaternion.Euler(0, 0, 180));
+            for (int z = height; z < height * 2; ++z) {
+                GameObject go = Instantiate(genModules[(width * height) + x + (z % height) * width], new Vector3(x * 2 - (width - 1), -0.5f, (z % height) * 2 - (height - 1)), Quaternion.Euler(0, 0, 180));
                 if (go.GetComponent<Module>() != null) {
                     go.GetComponent<Module>().bombSource = this;
                 }
