@@ -20,7 +20,7 @@ public class AdditionModuleScript: Module
     GameObject[] operationBits;
     bool[] operationState;
 
-    int answer;
+    public int answer;
     bool[] lights;
 
     public Color completionColor;
@@ -32,6 +32,7 @@ public class AdditionModuleScript: Module
 
     //Tester values, modify for balance, 8 was default try
     public int bitsPerNumber = 8;
+    public int a,b;
 
     void Start() {
         base.Start();
@@ -59,7 +60,8 @@ public class AdditionModuleScript: Module
             go.transform.localPosition = new Vector3(0, 0, 0);
             //Use magic to move the bit to the right place, in English:
             //Take an arbitrary number, subtract half the bit width from it, then subtract for every bit already made
-            go.transform.Translate((0.64f - (0.64f/bitsPerNumber)) - (i - 1) * (1.24f / bitsPerNumber), 0, 0);
+            go.transform.localPosition = new Vector3((0.64f - (0.64f/bitsPerNumber)) - (i - 1) * (1.24f / bitsPerNumber), 0, 0);
+            print (i.ToString() + " " + go.transform.position.ToString());
             //Scale it accordingly
             go.transform.localScale = new Vector3(1.24f / bitsPerNumber, 0.2f, 0.4f);
             //Give it a name
@@ -72,8 +74,8 @@ public class AdditionModuleScript: Module
         }
         
         //Answer generation, both numbers, and the answer are guaranteed to fit within the alloted bits per number
-        int a = StaticRandom.NextInt((int) (Math.Pow(2, bitsPerNumber)) - 1);
-        int b = StaticRandom.NextInt((int) (Math.Pow(2, bitsPerNumber)) - 1 - a);
+        a = StaticRandom.NextInt((int) (Math.Pow(2, bitsPerNumber)) - 1);
+        b = StaticRandom.NextInt((int) (Math.Pow(2, bitsPerNumber)) - 1 - a);
 
         lights = new bool[bitsPerNumber * 2];
         IntToBoolArray(a, lights, 0);
@@ -106,6 +108,7 @@ public class AdditionModuleScript: Module
                         completionLightSource.GetComponent<Light>().color = completionColor;
                         completionLightSource.GetComponent<Light>().enabled = true;
                         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
+                        print(sum);
                     } else {
                         bombSource.strikes++;
                         print(sum);
