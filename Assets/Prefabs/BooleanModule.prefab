@@ -39,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134845740657610919}
-  m_Mesh: {fileID: 6403308597351394902, guid: 9719851e4f95ffc4f9c41c330d230633, type: 3}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2432930557229300931
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1067,6 +1067,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moduleComplete: 0
   bombSource: {fileID: 0}
+  completionLED: {fileID: 0}
+  completionLightSource: {fileID: 0}
   completionColor: {r: 0.13250117, g: 0.5660378, b: 0.07208972, a: 0}
   trueColor: {r: 0.06170094, g: 1, b: 0, a: 0}
   falseColor: {r: 1, g: 0, b: 0, a: 0}
@@ -1205,7 +1207,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3653486686894655487}
-  m_Mesh: {fileID: 8566823319056965038, guid: 9719851e4f95ffc4f9c41c330d230633, type: 3}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &5498491540631889070
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1644,7 +1646,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7407897527653644232}
-  m_Mesh: {fileID: -476428961113843654, guid: 9719851e4f95ffc4f9c41c330d230633, type: 3}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1687980908284588175
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1813,7 +1815,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8189066864164373341}
-  m_Mesh: {fileID: -123163041383780332, guid: 9719851e4f95ffc4f9c41c330d230633, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!23 &520295407132965357
 MeshRenderer:
   m_ObjectHideFlags: 0

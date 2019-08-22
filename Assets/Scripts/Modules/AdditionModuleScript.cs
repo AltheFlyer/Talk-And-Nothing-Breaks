@@ -93,7 +93,7 @@ public class AdditionModuleScript: Module
     void Update() {
         if (!moduleComplete) {
             if (Input.GetMouseButtonDown(0)) {
-                if (submit.GetComponent<MouseOverScript>().mouseOver) {
+                if (IsMouseOver(submit)) {
                     int sum = 0;
                     int powerOfTwo = 1;
                     for (int i = 0; i < bitsPerNumber; ++i) {
@@ -112,9 +112,9 @@ public class AdditionModuleScript: Module
                     }
                 } else {
                     for (int i = 0; i < bitsPerNumber; ++i) {
-                        if (operationBits[i].GetComponent<MouseOverScript>().mouseOver) {
+                        if (IsMouseOver(operationBits[i])) {
                             operationState[i] = !operationState[i];
-                            operationBits[i].GetComponent<Renderer>().material.SetColor("_Color", operationState[i] ? trueColor: falseColor);
+                            SetObjectColor(operationBits[i], "_Color", operationState[i] ? trueColor: falseColor);
                         }
                     }
                 } 
@@ -132,13 +132,13 @@ public class AdditionModuleScript: Module
                 yield return new WaitForSeconds(2);
                 paused = false;
             } else if (currentLight < bitsPerNumber * 2) {
-                wire.GetComponent<Renderer>().material.SetColor("_Color", lights[currentLight] ? trueColor : falseColor);
-                wire.GetComponent<Renderer>().material.SetColor("_EmissionColor", lights[currentLight] ? trueColor : falseColor);
+                SetObjectColor(wire, "_Color", lights[currentLight] ? trueColor : falseColor);
+                SetObjectColor(wire, "_EmissionColor", lights[currentLight] ? trueColor : falseColor);
                 wire.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                 lightSource.GetComponent<Light>().color = lights[currentLight] ? trueColor : falseColor;
                 lightSource.GetComponent<Light>().enabled = true;
                 yield return new WaitForSeconds(0.5f);
-                wire.GetComponent<Renderer>().material.SetColor("_Color", wireColor);
+                SetObjectColor(wire, "_Color", wireColor);
                 wire.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
                 lightSource.GetComponent<Light>().enabled = false;
                 yield return new WaitForSeconds(0.25f);

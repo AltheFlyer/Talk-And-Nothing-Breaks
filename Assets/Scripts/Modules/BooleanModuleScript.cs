@@ -51,8 +51,8 @@ public class BooleanModuleScript : Module
 
         //Randomize the toggle light
         toggleState = StaticRandom.Next() < 0.5;
-        toggleLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", toggleState ? trueColor : falseColor);
-        toggleLight.GetComponent<Renderer>().material.SetColor("_Color", toggleState ? trueColor : falseColor);
+        SetObjectColor(toggleLight, "_EmissionColor", toggleState ? trueColor : falseColor);
+        SetObjectColor(toggleLight, "_Color", toggleState ? trueColor : falseColor);
 
         GenerateTrial();
     }
@@ -60,17 +60,17 @@ public class BooleanModuleScript : Module
     // Update is called once per frame
     void Update()
     {
-        if (!moduleComplete) {
-            if (toggleLight.GetComponent<MouseOverScript>().mouseOver && Input.GetMouseButtonDown(0)) {
+        if (!moduleComplete && Input.GetMouseButtonDown(0)) {
+            if (IsMouseOver(toggleLight)) {
                 toggleState = !toggleState;
-                toggleLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", toggleState ? trueColor : falseColor);
-                toggleLight.GetComponent<Renderer>().material.SetColor("_Color", toggleState ? trueColor : falseColor);
+                SetObjectColor(toggleLight, "_EmissionColor", toggleState ? trueColor : falseColor);
+                SetObjectColor(toggleLight, "_Color", toggleState ? trueColor : falseColor);
             }
-            if (submitButton.GetComponent<MouseOverScript>().mouseOver && Input.GetMouseButtonDown(0)) {
+            if (IsMouseOver(submitButton)) {
                 if (toggleState == solution) {
                     trialsLeft--;
                     int currentTrial = TOTAL_TRIALS - trialsLeft - 1;
-                    rounds[currentTrial].GetComponent<Renderer>().material.SetColor("_EmissionColor", trueColor);
+                    SetObjectColor(rounds[currentTrial], "_EmissionColor", trueColor);
                     rounds[currentTrial].GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     if (trialsLeft == 0) {
                         DeactivateModule();
@@ -127,18 +127,18 @@ public class BooleanModuleScript : Module
         }
 
         //Light up components according to puzzle
-        leftLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", a ? trueColor : falseColor);
-        rightLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", b ? trueColor : falseColor);
+        SetObjectColor(leftLight, "_EmissionColor", a ? trueColor : falseColor);
+        SetObjectColor(rightLight, "_EmissionColor", b ? trueColor : falseColor);
 
-        leftLight.GetComponent<Renderer>().material.SetColor("_Color", a ? trueColor : falseColor);
-        rightLight.GetComponent<Renderer>().material.SetColor("_Color", b ? trueColor : falseColor);
+        SetObjectColor(leftLight, "_Color", a ? trueColor : falseColor);
+        SetObjectColor(rightLight, "_Color", b ? trueColor : falseColor);
 
         leftLightSource.GetComponent<Light>().color = a ? trueColor : falseColor;
         rightLightSource.GetComponent<Light>().color = b ? trueColor : falseColor;
 
         if (operation == 0) {
-             rightLight.GetComponent<Renderer>().material.SetColor("_Color", inertColor);
-             rightLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", inertColor);
+            SetObjectColor(rightLight, "_Color", inertColor);
+            SetObjectColor(rightLight, "_EmissionColor", inertColor);
             rightLightSource.GetComponent<Light>().color = inertColor;
         }
     }

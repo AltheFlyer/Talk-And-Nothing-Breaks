@@ -27,8 +27,8 @@ public class Module: MonoBehaviour
         //Turn on completion light
         completionLightSource.GetComponent<Light>().color = completionColor;
         completionLightSource.GetComponent<Light>().enabled = true;
-        completionLED.GetComponent<Renderer>().material.SetColor("_Color", completionColor);
-        completionLED.GetComponent<Renderer>().material.SetColor("_EmissionColor", completionColor);
+        SetObjectColor(completionLED, "_Color", completionColor);
+        SetObjectColor(completionLED, "_EmissionColor", completionColor);
         completionLED.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
         //Deactivate Hover Glow on all children
@@ -38,5 +38,13 @@ public class Module: MonoBehaviour
 
         //Send message to main bomb
         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
+    }
+
+    public bool IsMouseOver(GameObject obj) {
+        return obj.GetComponent<MouseOverScript>().mouseOver;
+    }
+
+    public void SetObjectColor(GameObject obj, string type, Color c) {
+        obj.GetComponent<Renderer>().material.SetColor(type, c);
     }
 }
