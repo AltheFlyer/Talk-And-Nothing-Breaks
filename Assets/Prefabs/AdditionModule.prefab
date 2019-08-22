@@ -345,11 +345,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moduleComplete: 0
   bombSource: {fileID: 0}
+  completionLED: {fileID: 0}
+  completionLightSource: {fileID: 0}
+  completionColor: {r: 0.13333334, g: 0.5647059, b: 0.07058824, a: 0}
   digitPrefab: {fileID: 6347957352889165671, guid: 64418543f2a26544183cede28af08ae9,
     type: 3}
   answer: 0
   wireColor: {r: 1, g: 1, b: 1, a: 0.40392157}
-  completionColor: {r: 0.13333334, g: 0.5647059, b: 0.07058824, a: 0}
   trueColor: {r: 0, g: 1, b: 0.011662006, a: 0}
   falseColor: {r: 1, g: 0, b: 0, a: 0}
   inertColor: {r: 0, g: 0, b: 0, a: 0}

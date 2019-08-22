@@ -34,7 +34,7 @@ public class LevelGenerator : MonoBehaviour
     void Update()
     {
         if (strikes >= 3) {
-            //SceneManager.LoadScene("GameMenuScene");
+            SceneManager.LoadScene("GameMenuScene");
         }
     }
 

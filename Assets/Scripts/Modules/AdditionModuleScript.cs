@@ -12,8 +12,7 @@ public class AdditionModuleScript: Module
 
     GameObject wire;
     GameObject lightSource;
-    GameObject completionLightSource;
-    GameObject completionLED;
+
     GameObject digitSet;
     GameObject submit;
     GameObject moduleBase;
@@ -25,7 +24,6 @@ public class AdditionModuleScript: Module
     bool[] lights;
 
     public Color wireColor;
-    public Color completionColor;
     public Color trueColor;
     public Color falseColor;
     public Color inertColor;
@@ -42,14 +40,12 @@ public class AdditionModuleScript: Module
         submit = transform.Find("Submit").gameObject;
         wire = transform.Find("Wire").gameObject;
         lightSource = transform.Find("LightSource").gameObject;
-        completionLightSource = transform.Find("CompletionLightSource").gameObject;
-        completionLED = transform.Find("CompletionLightbulb").Find("LED").gameObject;
+
         digitSet = transform.Find("ToggleDigits").gameObject;
         moduleBase = transform.Find("Base").gameObject;
 
         //Lights initially off
         lightSource.GetComponent<Light>().enabled = false;
-        completionLightSource.GetComponent<Light>().enabled = false;
 
         operationBits = new GameObject[bitsPerNumber];
         operationState = new bool[bitsPerNumber];
@@ -107,19 +103,7 @@ public class AdditionModuleScript: Module
                         powerOfTwo *= 2;
                     }
                     if (sum == answer) {
-                        moduleComplete = true;
-                        completionLightSource.GetComponent<Light>().color = completionColor;
-                        completionLightSource.GetComponent<Light>().enabled = true;
-                        completionLED.GetComponent<Renderer>().material.SetColor("_Color", completionColor);
-                        completionLED.GetComponent<Renderer>().material.SetColor("_EmissionColor", completionColor);
-                        completionLED.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-                        bombSource.GetComponent<LevelGenerator>().CheckCompletion();
-
-                        //Disable hover glow
-                        for (int i = 0; i < bitsPerNumber; ++i) {
-                            operationBits[i].GetComponent<HoverGlow>().enabled = false;
-                        }
-                        submit.GetComponent<HoverGlow>().enabled = false;
+                        DeactivateModule();
                         
                         print(sum);
                     } else {
