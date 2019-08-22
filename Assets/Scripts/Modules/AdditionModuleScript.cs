@@ -13,6 +13,7 @@ public class AdditionModuleScript: Module
     GameObject wire;
     GameObject lightSource;
     GameObject completionLightSource;
+    GameObject completionLED;
     GameObject digitSet;
     GameObject submit;
     GameObject moduleBase;
@@ -23,6 +24,7 @@ public class AdditionModuleScript: Module
     public int answer;
     bool[] lights;
 
+    public Color wireColor;
     public Color completionColor;
     public Color trueColor;
     public Color falseColor;
@@ -41,6 +43,7 @@ public class AdditionModuleScript: Module
         wire = transform.Find("Wire").gameObject;
         lightSource = transform.Find("LightSource").gameObject;
         completionLightSource = transform.Find("CompletionLightSource").gameObject;
+        completionLED = transform.Find("CompletionLED").gameObject;
         digitSet = transform.Find("ToggleDigits").gameObject;
         moduleBase = transform.Find("Base").gameObject;
 
@@ -107,6 +110,9 @@ public class AdditionModuleScript: Module
                         moduleComplete = true;
                         completionLightSource.GetComponent<Light>().color = completionColor;
                         completionLightSource.GetComponent<Light>().enabled = true;
+                        completionLED.GetComponent<Renderer>().material.SetColor("_Color", completionColor);
+                        completionLED.GetComponent<Renderer>().material.SetColor("_EmissionColor", completionColor);
+                        completionLED.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
                         print(sum);
                     } else {
@@ -135,11 +141,14 @@ public class AdditionModuleScript: Module
                 yield return new WaitForSeconds(2);
                 paused = false;
             } else if (currentLight < bitsPerNumber * 2) {
-                wire.GetComponent<Renderer>().material.color = lights[currentLight] ? trueColor : falseColor;
+                wire.GetComponent<Renderer>().material.SetColor("_Color", lights[currentLight] ? trueColor : falseColor);
+                wire.GetComponent<Renderer>().material.SetColor("_EmissionColor", lights[currentLight] ? trueColor : falseColor);
+                wire.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                 lightSource.GetComponent<Light>().color = lights[currentLight] ? trueColor : falseColor;
                 lightSource.GetComponent<Light>().enabled = true;
                 yield return new WaitForSeconds(0.5f);
-                wire.GetComponent<Renderer>().material.color = Color.white; 
+                wire.GetComponent<Renderer>().material.SetColor("_Color", wireColor);
+                wire.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
                 lightSource.GetComponent<Light>().enabled = false;
                 yield return new WaitForSeconds(0.25f);
                 currentLight++;

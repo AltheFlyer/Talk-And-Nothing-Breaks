@@ -8,13 +8,15 @@ public class BooleanModuleScript : Module
 
     GameObject leftLight;
     GameObject rightLight;
+    GameObject completionLED;
     GameObject leftLightSource;
     GameObject rightLightSource;
     GameObject completionLightSource;
     GameObject operationPrompt;
     GameObject toggleLight;
-    GameObject sumbitButton;
+    GameObject submitButton;
     GameObject moduleBase;
+    GameObject[] rounds;
 
     public Color completionColor;
     public Color trueColor;
@@ -24,6 +26,7 @@ public class BooleanModuleScript : Module
     public bool solution;
     public bool toggleState;
 
+    readonly int TOTAL_TRIALS = 3;
     int trialsLeft;
     public int operation;
 
@@ -31,21 +34,33 @@ public class BooleanModuleScript : Module
     void Start()
     {
         base.Start();
-        trialsLeft = 3;
+        trialsLeft = TOTAL_TRIALS;
 
         //Find child components
         leftLight = transform.Find("LeftLight").gameObject;
         rightLight = transform.Find("RightLight").gameObject;
+        completionLED = transform.Find("CompletionLED").gameObject;
         leftLightSource = transform.Find("LeftLightSource").gameObject;
         rightLightSource = transform.Find("RightLightSource").gameObject;
         completionLightSource = transform.Find("CompletionLightSource").gameObject;
         operationPrompt = transform.Find("Prompt").gameObject;
         toggleLight = transform.Find("OutputLight").gameObject;
-        sumbitButton = transform.Find("Submit").gameObject;
+        submitButton = transform.Find("Submit").gameObject;
         moduleBase = transform.Find("Base").gameObject;
+        rounds = new GameObject[TOTAL_TRIALS];
+        for (int i = 0; i < 3; ++i) {
+            int roundNumber = i + 1;
+            rounds[i] = transform.Find("Round" + roundNumber.ToString()).gameObject;
+        }
 
         //Turn off completion light
         completionLightSource.GetComponent<Light>().enabled = false;
+
+        //Randomize the toggle light
+        toggleState = StaticRandom.Next() < 0.5;
+        toggleLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", toggleState ? trueColor : falseColor);
+        toggleLight.GetComponent<Renderer>().material.SetColor("_Color", toggleState ? trueColor : falseColor);
+
         GenerateTrial();
     }
 
@@ -58,14 +73,24 @@ public class BooleanModuleScript : Module
                 toggleLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", toggleState ? trueColor : falseColor);
                 toggleLight.GetComponent<Renderer>().material.SetColor("_Color", toggleState ? trueColor : falseColor);
             }
-            if (sumbitButton.GetComponent<MouseOverScript>().mouseOver && Input.GetMouseButtonDown(0)) {
+            if (submitButton.GetComponent<MouseOverScript>().mouseOver && Input.GetMouseButtonDown(0)) {
                 if (toggleState == solution) {
                     trialsLeft--;
+                    int currentTrial = TOTAL_TRIALS - trialsLeft - 1;
+                    rounds[currentTrial].GetComponent<Renderer>().material.SetColor("_EmissionColor", trueColor);
+                    rounds[currentTrial].GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     if (trialsLeft == 0) {
                         moduleComplete = true;
                         completionLightSource.GetComponent<Light>().color = completionColor;
                         completionLightSource.GetComponent<Light>().enabled = true;
+                        completionLED.GetComponent<Renderer>().material.SetColor("_Color", completionColor);
+                        completionLED.GetComponent<Renderer>().material.SetColor("_EmissionColor", completionColor);
+                        completionLED.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
+
+                        //These not working
+                        submitButton.GetComponent<HoverGlow>().enabled = false;
+                        toggleLight.GetComponent<HoverGlow>().enabled = false;
                     } else {
                         GenerateTrial();
                     }
@@ -133,11 +158,5 @@ public class BooleanModuleScript : Module
              rightLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", inertColor);
             rightLightSource.GetComponent<Light>().color = inertColor;
         }
-
-
-        //Randomize the toggle light
-        toggleState = StaticRandom.Next() < 0.5;
-        toggleLight.GetComponent<Renderer>().material.SetColor("_EmissionColor", toggleState ? trueColor : falseColor);
-        toggleLight.GetComponent<Renderer>().material.SetColor("_Color", toggleState ? trueColor : falseColor);
     }
 }
