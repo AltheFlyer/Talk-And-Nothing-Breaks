@@ -10,11 +10,13 @@ public class BooleanModuleScript : Module
     GameObject rightLight;
     GameObject leftLightSource;
     GameObject rightLightSource;
+    GameObject completionLightSource;
     GameObject operationPrompt;
     GameObject toggleLight;
     GameObject sumbitButton;
     GameObject moduleBase;
 
+    public Color completionColor;
     public Color trueColor;
     public Color falseColor;
     public Color inertColor;
@@ -36,11 +38,14 @@ public class BooleanModuleScript : Module
         rightLight = transform.Find("RightLight").gameObject;
         leftLightSource = transform.Find("LeftLightSource").gameObject;
         rightLightSource = transform.Find("RightLightSource").gameObject;
+        completionLightSource = transform.Find("CompletionLightSource").gameObject;
         operationPrompt = transform.Find("Prompt").gameObject;
         toggleLight = transform.Find("OutputLight").gameObject;
         sumbitButton = transform.Find("Submit").gameObject;
         moduleBase = transform.Find("Base").gameObject;
 
+        //Turn off completion light
+        completionLightSource.GetComponent<Light>().enabled = false;
         GenerateTrial();
     }
 
@@ -58,7 +63,8 @@ public class BooleanModuleScript : Module
                     trialsLeft--;
                     if (trialsLeft == 0) {
                         moduleComplete = true;
-                        moduleBase.GetComponent<Renderer>().material.SetColor("_Color", trueColor);
+                        completionLightSource.GetComponent<Light>().color = completionColor;
+                        completionLightSource.GetComponent<Light>().enabled = true;
                         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
                     } else {
                         GenerateTrial();

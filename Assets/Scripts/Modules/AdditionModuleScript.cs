@@ -12,6 +12,7 @@ public class AdditionModuleScript: Module
 
     GameObject wire;
     GameObject lightSource;
+    GameObject completionLightSource;
     GameObject digitSet;
     GameObject submit;
     GameObject moduleBase;
@@ -22,6 +23,7 @@ public class AdditionModuleScript: Module
     int answer;
     bool[] lights;
 
+    public Color completionColor;
     public Color trueColor;
     public Color falseColor;
     public Color inertColor;
@@ -37,11 +39,13 @@ public class AdditionModuleScript: Module
         submit = transform.Find("Submit").gameObject;
         wire = transform.Find("Wire").gameObject;
         lightSource = transform.Find("LightSource").gameObject;
+        completionLightSource = transform.Find("CompletionLightSource").gameObject;
         digitSet = transform.Find("ToggleDigits").gameObject;
         moduleBase = transform.Find("Base").gameObject;
 
-        //Light initially off, as no colour has been set yet
+        //Lights initially off
         lightSource.GetComponent<Light>().enabled = false;
+        completionLightSource.GetComponent<Light>().enabled = false;
 
         operationBits = new GameObject[bitsPerNumber];
         operationState = new bool[bitsPerNumber];
@@ -99,7 +103,8 @@ public class AdditionModuleScript: Module
                     }
                     if (sum == answer) {
                         moduleComplete = true;
-                        moduleBase.GetComponent<Renderer>().material.SetColor("_Color", trueColor);
+                        completionLightSource.GetComponent<Light>().color = completionColor;
+                        completionLightSource.GetComponent<Light>().enabled = true;
                         bombSource.GetComponent<LevelGenerator>().CheckCompletion();
                     } else {
                         bombSource.strikes++;
