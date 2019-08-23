@@ -14,7 +14,7 @@ public class BrightModuleScript : Module
     [Range(0f,1f)]
     public float squarePercentSize = 0.9f;
     float gridYPos = 0.5f;
-    Vector2 gridPos = new Vector2(0.225f, -0.225f);
+    Vector2 gridPos = new Vector2(0.2f, -0.2f);
 
     public Material gridMat;
     public Color gridColor;
