@@ -69,7 +69,7 @@ public class LevelGenerator : MonoBehaviour
             if (i < numModules) {
                 //Insert some fancy heuristic some other day
                 if (StaticRandom.Next() < 0.5) {
-                    genModules.Add(additionModule);
+                    genModules.Add(brightModule);
                 } else {
                     genModules.Add(booleanModule);
                 }
