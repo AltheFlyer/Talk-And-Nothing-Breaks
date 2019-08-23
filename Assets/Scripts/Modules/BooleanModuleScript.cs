@@ -10,7 +10,6 @@ public class BooleanModuleScript : Module
     GameObject rightLight;
     GameObject leftLightSource;
     GameObject rightLightSource;
-
     GameObject operationPrompt;
     GameObject toggleLight;
     GameObject submitButton;
@@ -39,7 +38,6 @@ public class BooleanModuleScript : Module
         rightLight = transform.Find("RightLight").gameObject;
         leftLightSource = transform.Find("LeftLightSource").gameObject;
         rightLightSource = transform.Find("RightLightSource").gameObject;
-        
         operationPrompt = transform.Find("Prompt").gameObject;
         toggleLight = transform.Find("OutputLight").gameObject;
         submitButton = transform.Find("Submit").gameObject;
