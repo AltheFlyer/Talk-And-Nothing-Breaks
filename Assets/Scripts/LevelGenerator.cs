@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -24,10 +25,22 @@ public class LevelGenerator : MonoBehaviour
 
     public Module[,] modules;
 
+
+    //Bomb data
+    public int id;
+    public string idAsBinary;
+    GameObject idTag;
+
+    public string serialCode;
+
+    private string capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private string lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+
     // Start is called before the first frame update
     void Start()
     {
         GenerateBomb();
+        GeneratorCodes();
     }
 
     // Update is called once per frame
@@ -110,5 +123,22 @@ public class LevelGenerator : MonoBehaviour
                 go.transform.parent = this.transform;
             }
         }
+    }
+
+    public void GeneratorCodes() {
+        id = StaticRandom.NextInt(256);
+        idAsBinary = "";
+        int tmpId = id;
+        for (int power = 128; power > 0; power /= 2) {
+            if (tmpId >= power) {
+                idAsBinary += "1";
+                tmpId -= power;
+            } else {
+                idAsBinary += "0";
+            }
+        }
+        idTag = transform.Find("ID").gameObject;
+        idTag.GetComponent<TMP_Text>().text = "ID: " + idAsBinary.ToString().Substring(0, 4) + " " + idAsBinary.ToString().Substring(4, 4);
+        idTag.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.01f, modules[0, 0].transform.position.y, modules[0, 0].transform.position.z);
     }
 }
