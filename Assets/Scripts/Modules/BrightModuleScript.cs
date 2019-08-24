@@ -7,10 +7,11 @@ public class BrightModuleScript : Module
     [SerializeField]
     GameObject commandPrefab;
 
-    GameObject display;
+    GameObject submit;
     GameObject commandOutline;
     GameObject commands;
     GameObject map;
+    GameObject[] commandButtons;
     GameObject[,] mapGrid;
     GameObject[,] commandGrid;
 
@@ -21,19 +22,36 @@ public class BrightModuleScript : Module
     public float mapSquarePercentSize = 0.4f;
     Vector3 mapPos = new Vector3(0.2f, 0.5f, -0.2f);
 
+    float commandDist = 0.1f;
+    Vector3 commandTopLeftPos = new Vector3(-0.6f, 1.949f, 0.2f);
+    Vector2 currentCommandGrid = new Vector2(0, 0);
+
     public Material gridMat;
     public Color gridColor;
     public Color gridBGColor;
     public Color litColor;
+    Color[] commandColors = { Color.blue, Color.yellow, Color.green, Color.red, Color.cyan, Color.magenta };
     
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
+
+        commandButtons = new GameObject[6];
+        mapGrid = new GameObject[mapDimensions, mapDimensions];
+        commandGrid = new GameObject[7, 3];
+
+        submit = transform.Find("Submit").gameObject;
         map = transform.Find("Map").gameObject;
-        display = transform.Find("Display").gameObject;
-        commandOutline = display.transform.Find("Outline").gameObject;
-        commands = display.transform.Find("Commands").gameObject;
+        commandOutline = transform.Find("Display").Find("Outline").gameObject;
+        commands = transform.Find("Display").Find("Commands").gameObject;
+
+        for (int i = 0; i < 6; i++) {
+            commandButtons[i] = transform.Find("Buttons").Find("Button" + (i + 1)).gameObject;
+            commandButtons[i].GetComponent<Renderer>().material.SetColor("_Color", commandColors[i]);
+        }
+        commandOutline.GetComponent<Renderer>().material.SetColor("_Color", gridColor);
+        commandOutline.GetComponent<Renderer>().material.SetColor("_EmissionColor", gridColor);
 
         GenerateGrid();
     }
@@ -41,12 +59,29 @@ public class BrightModuleScript : Module
     // Update is called once per frame
     void Update()
     {
-        
+        if (!moduleComplete) {
+            if (Input.GetMouseButtonDown(0)) {
+                if (IsMouseOver(submit)) {
+
+                }
+
+                if (!(currentCommandGrid.x == 6 && currentCommandGrid.y == 2)) {
+                    for (int i = 0; i < 5; i++) {
+                        if (IsMouseOver(commandButtons[i])) {
+                            GameObject command = Instantiate(commandPrefab);
+                            command.transform.SetParent(commands.transform);
+
+                            command.transform.position = new Vector3(commandTopLeftPos.x * currentCommandGrid.x, commandTopLeftPos.y, commandTopLeftPos.z * currentCommandGrid.y);
+                            command.GetComponent<Renderer>().material.SetColor("_Color", commandColors[i]);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     void GenerateGrid()
     {
-        mapGrid = new GameObject[mapDimensions, mapDimensions];
         float squareWidth = mapWidth / mapDimensions;
         Vector3 botLeftPos = new Vector3(mapPos.x - 2 * squareWidth, mapPos.y, mapPos.z - 2 * squareWidth);
         GameObject lines = GameObject.CreatePrimitive(PrimitiveType.Cube);
