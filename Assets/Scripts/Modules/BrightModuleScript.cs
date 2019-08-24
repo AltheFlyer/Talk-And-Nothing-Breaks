@@ -49,10 +49,10 @@ public class BrightModuleScript : Module
 
         for (int i = 0; i < 6; i++) {
             commandButtons[i] = transform.Find("Buttons").Find("Button" + (i + 1)).gameObject;
-            commandButtons[i].GetComponent<Renderer>().material.SetColor("_Color", commandColors[i]);
+            SetObjectColor(commandButtons[i], "_Color", commandColors[i]);
         }
-        commandOutline.GetComponent<Renderer>().material.SetColor("_Color", gridColor);
-        commandOutline.GetComponent<Renderer>().material.SetColor("_EmissionColor", gridColor);
+        SetObjectColor(commandOutline, "_EmissionColor", gridColor);
+        SetObjectColor(commandOutline, "_Color", gridColor);
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 3; j++) {
@@ -94,7 +94,8 @@ public class BrightModuleScript : Module
                     for (int i = 0; i < 6; i++) {
                         if ((IsMouseOver(commandButtons[i])) && (i != delIndex)) {
                             GameObject command = commandGrid[(int)currentCommandGrid.x, (int)currentCommandGrid.y];
-                            command.GetComponent<Renderer>().material.SetColor("_Color", commandColors[i]);
+                            SetObjectColor(command, "_Color", commandColors[i]);
+                            SetObjectColor(command, "_EmissionColor", commandColors[i]);
                             command.GetComponent<MeshRenderer>().enabled = true;
                             currentCommandGrid.x++;
                             if (currentCommandGrid.x > 6) {
@@ -117,8 +118,8 @@ public class BrightModuleScript : Module
         lines.transform.localPosition = mapPos;
         lines.transform.localScale = new Vector3(mapWidth, mapSquareHeight - 0.01f, mapWidth);
         lines.GetComponent<Renderer>().material = gridMat;
-        lines.GetComponent<Renderer>().material.SetColor("_Color", gridBGColor);
-        lines.GetComponent<Renderer>().material.SetColor("_EmissionColor", gridBGColor);
+        SetObjectColor(lines, "_Color", gridBGColor);
+        SetObjectColor(lines, "_EmissionColor", gridBGColor);
         lines.name = "GridLines";
         for (int i = 0; i < mapDimensions; i++) {
             for (int j = 0; j < mapDimensions; j++) {
@@ -127,8 +128,8 @@ public class BrightModuleScript : Module
                 go.transform.localPosition = new Vector3(botLeftPos.x + squareWidth * i, botLeftPos.y, botLeftPos.z + squareWidth * j);
                 go.transform.localScale = new Vector3(squareWidth * mapSquarePercentSize, mapSquareHeight, squareWidth * mapSquarePercentSize);
                 go.GetComponent<Renderer>().material = gridMat;
-                go.GetComponent<Renderer>().material.SetColor("_Color", gridColor);
-                go.GetComponent<Renderer>().material.SetColor("_EmissionColor", gridColor);
+                SetObjectColor(go, "_Color", gridColor);
+                SetObjectColor(go, "_EmissionColor", gridColor);
                 go.name = "Square" + (5 * i + j + 1);
                 mapGrid[i, j] = go;
             }
