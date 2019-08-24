@@ -223,6 +223,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: menu_room
       objectReference: {fileID: 0}
+    - target: {fileID: -1260394747809671015, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 6e94a2464bec5894c9af5462514ae212,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -292,11 +297,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Shadows.m_Type
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -1260394747809671015, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7071215711155466673, guid: 6e94a2464bec5894c9af5462514ae212,
         type: 3}

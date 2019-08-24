@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class BrightModuleScript : Module
 {
+    [SerializeField]
+    GameObject commandPrefab;
 
+    GameObject display;
+    GameObject commandOutline;
+    GameObject commands;
     GameObject map;
-    GameObject[,] grid;
+    GameObject[,] mapGrid;
+    GameObject[,] commandGrid;
 
-    int gridDimensions = 5;
-    float totalWidth = 0.45f;
-    public float gridHeight = 0.2f;
+    int mapDimensions = 5;
+    float mapWidth = 0.45f;
+    float mapSquareHeight = 0.19f;
     [Range(0f,1f)]
-    public float squarePercentSize = 0.9f;
-    float gridYPos = 0.5f;
-    Vector2 gridPos = new Vector2(0.2f, -0.2f);
+    public float mapSquarePercentSize = 0.4f;
+    Vector3 mapPos = new Vector3(0.2f, 0.5f, -0.2f);
 
     public Material gridMat;
     public Color gridColor;
@@ -26,6 +31,9 @@ public class BrightModuleScript : Module
     {
         base.Start();
         map = transform.Find("Map").gameObject;
+        display = transform.Find("Display").gameObject;
+        commandOutline = display.transform.Find("Outline").gameObject;
+        commands = display.transform.Find("Commands").gameObject;
 
         GenerateGrid();
     }
@@ -38,27 +46,28 @@ public class BrightModuleScript : Module
 
     void GenerateGrid()
     {
-        grid = new GameObject[gridDimensions, gridDimensions];
-        float squareWidth = totalWidth / gridDimensions;
-        Vector2 botLeftPos = new Vector2(gridPos.x - 2 * squareWidth, gridPos.y - 2 * squareWidth);
+        mapGrid = new GameObject[mapDimensions, mapDimensions];
+        float squareWidth = mapWidth / mapDimensions;
+        Vector3 botLeftPos = new Vector3(mapPos.x - 2 * squareWidth, mapPos.y, mapPos.z - 2 * squareWidth);
         GameObject lines = GameObject.CreatePrimitive(PrimitiveType.Cube);
         lines.transform.SetParent(map.transform);
-        lines.transform.localPosition = new Vector3(gridPos.x, gridYPos, gridPos.y);
-        lines.transform.localScale = new Vector3(totalWidth, gridHeight - 0.01f, totalWidth);
+        lines.transform.localPosition = mapPos;
+        lines.transform.localScale = new Vector3(mapWidth, mapSquareHeight - 0.01f, mapWidth);
         lines.GetComponent<Renderer>().material = gridMat;
         lines.GetComponent<Renderer>().material.SetColor("_Color", gridBGColor);
         lines.GetComponent<Renderer>().material.SetColor("_EmissionColor", gridBGColor);
         lines.name = "GridLines";
-        for (int i = 0; i < gridDimensions; i++) {
-            for (int j = 0; j < gridDimensions; j++) {
+        for (int i = 0; i < mapDimensions; i++) {
+            for (int j = 0; j < mapDimensions; j++) {
                 GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 go.transform.SetParent(map.transform);
-                go.transform.localPosition = new Vector3(botLeftPos.x + squareWidth * i, gridYPos, botLeftPos.y + squareWidth * j);
-                go.transform.localScale = new Vector3(squareWidth * squarePercentSize, gridHeight, squareWidth * squarePercentSize);
+                go.transform.localPosition = new Vector3(botLeftPos.x + squareWidth * i, botLeftPos.y, botLeftPos.z + squareWidth * j);
+                go.transform.localScale = new Vector3(squareWidth * mapSquarePercentSize, mapSquareHeight, squareWidth * mapSquarePercentSize);
                 go.GetComponent<Renderer>().material = gridMat;
                 go.GetComponent<Renderer>().material.SetColor("_Color", gridColor);
                 go.GetComponent<Renderer>().material.SetColor("_EmissionColor", gridColor);
                 go.name = "Square" + (5 * i + j + 1);
+                mapGrid[i, j] = go;
             }
         }
 
