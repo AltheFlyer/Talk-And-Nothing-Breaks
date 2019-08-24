@@ -22,8 +22,9 @@ public class BrightModuleScript : Module
     public float mapSquarePercentSize = 0.4f;
     Vector3 mapPos = new Vector3(0.2f, 0.5f, -0.2f);
 
-    float commandDist = 0.1f;
-    Vector3 commandTopLeftPos = new Vector3(-0.6f, 1.949f, 0.2f);
+    int delIndex;
+    float commandDist = 0.2f;
+    Vector3 commandTopLeftPos = new Vector3(-0.6f, 0, 0.2f);
     Vector2 currentCommandGrid = new Vector2(0, 0);
 
     public Material gridMat;
@@ -53,6 +54,19 @@ public class BrightModuleScript : Module
         commandOutline.GetComponent<Renderer>().material.SetColor("_Color", gridColor);
         commandOutline.GetComponent<Renderer>().material.SetColor("_EmissionColor", gridColor);
 
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 3; j++) {
+                commandGrid[i, j] = Instantiate(commandPrefab);
+                commandGrid[i, j].transform.SetParent(commands.transform);
+                commandGrid[i, j].transform.localPosition = new Vector3(commandTopLeftPos.x + (commandDist * i), commandTopLeftPos.y, commandTopLeftPos.z - (commandDist * j));
+                commandGrid[i, j].transform.localScale = new Vector3(0.09f, 0.09f, 2f);
+                commandGrid[i, j].name = "Command" + (i * 3 + j + 1);
+                commandGrid[i, j].GetComponent<MeshRenderer>().enabled = false;
+            }
+        }
+
+        delIndex = 5;
+
         GenerateGrid();
     }
 
@@ -65,14 +79,28 @@ public class BrightModuleScript : Module
 
                 }
 
-                if (!(currentCommandGrid.x == 6 && currentCommandGrid.y == 2)) {
-                    for (int i = 0; i < 5; i++) {
-                        if (IsMouseOver(commandButtons[i])) {
-                            GameObject command = Instantiate(commandPrefab);
-                            command.transform.SetParent(commands.transform);
 
-                            command.transform.position = new Vector3(commandTopLeftPos.x * currentCommandGrid.x, commandTopLeftPos.y, commandTopLeftPos.z * currentCommandGrid.y);
+                if ((IsMouseOver(commandButtons[delIndex])) && !((currentCommandGrid.x == 0) && (currentCommandGrid.y == 0))) {
+
+                    currentCommandGrid.x--;
+                    if (currentCommandGrid.x < 0) {
+                        currentCommandGrid.y--;
+                        currentCommandGrid.x = 6;
+                    }
+                    commandGrid[(int)currentCommandGrid.x, (int)currentCommandGrid.y].GetComponent<MeshRenderer>().enabled = false;
+                }
+
+                if (!(currentCommandGrid.x == 0 && currentCommandGrid.y == 3)) {
+                    for (int i = 0; i < 6; i++) {
+                        if ((IsMouseOver(commandButtons[i])) && (i != delIndex)) {
+                            GameObject command = commandGrid[(int)currentCommandGrid.x, (int)currentCommandGrid.y];
                             command.GetComponent<Renderer>().material.SetColor("_Color", commandColors[i]);
+                            command.GetComponent<MeshRenderer>().enabled = true;
+                            currentCommandGrid.x++;
+                            if (currentCommandGrid.x > 6) {
+                                currentCommandGrid.x = 0;
+                                currentCommandGrid.y++;
+                            }
                         }
                     }
                 }
