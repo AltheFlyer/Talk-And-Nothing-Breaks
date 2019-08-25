@@ -80,11 +80,14 @@ public class LevelGenerator : MonoBehaviour
         List<GameObject> genModules = new List<GameObject>();
         for (int i = 0; i < width * height * 2; ++i) {
             if (i < numModules) {
+                double rand = StaticRandom.Next();
                 //Insert some fancy heuristic some other day
-                if (StaticRandom.Next() < 0.5) {
-                    genModules.Add(brightModule);
-                } else {
+                if (rand < 0.3) {
+                    genModules.Add(additionModule);
+                } else if (rand < 0.6) {
                     genModules.Add(booleanModule);
+                } else {
+                    genModules.Add(brightModule);
                 }
             } else {
                 //When number of modules is exhausted, add blanks until the list is full

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BrightModuleScript : Module
@@ -25,13 +26,14 @@ public class BrightModuleScript : Module
     Vector3 mapPos = new Vector3(0.2f, 0.5f, -0.2f);
     Vector3 mapBotLeftPos;
     Vector2 botGridPos = new Vector2(0, 0);
+    List<Vector2> brightPoints;
 
     int delIndex;
     float commandDist = 0.2f;
     Vector3 commandTopLeftPos = new Vector3(-0.6f, 0, 0.2f);
     Vector2 currentCommandGrid = new Vector2(6, -1);
-    
 
+    static System.Random random = new System.Random();
     public Material gridMat;
     public Color gridColor;
     public Color gridBGColor;
@@ -51,6 +53,20 @@ public class BrightModuleScript : Module
         map = transform.Find("Map").gameObject;
         commandOutline = transform.Find("Display").Find("Outline").gameObject;
         commands = transform.Find("Display").Find("Commands").gameObject;
+        for (int i = 0; i < commandColors.Length; ++i)
+        {
+            int j = random.Next(i, commandColors.Length);
+            if (commandColors[i] == Color.magenta) {
+                delIndex = j;
+            }
+            if (commandColors[j] == Color.magenta) {
+                delIndex = i;
+            }
+            Color temp = commandColors[i];
+            commandColors[i] = commandColors[j];
+            commandColors[j] = temp;
+            
+        }
 
         for (int i = 0; i < 6; i++) {
             commandButtons[i] = transform.Find("Buttons").Find("Button" + (i + 1)).gameObject;
@@ -70,45 +86,76 @@ public class BrightModuleScript : Module
             }
         }
 
-        delIndex = 5;
+        brightPoints = new List<Vector2>();
+        brightPoints.Add(new Vector2(3f, 2f));
+        brightPoints.Add(new Vector2(4f, 1f));
+        brightPoints.Add(new Vector2(4f, 4f));
+
+        
+
+        
 
         GenerateGrid();
     }
 
+
     bool CheckAnswer()
     {
+        try
+        {
+            Destroy(answer);
+        } catch (System.NullReferenceException e)
+        {
+            
+        }
+
         answer = new GameObject();
         answer.transform.SetParent(map.transform);
-        int numLit = 0;
+        answer.transform.localPosition = new Vector3(0, 0, 0);
+        answer.transform.localScale = new Vector3(1, 1, 1);
+        answer.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        answer.name = "answer";
+        List<Vector2> brightened = new List<Vector2>();
+        botGridPos = new Vector2(0, 0);
         for (int i = 0; i < currentCommandGrid.y + 1; i++) {
             for (int j = 0; j < 7; j++) {
                 if (commandGrid[j, i].GetComponent<MeshRenderer>().enabled) {
                     Color color = commandGrid[j, i].GetComponent<Renderer>().material.GetColor("_Color");
-                    if (color == commandColors[0] && botGridPos.x > 0) {
+                    if (color == Color.blue && botGridPos.x > 0) {
                         MoveBot(-1, 0);
                         botGridPos.x--;
-                    } else if (color == commandColors[1] && botGridPos.x < 4) {
+                    } else if (color == Color.yellow && botGridPos.x < 4) {
                         MoveBot(1, 0);
                         botGridPos.x++;
-                    } else if (color == commandColors[2] && botGridPos.y > 0) {
+                    } else if (color == Color.green && botGridPos.y > 0) {
                         MoveBot(0, -1);
                         botGridPos.y--;
-                    } else if (color == commandColors[3] && botGridPos.y < 4) {
+                    } else if (color == Color.red && botGridPos.y < 4) {
                         MoveBot(0, 1);
                         botGridPos.y++;
-                    } else if (color == commandColors[4]) {
+                    } else if (color == Color.cyan) {
+                        print(j + " " + i);
+                        if (brightPoints.Contains(botGridPos) && !brightened.Contains(botGridPos))
+                        {
+                            brightened.Add(botGridPos);
+                        }
                         Brighten(botGridPos);
+
                     }
                 }
             }
         }
-        return true;
+        print(brightened.Count);
+        if (brightened.Count == 3 && botGridPos.x == 4 && botGridPos.y == 4) {
+            return true;
+        }
+        return false;
     }
 
     void Brighten (Vector2 pos)
     {
         GameObject bright = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        bright.transform.SetParent(map.transform);
+        bright.transform.SetParent(answer.transform);
 
         bright.transform.localPosition = new Vector3(mapBotLeftPos.x + squareWidth * botGridPos.x, mapBotLeftPos.y + 0.002f, mapBotLeftPos.z + squareWidth * botGridPos.y);
         bright.transform.localScale = new Vector3(squareWidth * 0.75f, mapSquareHeight, squareWidth * 0.75f);
@@ -123,7 +170,7 @@ public class BrightModuleScript : Module
     {
         for (int k = 0; k < 2; k++) {
             GameObject path = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            path.transform.SetParent(map.transform);
+            path.transform.SetParent(answer.transform);
 
             Vector3 botPos = new Vector3(mapBotLeftPos.x + squareWidth * botGridPos.x, mapBotLeftPos.y + 0.001f, mapBotLeftPos.z + squareWidth * botGridPos.y);
             path.transform.localPosition = botPos + new Vector3((k + 1) * dx * squareWidth / 2, 0, (k + 1) * dy * squareWidth / 2);
@@ -143,7 +190,13 @@ public class BrightModuleScript : Module
         if (!moduleComplete) {
             if (Input.GetMouseButtonDown(0)) {
                 if (IsMouseOver(submit)) {
-                    CheckAnswer();
+                    if (CheckAnswer())
+                    {
+                        DeactivateModule();
+                    } else
+                    {
+                        bombSource.strikes++;
+                    }
                 }
 
                 if ((IsMouseOver(commandButtons[delIndex])) && !((currentCommandGrid.x == 6) && (currentCommandGrid.y == -1))) {
@@ -179,6 +232,17 @@ public class BrightModuleScript : Module
     {
         squareWidth = mapWidth / mapDimensions;
         mapBotLeftPos = new Vector3(mapPos.x - 2 * squareWidth, mapPos.y, mapPos.z - 2 * squareWidth);
+
+        // Initial white square
+        GameObject initialBot = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        initialBot.transform.SetParent(map.transform);
+        initialBot.transform.localPosition = new Vector3(mapBotLeftPos.x, mapBotLeftPos.y + 0.001f, mapBotLeftPos.z);
+        initialBot.transform.localScale = new Vector3(squareWidth / 2, mapSquareHeight, squareWidth / 2);
+        initialBot.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        initialBot.GetComponent<Renderer>().material = gridMat;
+        SetObjectColor(initialBot, "_Color", Color.white);
+        SetObjectColor(initialBot, "_EmissionColor", Color.white);
+        initialBot.name = "bot";
 
         // Create backlight
         GameObject lines = GameObject.CreatePrimitive(PrimitiveType.Cube);
