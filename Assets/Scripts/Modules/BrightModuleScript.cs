@@ -11,6 +11,7 @@ public class BrightModuleScript : Module
     GameObject commandOutline;
     GameObject commands;
     GameObject map;
+    GameObject answer;
     GameObject[] commandButtons;
     GameObject[,] mapGrid;
     GameObject[,] commandGrid;
@@ -76,6 +77,8 @@ public class BrightModuleScript : Module
 
     bool CheckAnswer()
     {
+        answer = new GameObject();
+        answer.transform.SetParent(map.transform);
         int numLit = 0;
         for (int i = 0; i < currentCommandGrid.y + 1; i++) {
             for (int j = 0; j < 7; j++) {
@@ -84,13 +87,13 @@ public class BrightModuleScript : Module
                     if (color == commandColors[0] && botGridPos.x > 0) {
                         MoveBot(-1, 0);
                         botGridPos.x--;
-                    } else if (color == commandColors[1] && botGridPos.x < 5) {
+                    } else if (color == commandColors[1] && botGridPos.x < 4) {
                         MoveBot(1, 0);
                         botGridPos.x++;
                     } else if (color == commandColors[2] && botGridPos.y > 0) {
                         MoveBot(0, -1);
                         botGridPos.y--;
-                    } else if (color == commandColors[3] && botGridPos.y < 5) {
+                    } else if (color == commandColors[3] && botGridPos.y < 4) {
                         MoveBot(0, 1);
                         botGridPos.y++;
                     } else if (color == commandColors[4]) {
@@ -107,8 +110,10 @@ public class BrightModuleScript : Module
         GameObject bright = GameObject.CreatePrimitive(PrimitiveType.Cube);
         bright.transform.SetParent(map.transform);
 
-        bright.transform.localPosition = new Vector3(mapBotLeftPos.x + squareWidth * botGridPos.x, mapBotLeftPos.y + 0.02f, mapBotLeftPos.z + squareWidth * botGridPos.y);
+        bright.transform.localPosition = new Vector3(mapBotLeftPos.x + squareWidth * botGridPos.x, mapBotLeftPos.y + 0.002f, mapBotLeftPos.z + squareWidth * botGridPos.y);
         bright.transform.localScale = new Vector3(squareWidth * 0.75f, mapSquareHeight, squareWidth * 0.75f);
+        bright.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
         bright.GetComponent<Renderer>().material = gridMat;
         SetObjectColor(bright, "_Color", Color.green);
         SetObjectColor(bright, "_EmissionColor", Color.green);
@@ -120,9 +125,10 @@ public class BrightModuleScript : Module
             GameObject path = GameObject.CreatePrimitive(PrimitiveType.Cube);
             path.transform.SetParent(map.transform);
 
-            Vector3 botPos = new Vector3(mapBotLeftPos.x + squareWidth * botGridPos.x, mapBotLeftPos.y + 0.01f, mapBotLeftPos.z + squareWidth * botGridPos.y);
+            Vector3 botPos = new Vector3(mapBotLeftPos.x + squareWidth * botGridPos.x, mapBotLeftPos.y + 0.001f, mapBotLeftPos.z + squareWidth * botGridPos.y);
             path.transform.localPosition = botPos + new Vector3((k + 1) * dx * squareWidth / 2, 0, (k + 1) * dy * squareWidth / 2);
             path.transform.localScale = new Vector3(squareWidth / 2, mapSquareHeight, squareWidth / 2);
+            path.transform.localRotation = Quaternion.Euler(0, 0, 0);
             path.GetComponent<Renderer>().material = gridMat;
             SetObjectColor(path, "_Color", Color.white);
             SetObjectColor(path, "_EmissionColor", Color.white);
@@ -178,7 +184,7 @@ public class BrightModuleScript : Module
         GameObject lines = GameObject.CreatePrimitive(PrimitiveType.Cube);
         lines.transform.SetParent(map.transform);
         lines.transform.localPosition = mapPos;
-        lines.transform.localScale = new Vector3(mapWidth, mapSquareHeight - 0.01f, mapWidth);
+        lines.transform.localScale = new Vector3(mapWidth, mapSquareHeight - 0.001f, mapWidth);
         lines.GetComponent<Renderer>().material = gridMat;
         SetObjectColor(lines, "_Color", gridBGColor);
         SetObjectColor(lines, "_EmissionColor", gridBGColor);
