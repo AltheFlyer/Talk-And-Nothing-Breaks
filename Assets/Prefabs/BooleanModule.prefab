@@ -888,7 +888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseOver: 0
   startMaterial: {fileID: 2100000, guid: 6f214d144df6d404892b56c6ed4c1466, type: 2}
-  mouseOverMaterial: {fileID: 2100000, guid: fccc7d75d0f29a04894df65ce468255e, type: 2}
+  mouseOverMaterial: {fileID: 2100000, guid: f35a5f4e1c279d84e95ed49fe258f60d, type: 2}
 --- !u!65 &3403677994497467435
 BoxCollider:
   m_ObjectHideFlags: 0

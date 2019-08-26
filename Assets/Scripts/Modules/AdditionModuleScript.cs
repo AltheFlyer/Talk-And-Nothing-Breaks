@@ -70,6 +70,7 @@ public class AdditionModuleScript: Module
             operationBits[i - 1] = go;
             operationState[i - 1] = false;
             go.GetComponent<Renderer>().material.SetColor("_Color", falseColor);
+            go.GetComponent<Renderer>().material.SetColor("_EmissionColor", falseColor);
         }
         
         //Answer generation, both numbers, and the answer are guaranteed to fit within the alloted bits per number
@@ -115,6 +116,7 @@ public class AdditionModuleScript: Module
                         if (IsMouseOver(operationBits[i])) {
                             operationState[i] = !operationState[i];
                             SetObjectColor(operationBits[i], "_Color", operationState[i] ? trueColor: falseColor);
+                            SetObjectColor(operationBits[i], "_EmissionColor", operationState[i] ? trueColor: falseColor);
                         }
                     }
                 } 
