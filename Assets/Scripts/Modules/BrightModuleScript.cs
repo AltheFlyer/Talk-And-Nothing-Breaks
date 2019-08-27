@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BrightModuleScript : Module
 {
@@ -26,9 +27,11 @@ public class BrightModuleScript : Module
     Vector3 mapPos = new Vector3(0.2f, 0.5f, -0.2f);
     Vector3 mapBotLeftPos;
     Vector2 botGridPos = new Vector2(0, 0);
+    [SerializeField]
     List<Vector2> brightPoints;
 
     //Used for command gen, traversal, and usage
+    [SerializeField]
     int delIndex;
     float commandDist = 0.2f;
     Vector3 commandTopLeftPos = new Vector3(-0.6f, 0, 0.2f);
@@ -105,11 +108,12 @@ public class BrightModuleScript : Module
 
         //Set points bot needs to brighten
         //TODO: Make based off of ID and serial instead of constant
-        brightPoints.Add(new Vector2(3f, 2f));
-        brightPoints.Add(new Vector2(4f, 1f));
-        brightPoints.Add(new Vector2(4f, 4f));
+        //brightPoints.Add(new Vector2(3f, 2f));
+        //brightPoints.Add(new Vector2(4f, 1f));
+        //brightPoints.Add(new Vector2(4f, 4f));
 
         //Generate the map
+        GenerateLights();
         GenerateMap();
     }
 
@@ -216,6 +220,7 @@ public class BrightModuleScript : Module
             Destroy(answer);
         } catch (System.NullReferenceException e) {
             //Empty catch, idk what to put here so left empty
+            print("Oh no");
         }
 
         //Create a new answer object to hold path
@@ -265,7 +270,7 @@ public class BrightModuleScript : Module
         }
 
         // Correct if brightened all 3 points and bot position is the top right corner
-        if (brightened.Count == 3 && botGridPos.x == 4 && botGridPos.y == 4) {
+        if (brightened.Count == brightPoints.Count) {
             return true;
         }
         return false;
@@ -303,6 +308,211 @@ public class BrightModuleScript : Module
 
 
         }
+    }
+
+    void GenerateLights() 
+    {
+        //Note lights are on a 5x5 grid, zero-indexed, with standard mathematical x/y axes
+
+        //Reference Values
+        string serial = bombSource.serialCode;
+        int id = bombSource.id;
+        string idString = bombSource.idAsBinary;
+        bool containsVowel = bombSource.serialContainsVowel;
+        //int delIndex
+        string numbers = "1234567890";
+        string letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
+        string vowels = "AEIOU";
+        string consonants = "QWRTYPSDFGHJKLZXCVBNM";
+
+        //First Light
+        int row = 0;
+        int col = 0;
+
+        int redPos = GetLightPosition(Color.red);
+        int bluePos = GetLightPosition(Color.blue);
+        int yellowPos = GetLightPosition(Color.yellow);
+        int greenPos = GetLightPosition(Color.green);
+        int cyanPos = GetLightPosition(Color.cyan);
+        print(GetLightPosition(Color.magenta) == delIndex);
+        
+        //Is ID even? (Column)
+        if (id % 2 == 0) {
+            //Does serial number end with a number?
+            if (numbers.Contains(serial.Substring(serial.Length - 1, 1))) {
+                col = 0;
+            } else {
+                col = 1;
+            }
+        } else {
+            if (numbers.Contains(serial.Substring(0,  1))) {
+                col = 3;
+            } else {
+                col = 4;
+            }
+        }
+        
+        //Is the position of the light (cyan) button in the top row?
+        if (cyanPos < 3) {
+            row = 4;
+        } else {
+            row = 3;
+        }
+
+        brightPoints.Add(new Vector2(col, row));
+
+
+        //Second Light
+        //What position is the delete button?
+        if (delIndex == 0 || delIndex == 3) {
+            //Are there vowels in the serial code? If so, what is it?
+            row = delIndex / 3;
+            if (bombSource.serialContainsVowel) {
+                for (int i = 0; i < serial.Length; i++) {
+                    if (vowels.Contains(serial.Substring(i, 1))) {
+                        col = vowels.IndexOf(serial.Substring(i, 1));
+                    }
+                }
+            } else {
+                col = 0;
+            }
+        } else if (delIndex == 1) {
+            row = 2;
+            int vowelCount = 0;
+            for (int i = 0; i < serial.Length; i++) {
+                if (vowels.Contains(serial.Substring(i, 1))) {
+                    vowelCount++;
+                }
+            }
+            if (vowelCount == 0) {
+                col = 4;
+            } else if (vowelCount == 1) {
+                col = 3;
+            } else {
+                col = 0;
+            }
+        } else if (delIndex == 2) {
+            row = 2;
+            int consonantCount = 0;
+            for (int i = 0; i < serial.Length; i++) {
+                if (consonants.Contains(serial.Substring(i, 1))) {
+                    consonantCount++;
+                }
+            }
+            col = Math.Min(consonantCount, 4);
+        } else if (delIndex == 4) {
+            if (id >= 128) {
+                col = 2;
+                row = 4;
+            } else {
+                col = 1;
+                row = 2;
+            }
+        } else if (delIndex == 5) {
+            if (id % 7 == 0) {
+                row = 1;
+                col = 4;
+            } else if (id % 5 == 0) {
+                row = 1;
+                col = 3;
+            } else if (id % 3 == 0) {
+                row = 2;
+                col = 1;
+            } else if (id % 2 == 0) {
+                row = 1;
+                col = 1;
+            } else {
+                row = 1;
+                col = 2;
+            }
+        }
+
+        brightPoints.Add(new Vector2(col, row));
+
+        //Final light
+        //Make the lookup table;
+        int[,] generatedCols = {
+            {0, 0, 0, 0, 0, 4, 4, 4, 4},
+            {3, 3, 2, 2, 2, 1, 1, 1, 1},
+            {1, 3, 2, 4, 0, 0, 1, 2, 3},
+            {0, 1, 2, 3, 4, 0, 1, 2, 3}
+        };
+
+        //Get number of letters in serial code
+        int letterCount = 0;
+        for (int i = 0; i < serial.Length; i++) {
+            if (letters.Contains(serial.Substring(i, 1))) {
+                letterCount++;
+            }
+        }
+
+        //Is the 'up' button higher than the 'down' button?
+        if (redPos < 3 && greenPos >= 3) {
+            col = generatedCols[0, letterCount];
+        //Is the 'left' button to the left of the 'right' button?
+        } else if (bluePos % 3 < yellowPos % 3) {
+            col = generatedCols[1, letterCount];
+        //Is the 'delete' button directly left of the 'light' button?
+        } else if (delIndex != 2 && delIndex + 1 == cyanPos) {
+            col = generatedCols[2, letterCount];
+        } else {
+            col = generatedCols[3, letterCount];
+        }
+
+        int oneCount = 0;
+        for (int i = 0; i < idString.Length; i++) {
+            if ("1" == idString.Substring(i, 1)) {
+                oneCount++;
+            }
+        }
+
+        //Is the up button directly above delete or light?
+        if (redPos < 3 && (redPos + 3 == delIndex || redPos + 3 == cyanPos)) {
+            row = 0;
+        //'Right' directly below delete or light?
+        } else if (yellowPos >= 3 && (yellowPos - 3 == delIndex || yellowPos - 3 == cyanPos)) {
+            row = 4;
+        //'Left' directly below delete or light?
+        } else if (bluePos >= 3 && (bluePos - 3 == delIndex || bluePos - 3 == cyanPos)) {
+            row = 3;
+        //Are 'down', delete, or 'down', light in the same row?
+        } else if (greenPos % 3 == delIndex % 3 ||  greenPos % 3 ==  cyanPos % 3) {
+            row = 2;
+        } else {
+            row = 1;
+        }
+
+        if (oneCount <= 4) {
+            row += oneCount;
+        } else {
+            row += (oneCount - 4);
+        }
+        
+        row = row % 5;
+
+        if (brightPoints.Contains(new Vector2(col, row))) {
+            if (!brightPoints.Contains(new Vector2(0, 2))) {
+                brightPoints.Add(new Vector2(0, 2));
+            } else if (!brightPoints.Contains(new Vector2(0, 4))) {
+                brightPoints.Add(new Vector2(0, 4));
+            } else {
+                brightPoints.Add(new Vector2(4, 4));
+            }
+        } else {
+            brightPoints.Add(new Vector2(col, row));
+        }
+    }
+
+    int GetLightPosition(Color c)
+    {
+        for (int i = 0; i < 6; i++) {
+            if (commandColors[i] == c) {
+                return i;
+            }
+        }
+        //Bad bad bad
+        print("GET LIGHT POSITION FAILED");
+        return 0;
     }
 
 }

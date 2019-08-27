@@ -32,9 +32,9 @@ public class LevelGenerator : MonoBehaviour
     GameObject idTag;
 
     public string serialCode;
+    public int serialLength = 8;
 
-    private string capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private string lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+    public bool serialContainsVowel;
 
     // Start is called before the first frame update
     void Start()
@@ -129,6 +129,10 @@ public class LevelGenerator : MonoBehaviour
     }
 
     public void GeneratorCodes() {
+        string codeLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string vowels = "AEIOU";
+        string codeNumbers = "0123456789";
+
         id = StaticRandom.NextInt(256);
         idAsBinary = "";
         int tmpId = id;
@@ -143,5 +147,19 @@ public class LevelGenerator : MonoBehaviour
         idTag = transform.Find("ID").gameObject;
         idTag.GetComponent<TMP_Text>().text = "ID: " + idAsBinary.ToString().Substring(0, 4) + " " + idAsBinary.ToString().Substring(4, 4);
         idTag.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.01f, modules[0, 0].transform.position.y, modules[0, 0].transform.position.z);
+
+        //Serial code generation
+        serialContainsVowel = false;
+        serialCode = "";
+        for (int i = 0; i < serialLength; ++i) {
+            if (StaticRandom.Next() < 0.5f) {
+                serialCode += codeLetters.Substring(StaticRandom.NextInt(26), 1);
+                if (vowels.Contains(serialCode.Substring(i, 1))) {
+                    serialContainsVowel = true;
+                }
+            } else {
+                serialCode += codeNumbers.Substring(StaticRandom.NextInt(10), 1);
+            }
+        }
     }
 }
