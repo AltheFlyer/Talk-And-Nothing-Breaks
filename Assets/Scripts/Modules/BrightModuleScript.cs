@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -392,14 +392,14 @@ public class BrightModuleScript : Module
                 col = 0;
             }
         } else if (delIndex == 2) {
-            row = 2;
+            col = 2;
             int consonantCount = 0;
             for (int i = 0; i < serial.Length; i++) {
                 if (consonants.Contains(serial.Substring(i, 1))) {
                     consonantCount++;
                 }
             }
-            col = Math.Min(consonantCount, 4);
+            row = Math.Min(consonantCount, 4);
         } else if (delIndex == 4) {
             if (id >= 128) {
                 col = 2;

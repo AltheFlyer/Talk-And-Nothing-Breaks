@@ -345,6 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moduleComplete: 0
   bombSource: {fileID: 0}
+  spawnWeight: 5
   digitPrefab: {fileID: 6347957352889165671, guid: 64418543f2a26544183cede28af08ae9,
     type: 3}
   answer: 0

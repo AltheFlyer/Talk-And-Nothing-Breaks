@@ -7,6 +7,8 @@ public class Module: MonoBehaviour
 
     public bool moduleComplete;
     public LevelGenerator bombSource;
+    public int spawnWeight;
+
     GameObject completionLED;
     GameObject completionLightSource;
     Color completionColor = new Color(0.1333333f, 0.5647059f, 0.07058824f, 0);

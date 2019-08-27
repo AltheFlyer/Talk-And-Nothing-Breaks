@@ -15,6 +15,9 @@ public class LevelGenerator : MonoBehaviour
     public GameObject additionModule;
     public GameObject brightModule;
 
+    [SerializeField]
+    public GameObject[] prefabModules;
+
     //Generator settings
     public int width;
     public int height;
@@ -35,6 +38,7 @@ public class LevelGenerator : MonoBehaviour
     public int serialLength = 8;
 
     public bool serialContainsVowel;
+    GameObject serialTag;
 
     // Start is called before the first frame update
     void Start()
@@ -76,19 +80,30 @@ public class LevelGenerator : MonoBehaviour
 
         GameObject tmp;
         System.Random rnd = new System.Random();
+
+
+        int fullWeight = 0;
+        for (int i = 0; i < prefabModules.Length; i++) {
+            fullWeight += prefabModules[i].GetComponent<Module>().spawnWeight;
+        }
+
         //Generate a list of modules to make
         List<GameObject> genModules = new List<GameObject>();
         for (int i = 0; i < width * height * 2; ++i) {
             if (i < numModules) {
-                double rand = StaticRandom.Next();
+                double rand = StaticRandom.NextInt(fullWeight);
                 //Insert some fancy heuristic some other day
-                if (rand < 0.3) {
-                    genModules.Add(additionModule);
-                } else if (rand < 0.6) {
-                    genModules.Add(booleanModule);
-                } else {
-                    genModules.Add(brightModule);
+                int counter = fullWeight;
+                print("A");
+                for (int j = prefabModules.Length - 1; j >= 0; j--) {
+                    if (rand >= counter - prefabModules[j].GetComponent<Module>().spawnWeight) {
+                        genModules.Add(prefabModules[j]);
+                        break;
+                    } else {
+                        counter -= prefabModules[j].GetComponent<Module>().spawnWeight;
+                    }
                 }
+                print("B");
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
                 genModules.Add(blankModule);
@@ -144,9 +159,14 @@ public class LevelGenerator : MonoBehaviour
                 idAsBinary += "0";
             }
         }
-        idTag = transform.Find("ID").gameObject;
+
+        GameObject idPlate = transform.Find("ID Plate").gameObject;
+        idPlate.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.1f, modules[0, 0].transform.position.y, modules[0, 0].transform.position.z);
+
+
+        idTag = idPlate.transform.Find("ID").gameObject;
         idTag.GetComponent<TMP_Text>().text = "ID: " + idAsBinary.ToString().Substring(0, 4) + " " + idAsBinary.ToString().Substring(4, 4);
-        idTag.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.01f, modules[0, 0].transform.position.y, modules[0, 0].transform.position.z);
+        //idTag.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.01f, modules[0, 0].transform.position.y, modules[0, 0].transform.position.z);
 
         //Serial code generation
         serialContainsVowel = false;
@@ -161,5 +181,10 @@ public class LevelGenerator : MonoBehaviour
                 serialCode += codeNumbers.Substring(StaticRandom.NextInt(10), 1);
             }
         }
+        serialTag = idPlate.transform.Find("Serial Code").gameObject;
+        serialTag.GetComponent<TMP_Text>().text = serialCode;
+        //serialTag.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.01f, modules[0, 0].transform.position.y - 0.5f, modules[0, 0].transform.position.z);
+
+        
     }
 }

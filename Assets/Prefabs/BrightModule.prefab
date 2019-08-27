@@ -1303,9 +1303,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moduleComplete: 0
   bombSource: {fileID: 0}
+  spawnWeight: 2
   commandPrefab: {fileID: 2923073790402437134, guid: 7dfb640623036fd4a8c0b1750ed8c7b0,
     type: 3}
   mapSquarePercentSize: 0.5
+  brightPoints: []
+  delIndex: 0
   gridMat: {fileID: 2100000, guid: f08554760abfc5146a3a23ba3263ef48, type: 2}
   gridColor: {r: 0, g: 0.23584908, b: 0.011504822, a: 0}
   gridBGColor: {r: 0.009834462, g: 0.122641504, b: 0.012522216, a: 0}
