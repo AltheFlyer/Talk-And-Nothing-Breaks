@@ -113,8 +113,10 @@ public class BrightModuleScript : Module
         //brightPoints.Add(new Vector2(4f, 4f));
 
         //Generate the map
-        GenerateLights();
+        
         GenerateMap();
+
+        GenerateLights();
     }
 
     void Update()
@@ -269,7 +271,7 @@ public class BrightModuleScript : Module
             }
         }
 
-        // Correct if brightened all 3 points and bot position is the top right corner
+        // Correct if brightened all 3 points
         if (brightened.Count == brightPoints.Count) {
             return true;
         }
@@ -334,7 +336,8 @@ public class BrightModuleScript : Module
         int yellowPos = GetLightPosition(Color.yellow);
         int greenPos = GetLightPosition(Color.green);
         int cyanPos = GetLightPosition(Color.cyan);
-        print(GetLightPosition(Color.magenta) == delIndex);
+        Color helpMe = new Color(1, 1, 0, 0);
+
         
         //Is ID even? (Column)
         if (id % 2 == 0) {
@@ -344,25 +347,31 @@ public class BrightModuleScript : Module
             } else {
                 col = 1;
             }
+            //Is the position of the light (cyan) button in the top row?
+            if (cyanPos < 3) {
+                row = 4;
+            } else {
+                row = 3;
+            }
         } else {
             if (numbers.Contains(serial.Substring(0,  1))) {
                 col = 3;
             } else {
                 col = 4;
             }
-        }
-        
-        //Is the position of the light (cyan) button in the top row?
-        if (cyanPos < 3) {
-            row = 4;
-        } else {
-            row = 3;
+            //Is the 'up' light in a higher column than the 'down' light?
+            //Is the position of the light (cyan) button in the top row?
+            if (redPos < 3 && greenPos >= 3) {
+                row = 4;
+            } else {
+                row = 3;
+            }
         }
 
         brightPoints.Add(new Vector2(col, row));
+        
 
-
-        //Second Light
+        //First Light RNG
         //What position is the delete button?
         if (delIndex == 0 || delIndex == 3) {
             //Are there vowels in the serial code? If so, what is it?
@@ -428,8 +437,9 @@ public class BrightModuleScript : Module
         }
 
         brightPoints.Add(new Vector2(col, row));
-
-        //Final light
+        SetObjectColor(mapGrid[col, row], "_Color", helpMe);
+        
+        //2nd RNG light
         //Make the lookup table;
         int[,] generatedCols = {
             {0, 0, 0, 0, 0, 4, 4, 4, 4},
@@ -490,17 +500,21 @@ public class BrightModuleScript : Module
         
         row = row % 5;
 
-        if (brightPoints.Contains(new Vector2(col, row))) {
+        if ((row == 0 && col == 0) || brightPoints.Contains(new Vector2(col, row))) {
             if (!brightPoints.Contains(new Vector2(0, 2))) {
-                brightPoints.Add(new Vector2(0, 2));
+                col = 0;
+                row = 2;
             } else if (!brightPoints.Contains(new Vector2(0, 4))) {
-                brightPoints.Add(new Vector2(0, 4));
+                col = 0;
+                row = 4;
             } else {
-                brightPoints.Add(new Vector2(4, 4));
+                col = 4;
+                row = 4;
             }
-        } else {
-            brightPoints.Add(new Vector2(col, row));
         }
+
+        brightPoints.Add(new Vector2(col, row));
+        SetObjectColor(mapGrid[col, row], "_Color", helpMe);
     }
 
     int GetLightPosition(Color c)
