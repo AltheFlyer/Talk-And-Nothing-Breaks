@@ -16,8 +16,11 @@ public class StartScreenButtons : MonoBehaviour
                         DecreaseHeight,
                         BombInfoPanel;
 
+    public BombData data;
+
     public void Start() {
         UpdateText();
+        data = GameObject.Find("BombData").GetComponent<BombData>();
     }
 
     public void Play() {
@@ -68,6 +71,15 @@ public class StartScreenButtons : MonoBehaviour
         UpdateText();
     }
 
+    public void PlayBooleanOnly() {
+        data.width = 1;
+        data.height = 1;
+        data.numModules = 2;
+        data.SelectModule("boolean");
+        data.Use();
+        Play();
+    }
+
     private int MaxModules() {
         return LevelData.width * LevelData.height * 2;
     }
@@ -77,5 +89,14 @@ public class StartScreenButtons : MonoBehaviour
             "Modules: " + LevelData.numModules.ToString() + "\n" +
             "Width: " + LevelData.width.ToString() + "\n" +
             "Height: " + LevelData.height.ToString() + "\n";
+    }
+
+    public void PlaySingleModule(string name) {
+        data.width = 1;
+        data.height = 1;
+        data.numModules = 2;
+        data.SelectModule(name);
+        data.Use();
+        Play();
     }
 }

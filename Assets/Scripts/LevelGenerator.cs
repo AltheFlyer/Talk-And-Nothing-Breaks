@@ -16,7 +16,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject brightModule;
 
     [SerializeField]
-    public GameObject[] prefabModules;
+    public List<GameObject> prefabModules;
 
     //Generator settings
     public int width;
@@ -59,7 +59,7 @@ public class LevelGenerator : MonoBehaviour
         bool isComplete = true;
         for (int x = 0; x < width; ++x) {
             for (int z = 0; z < height * 2; ++z) {
-                print("Z:" + z.ToString());
+                //print("Z:" + z.ToString());
                 if (!modules[x,z].moduleComplete) {
                     isComplete = false;
                 }
@@ -74,16 +74,25 @@ public class LevelGenerator : MonoBehaviour
     public void GenerateBomb() {
         strikes = 0;
 
-        width = LevelData.width;
-        height = LevelData.height;
-        numModules = LevelData.numModules;
+        if (GameObject.Find("BombData")) {
+            BombData data = GameObject.Find("BombData").GetComponent<BombData>();
+            width = data.width;
+            height = data.height;
+            numModules = data.numModules;
+            prefabModules = data.modules;
+            data.Consume();
+        } else {
+            width = LevelData.width;
+            height = LevelData.height;
+            numModules = LevelData.numModules;
+        }
 
         GameObject tmp;
         System.Random rnd = new System.Random();
 
 
         int fullWeight = 0;
-        for (int i = 0; i < prefabModules.Length; i++) {
+        for (int i = 0; i < prefabModules.Count; i++) {
             fullWeight += prefabModules[i].GetComponent<Module>().spawnWeight;
         }
 
@@ -94,8 +103,8 @@ public class LevelGenerator : MonoBehaviour
                 double rand = StaticRandom.NextInt(fullWeight);
                 //Insert some fancy heuristic some other day
                 int counter = fullWeight;
-                print("A");
-                for (int j = prefabModules.Length - 1; j >= 0; j--) {
+                //print("A");
+                for (int j = prefabModules.Count - 1; j >= 0; j--) {
                     if (rand >= counter - prefabModules[j].GetComponent<Module>().spawnWeight) {
                         genModules.Add(prefabModules[j]);
                         break;
@@ -103,7 +112,7 @@ public class LevelGenerator : MonoBehaviour
                         counter -= prefabModules[j].GetComponent<Module>().spawnWeight;
                     }
                 }
-                print("B");
+                //print("B");
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
                 genModules.Add(blankModule);

@@ -60,7 +60,7 @@ public class AdditionModuleScript: Module
             //Use magic to move the bit to the right place, in English:
             //Take an arbitrary number, subtract half the bit width from it, then subtract for every bit already made
             go.transform.localPosition = new Vector3((0.64f - (0.64f/bitsPerNumber)) - (i - 1) * (1.24f / bitsPerNumber), 0, 0);
-            print (i.ToString() + " " + go.transform.position.ToString());
+            //print (i.ToString() + " " + go.transform.position.ToString());
             //Scale it accordingly
             go.transform.localScale = new Vector3(1.24f / bitsPerNumber, 0.2f, 0.4f);
             //Give it a name
@@ -80,10 +80,6 @@ public class AdditionModuleScript: Module
         lights = new bool[bitsPerNumber * 2];
         IntToBoolArray(a, lights, 0);
         IntToBoolArray(b, lights, bitsPerNumber);
-
-        for (int i = 0; i < bitsPerNumber * 2; ++i) {
-            print(lights[i] ? 1: 0);
-        }
 
         answer = a + b;
 
@@ -106,10 +102,10 @@ public class AdditionModuleScript: Module
                     if (sum == answer) {
                         DeactivateModule();
                         
-                        print(sum);
+                        //(sum);
                     } else {
                         bombSource.strikes++;
-                        print(sum);
+                        //print(sum);
                     }
                 } else {
                     for (int i = 0; i < bitsPerNumber; ++i) {
