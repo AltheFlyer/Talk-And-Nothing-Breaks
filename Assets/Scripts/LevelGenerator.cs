@@ -74,27 +74,32 @@ public class LevelGenerator : MonoBehaviour
     public void GenerateBomb() {
         strikes = 0;
 
+        int fullWeight = 0;
+        BombData data = null;
+
         if (GameObject.Find("BombData")) {
-            BombData data = GameObject.Find("BombData").GetComponent<BombData>();
+            data = GameObject.Find("BombData").GetComponent<BombData>();
+        }
+        if (data) {
             width = data.width;
             height = data.height;
             numModules = data.numModules;
             prefabModules = data.modules;
             data.Consume();
+            for (int i = 0; i < prefabModules.Count; i++) {
+                fullWeight += data.weights[i];
+            }
         } else {
             width = LevelData.width;
             height = LevelData.height;
             numModules = LevelData.numModules;
+            for (int i = 0; i < prefabModules.Count; i++) {
+                fullWeight += prefabModules[i].GetComponent<Module>().spawnWeight;
+            }
         }
 
         GameObject tmp;
         System.Random rnd = new System.Random();
-
-
-        int fullWeight = 0;
-        for (int i = 0; i < prefabModules.Count; i++) {
-            fullWeight += prefabModules[i].GetComponent<Module>().spawnWeight;
-        }
 
         //Generate a list of modules to make
         List<GameObject> genModules = new List<GameObject>();
@@ -105,11 +110,21 @@ public class LevelGenerator : MonoBehaviour
                 int counter = fullWeight;
                 //print("A");
                 for (int j = prefabModules.Count - 1; j >= 0; j--) {
-                    if (rand >= counter - prefabModules[j].GetComponent<Module>().spawnWeight) {
-                        genModules.Add(prefabModules[j]);
-                        break;
+                    //TODO I REALLY want to remove this check, I'll do it after debug is over when BombData is required
+                    if (data) {
+                        if (rand >= counter - data.weights[j]) {
+                            genModules.Add(prefabModules[j]);
+                            break;
+                        } else {
+                            counter -= data.weights[j];
+                        }
                     } else {
-                        counter -= prefabModules[j].GetComponent<Module>().spawnWeight;
+                        if (rand >= counter - prefabModules[j].GetComponent<Module>().spawnWeight) {
+                            genModules.Add(prefabModules[j]);
+                            break;
+                        } else {
+                            counter -= prefabModules[j].GetComponent<Module>().spawnWeight;
+                        }
                     }
                 }
                 //print("B");

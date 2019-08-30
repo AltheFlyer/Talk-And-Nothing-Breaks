@@ -81,15 +81,6 @@ public class StartScreenButtons : MonoBehaviour
         UpdateText();
     }
 
-    public void PlayBooleanOnly() {
-        data.width = 1;
-        data.height = 1;
-        data.numModules = 2;
-        data.SelectModule("boolean");
-        data.Use();
-        Play();
-    }
-
     private int MaxModules() {
         return LevelData.width * LevelData.height * 2;
     }
@@ -116,6 +107,16 @@ public class StartScreenButtons : MonoBehaviour
         data.height = 1;
         data.numModules = 2;
         data.SelectModule(name);
+        data.Use();
+        Play();
+    }
+
+    public void WeightTest() {
+        data.width = 3;
+        data.height = 2;
+        data.numModules = 12;
+        data.SelectModule("boolean", 5);
+        data.SelectModule("addition", 1);
         data.Use();
         Play();
     }

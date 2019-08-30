@@ -7,6 +7,7 @@ public class BombData : MonoBehaviour
 
     public List<GameObject> allModules;
     public List<GameObject> modules;
+    public List<int> weights;
     public int width;
     public int height;
     public int numModules;
@@ -14,7 +15,8 @@ public class BombData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        modules = new List<GameObject>();  
+        modules = new List<GameObject>();
+        weights = new List<int>();
     }
 
     // Update is called once per frame
@@ -36,15 +38,34 @@ public class BombData : MonoBehaviour
         height = 2;
         numModules = 0;
         modules = new List<GameObject>();
+        weights = new List<int>();
     }
 
     public void SelectModule(string name) {
+        GameObject selection = allModules[0];
         if (name == "boolean") {
-            modules.Add(allModules[0]);
+            selection = allModules[0];
         } else if (name == "addition") {
-            modules.Add(allModules[1]);
+            selection = allModules[1];
         } else if (name == "bright") {
-            modules.Add(allModules[2]);
+            selection = allModules[2];
         }
+
+        modules.Add(selection);
+        weights.Add(selection.GetComponent<Module>().spawnWeight);
+    }
+
+    public void SelectModule(string name, int weight) {
+        GameObject selection = allModules[0];
+        if (name == "boolean") {
+            selection = allModules[0];
+        } else if (name == "addition") {
+            selection = allModules[1];
+        } else if (name == "bright") {
+            selection = allModules[2];
+        }
+
+        modules.Add(selection);
+        weights.Add(weight);
     }
 }
