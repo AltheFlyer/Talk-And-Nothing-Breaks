@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExpCamera: MonoBehaviour
+public class CameraController: MonoBehaviour
 {
 
     private float moveSpeed = 5f;
@@ -50,17 +50,17 @@ public class ExpCamera: MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.W)) {
-            transform.Translate(0, moveSpeed * Time.deltaTime, 0);
+        if (Input.GetKey(KeyCode.W) && transform.position.z < 19) {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + moveSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.A)) {
-            transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
+        if (Input.GetKey(KeyCode.A) && transform.position.x > -19) {
+            transform.position = new Vector3(transform.position.x - moveSpeed * Time.deltaTime, transform.position.y, transform.position.z);
         }
-        if (Input.GetKey(KeyCode.S)) {
-            transform.Translate(0, -moveSpeed * Time.deltaTime, 0);
+        if (Input.GetKey(KeyCode.S) && transform.position.z > -19) {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - moveSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.D)) {
-            transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+        if (Input.GetKey(KeyCode.D) && transform.position.x < 19) {
+            transform.position = new Vector3(transform.position.x + moveSpeed * Time.deltaTime, transform.position.y, transform.position.z);
         }
     }   
 }

@@ -18,9 +18,19 @@ public class StartScreenButtons : MonoBehaviour
 
     public BombData data;
 
+    //Button sets
+    public GameObject currentSubScreen;
+    public GameObject mainScreen;
+    public GameObject levelScreen;
+
     public void Start() {
         UpdateText();
         data = GameObject.Find("BombData").GetComponent<BombData>();
+        mainScreen = transform.Find("Main").gameObject;
+        levelScreen = transform.Find("Levels").gameObject;
+
+        currentSubScreen = mainScreen;
+        levelScreen.SetActive(false);
     }
 
     public void Play() {
@@ -89,6 +99,16 @@ public class StartScreenButtons : MonoBehaviour
             "Modules: " + LevelData.numModules.ToString() + "\n" +
             "Width: " + LevelData.width.ToString() + "\n" +
             "Height: " + LevelData.height.ToString() + "\n";
+    }
+
+    public void SetScreen(string name) {
+        currentSubScreen.SetActive(false);
+        if (name == "main") {
+            currentSubScreen = mainScreen;
+        } else if (name == "levels") {
+            currentSubScreen = levelScreen;
+        }
+        currentSubScreen.SetActive(true);
     }
 
     public void PlaySingleModule(string name) {
