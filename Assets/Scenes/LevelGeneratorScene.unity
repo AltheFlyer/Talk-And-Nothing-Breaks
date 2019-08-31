@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29226f5e4caee6c47a8e5ee190ad838d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonModule: {fileID: 6886577965660899335, guid: 45b5c9a8cf9334140b088591765c5499,
+  timerModule: {fileID: 4219599296032187756, guid: d7740f801e59d49459d3906183f5e3ce,
     type: 3}
   blankModule: {fileID: 5736671204777040602, guid: 68f4bce216b59b3468822d8d0bdbab5e,
     type: 3}

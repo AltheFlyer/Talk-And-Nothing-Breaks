@@ -9,7 +9,7 @@ public class LevelGenerator : MonoBehaviour
 {
     
     //Prefabs
-    public GameObject buttonModule;
+    public GameObject timerModule;
     public GameObject blankModule;
     public GameObject booleanModule;
     public GameObject additionModule;
@@ -44,7 +44,7 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         GenerateBomb();
-        GeneratorCodes();
+        GeneratorCodes();        
     }
 
     // Update is called once per frame
@@ -103,7 +103,10 @@ public class LevelGenerator : MonoBehaviour
 
         //Generate a list of modules to make
         List<GameObject> genModules = new List<GameObject>();
-        for (int i = 0; i < width * height * 2; ++i) {
+        genModules.Add(timerModule);
+        GameObject bombTimer = null;
+
+        for (int i = 0; i < width * height * 2 - 1; ++i) {
             if (i < numModules) {
                 double rand = StaticRandom.NextInt(fullWeight);
                 //Insert some fancy heuristic some other day
@@ -150,6 +153,9 @@ public class LevelGenerator : MonoBehaviour
                 if (go.GetComponent<Module>() != null) {
                     go.GetComponent<Module>().bombSource = this;
                 }
+                if (go.GetComponent<BombTimerScript>()) {
+                    bombTimer = go;
+                }
                 modules[x, z] = go.GetComponent<Module>();
                 go.transform.parent = this.transform;
             }
@@ -164,6 +170,12 @@ public class LevelGenerator : MonoBehaviour
                 modules[x, z] = go.GetComponent<Module>();
                 go.transform.parent = this.transform;
             }
+        }
+
+        if (data) {
+            bombTimer.GetComponent<BombTimerScript>().secondsLeft = data.time;
+        } else {
+            bombTimer.GetComponent<BombTimerScript>().secondsLeft = 300;
         }
     }
 

@@ -11,12 +11,14 @@ public class BombData : MonoBehaviour
     public int width;
     public int height;
     public int numModules;
+    public float time;
 
     // Start is called before the first frame update
     void Start()
     {
         modules = new List<GameObject>();
         weights = new List<int>();
+        time = 600;
     }
 
     // Update is called once per frame
@@ -39,6 +41,7 @@ public class BombData : MonoBehaviour
         numModules = 0;
         modules = new List<GameObject>();
         weights = new List<int>();
+        time = 600;
     }
 
     public void SelectModule(string name) {

@@ -82,7 +82,7 @@ public class StartScreenButtons : MonoBehaviour
     }
 
     private int MaxModules() {
-        return LevelData.width * LevelData.height * 2;
+        return LevelData.width * LevelData.height * 2 - 1;
     }
 
     private void UpdateText() {
@@ -105,7 +105,7 @@ public class StartScreenButtons : MonoBehaviour
     public void PlaySingleModule(string name) {
         data.width = 1;
         data.height = 1;
-        data.numModules = 2;
+        data.numModules = 1;
         data.SelectModule(name);
         data.Use();
         Play();
