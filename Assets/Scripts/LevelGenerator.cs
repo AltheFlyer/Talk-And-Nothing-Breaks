@@ -167,6 +167,9 @@ public class LevelGenerator : MonoBehaviour
                 if (go.GetComponent<Module>() != null) {
                     go.GetComponent<Module>().bombSource = this;
                 }
+                if (go.GetComponent<BombTimerScript>()) {
+                    bombTimer = go;
+                }
                 modules[x, z] = go.GetComponent<Module>();
                 go.transform.parent = this.transform;
             }

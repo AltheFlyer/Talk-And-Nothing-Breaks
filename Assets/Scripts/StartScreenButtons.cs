@@ -106,6 +106,7 @@ public class StartScreenButtons : MonoBehaviour
         data.width = 1;
         data.height = 1;
         data.numModules = 1;
+        data.time = 60;
         data.SelectModule(name);
         data.Use();
         Play();

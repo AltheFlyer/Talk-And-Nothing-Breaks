@@ -18,6 +18,8 @@ public class BombTimerScript : NeutralModule
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
+
         digits = new GameObject[4];
 
         Transform digitHolder = transform.Find("Timer");
