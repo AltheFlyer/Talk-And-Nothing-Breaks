@@ -13,7 +13,7 @@ public class BombTimerScript : NeutralModule
     Color blankColor;
 
     IEnumerator countDown;
-    public float secondsLeft;
+    public float secondsLeft = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,14 @@ public class BombTimerScript : NeutralModule
                 digits[i].transform.Find(GetSegmentName(j)).gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
             }
         }
-        
+
+        //Enable center colon
+        SetObjectColor(digitHolder.Find("Colon").Find("Bot").gameObject, "_Color", lightColor);
+        SetObjectColor(digitHolder.Find("Colon").Find("Bot").gameObject, "_EmissionColor", lightColor);
+
+        SetObjectColor(digitHolder.Find("Colon").Find("Top").gameObject, "_Color", lightColor);
+        SetObjectColor(digitHolder.Find("Colon").Find("Top").gameObject, "_EmissionColor", lightColor);
+                
         countDown = CountDown();
         StartCoroutine(countDown);
     }
