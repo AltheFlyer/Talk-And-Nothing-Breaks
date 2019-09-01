@@ -52,6 +52,8 @@ public class BombData : MonoBehaviour
             selection = allModules[1];
         } else if (name == "bright") {
             selection = allModules[2];
+        } else if (name == "alchemy") {
+            selection = allModules[3];
         }
 
         modules.Add(selection);
@@ -66,6 +68,8 @@ public class BombData : MonoBehaviour
             selection = allModules[1];
         } else if (name == "bright") {
             selection = allModules[2];
+        } else if (name == "alchemy") {
+            selection = allModules[3];
         }
 
         modules.Add(selection);

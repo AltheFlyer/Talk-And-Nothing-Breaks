@@ -60,6 +60,7 @@ public class LevelGenerator : MonoBehaviour
         for (int x = 0; x < width; ++x) {
             for (int z = 0; z < height * 2; ++z) {
                 //print("Z:" + z.ToString());
+                print(modules[x, z]);
                 if (!modules[x,z].moduleComplete) {
                     isComplete = false;
                 }
