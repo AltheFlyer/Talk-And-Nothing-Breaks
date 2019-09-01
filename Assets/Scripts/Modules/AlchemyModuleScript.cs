@@ -16,6 +16,7 @@ public class AlchemyModuleScript: Module
     
     public Texture[] symbolTextures;
     GameObject symbolText;
+    GameObject mainIcon;
 
     //For the symbol at index i in symbols, reaching pass[i] = win, fail[i] = lose
     //PassSymbols
@@ -46,8 +47,11 @@ public class AlchemyModuleScript: Module
         startSymbol = StaticRandom.NextInt(10);
         currentSymbol = startSymbol;
 
-        symbolText = transform.Find("Text").gameObject;
-        symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
+        //symbolText = transform.Find("Text").gameObject;
+        //symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
+
+        mainIcon = transform.Find("Main Icon").gameObject;
+        mainIcon.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", symbolTextures[currentSymbol]);
 
         functionButtons = new GameObject[3];
 
@@ -62,7 +66,8 @@ public class AlchemyModuleScript: Module
                 for (int i = 0; i < 3; i++) {
                     if (IsMouseOver(functionButtons[i])) {
                         currentSymbol = symbolNeighbours[currentSymbol, i];
-                        symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
+                        //symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
+                        mainIcon.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", symbolTextures[currentSymbol]);
                     }
                 }
             }
@@ -72,7 +77,8 @@ public class AlchemyModuleScript: Module
             DeactivateModule();
         } else if (currentSymbol == failSymbols[startSymbol]) {
             currentSymbol = startSymbol;
-            symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
+            //symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
+            mainIcon.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", symbolTextures[currentSymbol]);
             bombSource.strikes++;
         }
     }
