@@ -788,7 +788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moduleComplete: 0
   bombSource: {fileID: 0}
-  spawnWeight: 1
+  spawnWeight: 4
   symbolTextures:
   - {fileID: 2800000, guid: 61e9254f72764db4c90df8580402fdda, type: 3}
   - {fileID: 2800000, guid: dcba172644ca81b44a21a7b8a5ff09d7, type: 3}
@@ -967,7 +967,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7432a7116bebe2744befe63045041afb, type: 2}
+  - {fileID: 2100000, guid: 1f2bcfd6d8ce8774189a5d99d98adfbd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
