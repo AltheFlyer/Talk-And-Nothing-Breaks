@@ -76,7 +76,7 @@ public class BooleanModuleScript : Module
                         GenerateTrial();
                     }
                 } else {
-                    bombSource.strikes++;
+                    AddStrike();
                 }
             }
         }

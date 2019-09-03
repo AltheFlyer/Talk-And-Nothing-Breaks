@@ -6,9 +6,10 @@ public class BombTimerScript : NeutralModule
 {
 
     GameObject[] digits;
+    GameObject[] strikes;
+
     [SerializeField]
     Color lightColor;
-
     [SerializeField]
     Color blankColor;
 
@@ -41,6 +42,20 @@ public class BombTimerScript : NeutralModule
                 
         countDown = CountDown();
         StartCoroutine(countDown);
+
+
+        strikes = new GameObject[3];
+        Transform strikeHolder = transform.Find("Strikes");
+
+        //Initialize strikes
+        for (int i = 0; i < 3; i++) {
+            strikes[i] = strikeHolder.Find("Strike " + (i + 1).ToString()).gameObject;
+            SetObjectColor(strikes[i].transform.Find("Fractured Cross").gameObject, "_Color", blankColor);
+            SetObjectColor(strikes[i].transform.Find("Main Cross").gameObject, "_Color", blankColor);
+
+            strikes[i].transform.Find("Fractured Cross").gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+            strikes[i].transform.Find("Main Cross").gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+        }
     }
 
     void SetNumber(int digit, int number) 
@@ -128,5 +143,16 @@ public class BombTimerScript : NeutralModule
         bombSource.strikes += 99;
 
         StopCoroutine(countDown);
+    }
+
+    public void AddStrike(int numStrikes) {
+        SetObjectColor(strikes[numStrikes - 1].transform.Find("Fractured Cross").gameObject, "_Color", lightColor);
+        SetObjectColor(strikes[numStrikes - 1].transform.Find("Main Cross").gameObject, "_Color", lightColor);
+
+        SetObjectColor(strikes[numStrikes - 1].transform.Find("Fractured Cross").gameObject, "_EmissionColor", lightColor);
+        SetObjectColor(strikes[numStrikes - 1].transform.Find("Main Cross").gameObject, "_EmissionColor", lightColor);
+
+        strikes[numStrikes - 1].transform.Find("Fractured Cross").gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+        strikes[numStrikes - 1].transform.Find("Main Cross").gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
     }
 }

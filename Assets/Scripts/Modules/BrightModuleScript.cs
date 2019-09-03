@@ -128,7 +128,7 @@ public class BrightModuleScript : Module
                     if (CheckAnswer()) {
                         DeactivateModule();
                     } else {
-                        bombSource.strikes++;
+                        AddStrike();
                     }
                 }
 

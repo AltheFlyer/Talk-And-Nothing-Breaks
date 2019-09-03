@@ -39,7 +39,7 @@ public class Module: MonoBehaviour
         }
 
         //Send message to main bomb
-        bombSource.GetComponent<LevelGenerator>().CheckCompletion();
+        bombSource.CheckCompletion();
     }
 
     public bool IsMouseOver(GameObject obj) {
@@ -48,5 +48,9 @@ public class Module: MonoBehaviour
 
     public void SetObjectColor(GameObject obj, string type, Color c) {
         obj.GetComponent<Renderer>().material.SetColor(type, c);
+    }
+
+    public void AddStrike() {
+        bombSource.AddStrike();
     }
 }

@@ -104,7 +104,7 @@ public class AdditionModuleScript: Module
                         
                         //(sum);
                     } else {
-                        bombSource.strikes++;
+                        AddStrike();
                         //print(sum);
                     }
                 } else {

@@ -28,7 +28,6 @@ public class LevelGenerator : MonoBehaviour
 
     public Module[,] modules;
 
-
     //Bomb data
     public int id;
     public string idAsBinary;
@@ -40,19 +39,13 @@ public class LevelGenerator : MonoBehaviour
     public bool serialContainsVowel;
     GameObject serialTag;
 
+    GameObject loadedTimerModule;
+
     // Start is called before the first frame update
     void Start()
     {
         GenerateBomb();
         GeneratorCodes();        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (strikes >= 3) {
-            SceneManager.LoadScene("GameMenuScene");
-        }
     }
 
     public void CheckCompletion() {
@@ -105,7 +98,6 @@ public class LevelGenerator : MonoBehaviour
         //Generate a list of modules to make
         List<GameObject> genModules = new List<GameObject>();
         genModules.Add(timerModule);
-        GameObject bombTimer = null;
 
         for (int i = 0; i < width * height * 2 - 1; ++i) {
             if (i < numModules) {
@@ -155,7 +147,7 @@ public class LevelGenerator : MonoBehaviour
                     go.GetComponent<Module>().bombSource = this;
                 }
                 if (go.GetComponent<BombTimerScript>()) {
-                    bombTimer = go;
+                    loadedTimerModule = go;
                 }
                 modules[x, z] = go.GetComponent<Module>();
                 go.transform.parent = this.transform;
@@ -169,7 +161,7 @@ public class LevelGenerator : MonoBehaviour
                     go.GetComponent<Module>().bombSource = this;
                 }
                 if (go.GetComponent<BombTimerScript>()) {
-                    bombTimer = go;
+                    loadedTimerModule = go;
                 }
                 modules[x, z] = go.GetComponent<Module>();
                 go.transform.parent = this.transform;
@@ -177,9 +169,9 @@ public class LevelGenerator : MonoBehaviour
         }
 
         if (data) {
-            bombTimer.GetComponent<BombTimerScript>().secondsLeft = data.time;
+            loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft = data.time;
         } else {
-            bombTimer.GetComponent<BombTimerScript>().secondsLeft = 300;
+            loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft = 300;
         }
     }
 
@@ -224,7 +216,13 @@ public class LevelGenerator : MonoBehaviour
         serialTag = idPlate.transform.Find("Serial Code").gameObject;
         serialTag.GetComponent<TMP_Text>().text = serialCode;
         //serialTag.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.01f, modules[0, 0].transform.position.y - 0.5f, modules[0, 0].transform.position.z);
+    }
 
-        
+    public void AddStrike() {
+        strikes++;
+        loadedTimerModule.GetComponent<BombTimerScript>().AddStrike(strikes);
+        if (strikes >= 3) {
+            SceneManager.LoadScene("GameMenuScene");
+        }
     }
 }
