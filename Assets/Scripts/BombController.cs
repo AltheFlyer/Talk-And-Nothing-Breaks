@@ -24,7 +24,12 @@ public class BombController : MonoBehaviour {
         if (Input.GetMouseButton(1)) {
             float h = Input.GetAxis("Mouse X");
             float v = Input.GetAxis("Mouse Y");
-            transform.Rotate(3 * v, 0, -3 * h, Space.Self);
+            print(transform.rotation.eulerAngles.z);
+            if (transform.rotation.eulerAngles.z > 270 || transform.rotation.eulerAngles.z < 90) {
+                transform.Rotate(3 * v, 0, -3 * h, Space.Self);
+            } else {
+                transform.Rotate(-3 * v, 0, -3 * h, Space.Self);
+            }
             Quaternion q = transform.rotation;
             transform.rotation = Quaternion.Euler(q.eulerAngles.x, 0, q.eulerAngles.z);
         }
