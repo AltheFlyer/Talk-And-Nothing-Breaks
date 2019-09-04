@@ -139,8 +139,7 @@ public class BombTimerScript : NeutralModule
             }
             yield return null;
         }
-        //Oh no... (I'll make this code less crappy later)
-        bombSource.strikes += 99;
+        bombSource.Kill();
 
         StopCoroutine(countDown);
     }

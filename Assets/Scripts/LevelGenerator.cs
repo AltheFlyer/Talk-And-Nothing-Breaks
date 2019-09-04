@@ -222,7 +222,11 @@ public class LevelGenerator : MonoBehaviour
         strikes++;
         loadedTimerModule.GetComponent<BombTimerScript>().AddStrike(strikes);
         if (strikes >= 3) {
-            SceneManager.LoadScene("GameMenuScene");
+            Kill();
         }
+    }
+
+    public void Kill() {
+        SceneManager.LoadScene("GameMenuScene");
     }
 }

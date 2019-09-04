@@ -375,7 +375,7 @@ public class BrightModuleScript : Module
         //What position is the delete button?
         if (delIndex == 0 || delIndex == 3) {
             //Are there vowels in the serial code? If so, what is it?
-            row = delIndex / 3;
+            row = (delIndex / 3) + 1;
             if (bombSource.serialContainsVowel) {
                 for (int i = 0; i < serial.Length; i++) {
                     if (vowels.Contains(serial.Substring(i, 1))) {
