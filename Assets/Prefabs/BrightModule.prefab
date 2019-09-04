@@ -95,7 +95,7 @@ MonoBehaviour:
   mouseOver: 0
   startMaterial: {fileID: 670224309865224971, guid: 8de6ae10c64da1e43abab6943e001ef9,
     type: 3}
-  mouseOverMaterial: {fileID: 2100000, guid: fccc7d75d0f29a04894df65ce468255e, type: 2}
+  mouseOverMaterial: {fileID: 2100000, guid: f17ea3e254aedb143952e0b658a34c11, type: 2}
 --- !u!65 &7219794910604594976
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -539,7 +539,7 @@ MonoBehaviour:
   mouseOver: 0
   startMaterial: {fileID: 670224309865224971, guid: 8de6ae10c64da1e43abab6943e001ef9,
     type: 3}
-  mouseOverMaterial: {fileID: 2100000, guid: fccc7d75d0f29a04894df65ce468255e, type: 2}
+  mouseOverMaterial: {fileID: 2100000, guid: f17ea3e254aedb143952e0b658a34c11, type: 2}
 --- !u!65 &4787052219936065533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -757,7 +757,7 @@ MonoBehaviour:
   mouseOver: 0
   startMaterial: {fileID: 670224309865224971, guid: 8de6ae10c64da1e43abab6943e001ef9,
     type: 3}
-  mouseOverMaterial: {fileID: 2100000, guid: fccc7d75d0f29a04894df65ce468255e, type: 2}
+  mouseOverMaterial: {fileID: 2100000, guid: f17ea3e254aedb143952e0b658a34c11, type: 2}
 --- !u!65 &7216299796140448526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1442,7 +1442,7 @@ MonoBehaviour:
   mouseOver: 0
   startMaterial: {fileID: 670224309865224971, guid: 8de6ae10c64da1e43abab6943e001ef9,
     type: 3}
-  mouseOverMaterial: {fileID: 2100000, guid: fccc7d75d0f29a04894df65ce468255e, type: 2}
+  mouseOverMaterial: {fileID: 2100000, guid: f17ea3e254aedb143952e0b658a34c11, type: 2}
 --- !u!65 &1258087428568874278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1707,7 +1707,7 @@ MonoBehaviour:
   mouseOver: 0
   startMaterial: {fileID: 670224309865224971, guid: 8de6ae10c64da1e43abab6943e001ef9,
     type: 3}
-  mouseOverMaterial: {fileID: 2100000, guid: fccc7d75d0f29a04894df65ce468255e, type: 2}
+  mouseOverMaterial: {fileID: 2100000, guid: f17ea3e254aedb143952e0b658a34c11, type: 2}
 --- !u!65 &4369125009352485444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1985,7 +1985,7 @@ MonoBehaviour:
   mouseOver: 0
   startMaterial: {fileID: 670224309865224971, guid: 8de6ae10c64da1e43abab6943e001ef9,
     type: 3}
-  mouseOverMaterial: {fileID: 2100000, guid: fccc7d75d0f29a04894df65ce468255e, type: 2}
+  mouseOverMaterial: {fileID: 2100000, guid: f17ea3e254aedb143952e0b658a34c11, type: 2}
 --- !u!65 &8129419325474299414
 BoxCollider:
   m_ObjectHideFlags: 0
