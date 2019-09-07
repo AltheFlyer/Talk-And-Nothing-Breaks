@@ -78,7 +78,7 @@ public class BrightModuleScript : Module
 
         }
 
-        //Get reference to game objects
+        //Find game objects
         submit = transform.Find("Submit").gameObject;
         map = transform.Find("Map").gameObject;
         commandOutline = transform.Find("Display").Find("Outline").gameObject;
@@ -120,50 +120,48 @@ public class BrightModuleScript : Module
 
     void Update()
     {
-        if (!moduleComplete) {
-            if (Input.GetMouseButtonDown(0)) {
-                //Submit button click
-                if (IsMouseOver(submit)) {
-                    if (CheckAnswer()) {
-                        DeactivateModule();
-                    } else {
-                        AddStrike();
-                    }
+        if (!moduleComplete && Input.GetMouseButtonDown(0)) {
+            //Submit button click
+            if (IsMouseOver(submit)) {
+                if (CheckAnswer()) {
+                    DeactivateModule();
+                } else {
+                    AddStrike();
                 }
+            }
 
-                //Clicked delete command and there are commands
-                if ((IsMouseOver(commandButtons[delIndex])) && !((currentCommandGrid.x == 6) && (currentCommandGrid.y == -1))) {
-                    //Stop rendering command to show it's to be not read and not shown
-                    commandGrid[(int)currentCommandGrid.x, (int)currentCommandGrid.y].GetComponent<MeshRenderer>().enabled = false;
-                    currentCommandGrid.x--;
+            //Clicked delete command and there are commands
+            if ((IsMouseOver(commandButtons[delIndex])) && !((currentCommandGrid.x == 6) && (currentCommandGrid.y == -1))) {
+                //Stop rendering command to show it's to be not read and not shown
+                commandGrid[(int)currentCommandGrid.x, (int)currentCommandGrid.y].GetComponent<MeshRenderer>().enabled = false;
+                currentCommandGrid.x--;
 
-                    // move to previous row if x smaller than 0
-                    if (currentCommandGrid.x < 0) {
-                        currentCommandGrid.y--;
-                        currentCommandGrid.x = 6;
-                    }
+                // move to previous row if x smaller than 0
+                if (currentCommandGrid.x < 0) {
+                    currentCommandGrid.y--;
+                    currentCommandGrid.x = 6;
                 }
+            }
 
-                //Clicked any other command and the display isn't full
-                if (!(currentCommandGrid.x == 6 && currentCommandGrid.y == 2)) {
-                    for (int i = 0; i < 6; ++i) {
+            //Clicked any other command and the display isn't full
+            if (!(currentCommandGrid.x == 6 && currentCommandGrid.y == 2)) {
+                for (int i = 0; i < 6; ++i) {
 
-                        //Check each button, making sure it isn't the delete button
-                        if ((IsMouseOver(commandButtons[i])) && (i != delIndex)) {
-                            currentCommandGrid.x++;
+                    //Check each button, making sure it isn't the delete button
+                    if ((IsMouseOver(commandButtons[i])) && (i != delIndex)) {
+                        currentCommandGrid.x++;
 
-                            //Move to next row if x is larger than 6
-                            if (currentCommandGrid.x > 6) {
-                                currentCommandGrid.x = 0;
-                                currentCommandGrid.y++;
-                            }
-
-                            //Re-color the command at the next position and enable renderer
-                            GameObject command = commandGrid[(int)currentCommandGrid.x, (int)currentCommandGrid.y];
-                            SetObjectColor(command, "_Color", commandColors[i]);
-                            SetObjectColor(command, "_EmissionColor", commandColors[i]);
-                            command.GetComponent<MeshRenderer>().enabled = true;
+                        //Move to next row if x is larger than 6
+                        if (currentCommandGrid.x > 6) {
+                            currentCommandGrid.x = 0;
+                            currentCommandGrid.y++;
                         }
+
+                        //Re-color the command at the next position and enable renderer
+                        GameObject command = commandGrid[(int)currentCommandGrid.x, (int)currentCommandGrid.y];
+                        SetObjectColor(command, "_Color", commandColors[i]);
+                        SetObjectColor(command, "_EmissionColor", commandColors[i]);
+                        command.GetComponent<MeshRenderer>().enabled = true;
                     }
                 }
             }

@@ -54,6 +54,8 @@ public class BombData : MonoBehaviour
             selection = allModules[2];
         } else if (name == "alchemy") {
             selection = allModules[3];
+        } else if (name == "cipher") {
+            selection = allModules[4];
         }
 
         modules.Add(selection);
@@ -70,6 +72,8 @@ public class BombData : MonoBehaviour
             selection = allModules[2];
         } else if (name == "alchemy") {
             selection = allModules[3];
+        } else if (name == "cipher") {
+            selection = allModules[4];
         }
 
         modules.Add(selection);

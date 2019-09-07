@@ -489,10 +489,55 @@ PrefabInstance:
       propertyPath: m_Name
       value: menu_room
       objectReference: {fileID: 0}
-    - target: {fileID: -1260394747809671015, guid: 6e94a2464bec5894c9af5462514ae212,
+    - target: {fileID: -7071215711155466673, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7071215711155466673, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5509024836831030411, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_Range
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -5509024836831030411, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -5509024836831030411, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5408363839973224431, guid: 6e94a2464bec5894c9af5462514ae212,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_Range
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_DrawHalo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 6e94a2464bec5894c9af5462514ae212,
         type: 3}
@@ -549,56 +594,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -5509024836831030411, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_Range
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: -5509024836831030411, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -5509024836831030411, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -7071215711155466673, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7071215711155466673, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -5408363839973224431, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_Range
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_DrawHalo
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4541810520604170224, guid: 6e94a2464bec5894c9af5462514ae212,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: -3648453424520517353, guid: 6e94a2464bec5894c9af5462514ae212,
         type: 3}
       propertyPath: m_Range
@@ -610,6 +605,11 @@ PrefabInstance:
       value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: -2160555211122815148, guid: 6e94a2464bec5894c9af5462514ae212,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1260394747809671015, guid: 6e94a2464bec5894c9af5462514ae212,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4352,6 +4352,7 @@ MonoBehaviour:
   - {fileID: 3801608779602073246, guid: fc12e446e4a135b489a9a9e6a7543155, type: 3}
   - {fileID: 5861293530552081046, guid: df8aceece5a4c5649b44a64070726051, type: 3}
   - {fileID: 6195395770200443799, guid: 8fe3677c7df324341827098bae762443, type: 3}
+  - {fileID: 5320221079955395915, guid: 6e7523c8641aae245813408b19fcca66, type: 3}
   modules: []
   weights: 
   width: 0

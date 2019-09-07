@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 3148183015322510835}
   - component: {fileID: 2904481223176079559}
   - component: {fileID: 8972194506211358867}
+  - component: {fileID: 2826843268797952145}
   m_Layer: 0
   m_Name: Left Arrow
   m_TagString: Untagged
@@ -312,6 +313,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2826843268797952145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134741255690753107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fc6716f6d8527449ccd40bc6f16a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOver: 0
+  startMaterial: {fileID: 0}
+  mouseOverMaterial: {fileID: 0}
 --- !u!1 &3412268756264290822
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +339,7 @@ GameObject:
   - component: {fileID: 3262949856049674741}
   - component: {fileID: 1040151266023395346}
   - component: {fileID: 2006416148717759854}
+  - component: {fileID: 4112309851974686647}
   m_Layer: 0
   m_Name: Submit
   m_TagString: Untagged
@@ -390,6 +407,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4112309851974686647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3412268756264290822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fc6716f6d8527449ccd40bc6f16a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOver: 0
+  startMaterial: {fileID: 0}
+  mouseOverMaterial: {fileID: 0}
 --- !u!1 &5320221079955395915
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +899,7 @@ GameObject:
   - component: {fileID: 8321564068727066486}
   - component: {fileID: 4322593411655983581}
   - component: {fileID: 5601278736656013541}
+  - component: {fileID: 4394869212335147979}
   m_Layer: 0
   m_Name: Right Arrow
   m_TagString: Untagged
@@ -934,6 +967,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4394869212335147979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6855468028786191306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fc6716f6d8527449ccd40bc6f16a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOver: 0
+  startMaterial: {fileID: 0}
+  mouseOverMaterial: {fileID: 0}
 --- !u!1 &7183161327008407385
 GameObject:
   m_ObjectHideFlags: 0
