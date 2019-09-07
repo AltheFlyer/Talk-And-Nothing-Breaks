@@ -22,8 +22,7 @@ public class BrightModuleScript : Module
     float mapWidth = 0.45f;
     float squareWidth;
     float mapSquareHeight = 0.2f;
-    [Range(0f,1f)]
-    public float mapSquarePercentSize = 0.4f;
+    float mapSquarePercentSize = 0.4f;
     Vector3 mapPos = new Vector3(0.2f, 0.5f, -0.2f);
     Vector3 mapBotLeftPos;
     Vector2 botGridPos = new Vector2(0, 0);
