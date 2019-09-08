@@ -521,7 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moduleComplete: 0
   bombSource: {fileID: 0}
-  spawnWeight: 5
+  spawnWeight: 2
 --- !u!1 &4871210954051035492
 GameObject:
   m_ObjectHideFlags: 0

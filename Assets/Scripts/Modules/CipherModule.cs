@@ -15,8 +15,8 @@ public class CipherModule : Module
 
     static System.Random random = new System.Random();
 
-    string[] answerWords = { "PUNCH", "PAINS", "PRICK", "ALBUM", "TABLE", "ALLOW", "PLUSH", "ALONE", "BRAIN", "TRAIN","BREAD", "BRYAN", "ALLEN", "BRICK", "TALON", "TRICK" };
-    int[] answerNums = { 103, 157, 223, 253, 364, 415, 420, 576, 613, 666, 643, 734, 790, 804, 924, 997 };
+    string[] answerWords = { "PUNCH", "BRYAN", "TRICK", "ALBUM", "TABLE", "ALLOW", "PLUSH", "ALONE", "BRAIN", "TRAIN","BREAD", "PAINS", "ALLEN", "BRICK", "TALON", "PRICK" };
+    int[] answerNums = { 103, 157, 223, 253, 364, 415, 420, 576, 613, 643, 666, 734, 790, 804, 924, 997 };
     string[] keywords = { "HA", "WAIT", "NO", "THE", "BOMB", "IS", "NOT", "SAFE", "ITS" };
     string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string vowels = "AEIOU";
@@ -113,10 +113,10 @@ public class CipherModule : Module
                 keywordIndex = 3;
             }
             else if (numVowels < 3) {
-                keywordIndex = 2;
+                keywordIndex = 7;
             }
             else {
-                keywordIndex = 7;
+                keywordIndex = 2;
             }
         }
         else {
