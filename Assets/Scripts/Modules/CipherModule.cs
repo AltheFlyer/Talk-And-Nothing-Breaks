@@ -7,7 +7,7 @@ using System;
 public class CipherModule : Module
 {
 
-    GameObject encryted;
+    GameObject encrypted;
     GameObject answer;
     GameObject left;
     GameObject right;
@@ -15,16 +15,16 @@ public class CipherModule : Module
 
     static System.Random random = new System.Random();
 
-    string[] answerWords = { "PUNCH", "KNOCK", "CHIPS", "JUICE", "TABLE", "CHAIR", "PLUSH", "LIGHT", "POPPY", "MONTH", "BRYAN", "ALLEN" };
-    int[] answerNums = { 103, 157, 253, 415, 576, 613, 643, 734, 790, 804, 924, 997 };
-    string[] keywords = { "ha", "wait", "no", "the", "bomb", "is", "not", "safe", "its" };
+    string[] answerWords = { "PUNCH", "PAINS", "PRICK", "ALBUM", "TABLE", "ALLOW", "PLUSH", "ALONE", "BRAIN", "TRAIN","BREAD", "BRYAN", "ALLEN", "BRICK", "TALON", "TRICK" };
+    int[] answerNums = { 103, 157, 223, 253, 364, 415, 420, 576, 613, 666, 643, 734, 790, 804, 924, 997 };
+    string[] keywords = { "HA", "WAIT", "NO", "THE", "BOMB", "IS", "NOT", "SAFE", "ITS" };
     string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string vowels = "AEIOU";
     string answerWord;
     int answerNumIndex;
     int currentNumIndex;
     int numVowels;
-    char[] decrypted;
+    String decrypted;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class CipherModule : Module
         base.Start();
 
         //Find game objects
-        encryted = transform.Find("Encrypted Message").gameObject;
+        encrypted = transform.Find("Encrypted Message").gameObject;
         answer = transform.Find("Answer Number").gameObject;
         left = transform.Find("Left Arrow").gameObject;
         right = transform.Find("Right Arrow").gameObject;
@@ -41,7 +41,8 @@ public class CipherModule : Module
         //set up encrypted word
         currentNumIndex = 0;
         answerNumIndex = random.Next(0, answerWords.Length);
-        decrypted = answerWords[answerNumIndex].ToCharArray();
+        decrypted = answerWords[answerNumIndex];
+        print(decrypted);
 
         //Find number of vowels in serial code
         numVowels = 0;
@@ -50,10 +51,11 @@ public class CipherModule : Module
                 numVowels++;
             }
         }
-
+        print(decrypted);
         generateAnswer();
-
+        print(decrypted);
         answer.GetComponent<TMP_Text>().text = answerNums[currentNumIndex].ToString();
+        print(decrypted);
     }
 
     // Update is called once per frame
@@ -72,11 +74,11 @@ public class CipherModule : Module
             }
 
             if (IsMouseOver(left) && currentNumIndex > 0) {
-                answerNumIndex--;
+                currentNumIndex--;
                 answer.GetComponent<TMP_Text>().text = answerNums[currentNumIndex].ToString();
             }
-            if (IsMouseOver(right) && answerNumIndex < answerNums.Length) {
-                answerNumIndex++;
+            if (IsMouseOver(right) && currentNumIndex < answerNums.Length - 1) {
+                currentNumIndex++;
                 answer.GetComponent<TMP_Text>().text = answerNums[currentNumIndex].ToString();
             }
         }
@@ -92,6 +94,7 @@ public class CipherModule : Module
 
     void generateAnswer ()
     {
+        char[] word = decrypted.ToCharArray();
         int keywordIndex = 0;
         //Generate keyword based on number of strikes and number of vowels in serial code
         if (bombSource.strikes == 2) {
@@ -99,10 +102,10 @@ public class CipherModule : Module
                 keywordIndex = 0;
             }
             else if (numVowels < 3)  {
-                keywordIndex = 2;
+                keywordIndex = 6;
             }
             else {
-                keywordIndex = 5;
+                keywordIndex = 4;
             }
         }
         else if (bombSource.strikes == 1) {
@@ -110,10 +113,10 @@ public class CipherModule : Module
                 keywordIndex = 3;
             }
             else if (numVowels < 3) {
-                keywordIndex = 6;
+                keywordIndex = 2;
             }
             else {
-                keywordIndex = 8;
+                keywordIndex = 7;
             }
         }
         else {
@@ -121,21 +124,21 @@ public class CipherModule : Module
                 keywordIndex = 1;
             }
             else if (numVowels < 3)  {
-                keywordIndex = 4;
+                keywordIndex = 5;
             }
             else {
-                keywordIndex = 7;
+                keywordIndex = 8;
             }
         }
         char[] keyword = keywords[keywordIndex].ToCharArray();
 
-        for (int i = 0; i < decrypted.Length; ++i) {
+        for (int i = 0; i < word.Length; ++i) {
             int cipherOffset = alphabet.IndexOf(keyword[i % keyword.Length]);
-            int letterOffset = alphabet.IndexOf(decrypted[i]);
+            int letterOffset = alphabet.IndexOf(word[i]);
             int index = (cipherOffset + letterOffset) % 26;
-            decrypted[i] = alphabet[index];
+            word[i] = alphabet[index];
         }
-        answerWord = decrypted.ToString();
-        encryted.GetComponent<TMP_Text>().text = answerWord;
+        answerWord = new String(word);
+        encrypted.GetComponent<TMP_Text>().text = answerWord;
     }
 }
