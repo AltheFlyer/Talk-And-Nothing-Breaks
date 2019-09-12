@@ -23,6 +23,9 @@ public class Module: MonoBehaviour
 
 
     public void DeactivateModule() {
+        //Increase score
+        PlayerData.IncreaseScore(1);
+
         //Mark module as complete
         moduleComplete = true;
 
