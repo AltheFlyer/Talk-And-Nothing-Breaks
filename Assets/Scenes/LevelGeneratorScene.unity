@@ -280,7 +280,7 @@ MonoBehaviour:
   - {fileID: 6195395770200443799, guid: 8fe3677c7df324341827098bae762443, type: 3}
   - {fileID: 4132655380056363045, guid: 6e7523c8641aae245813408b19fcca66, type: 3}
   width: 3
-  height: 2
+  height: 3
   numModules: 12
   strikes: 0
   id: 0
@@ -288,6 +288,12 @@ MonoBehaviour:
   serialCode: 
   serialLength: 8
   serialContainsVowel: 0
+  moduleHolder: {fileID: -927199367670048503, guid: d11fec2c60e72554e85d57e399317422,
+    type: 3}
+  edgeModuleHolder: {fileID: -927199367670048503, guid: 0ed1824cd69d6554dafb1ecff990b2f4,
+    type: 3}
+  cornerModuleHolder: {fileID: -927199367670048503, guid: eab0dae1e6ef964459bcc87ed6a880c7,
+    type: 3}
 --- !u!4 &704334966
 Transform:
   m_ObjectHideFlags: 0
