@@ -24,13 +24,13 @@ public class StartScreenButtons : MonoBehaviour
     public GameObject levelScreen;
 
     public void Start() {
-        UpdateText();
         data = GameObject.Find("BombData").GetComponent<BombData>();
         mainScreen = transform.Find("Main").gameObject;
         levelScreen = transform.Find("Levels").gameObject;
 
         currentSubScreen = mainScreen;
         levelScreen.SetActive(false);
+        UpdateText();
     }
 
     public void Play() {
@@ -38,59 +38,60 @@ public class StartScreenButtons : MonoBehaviour
     }
 
     public void IncrementModules() {
-        if (LevelData.numModules < MaxModules()) {
-            LevelData.numModules++;
+        if (data.meta.numModules < MaxModules()) {
+            data.meta.numModules++;
         }
         UpdateText();
     }
 
     public void DecrementModules() {
-        if (LevelData.numModules > 1) {
-            LevelData.numModules--;
+        if (data.meta.numModules > 1) {
+            data.meta.numModules--;
         }
         UpdateText();
     }
 
     public void IncrementWidth() {
-        LevelData.width++;
+        data.meta.width++;
         UpdateText();
     }
 
     public void DecrementWidth() {
-        if (LevelData.width > 0) {
-            LevelData.width--;
-            if (LevelData.numModules > MaxModules()) {
-                LevelData.numModules = MaxModules();
+        if (data.meta.width > 1) {
+            data.meta.width--;
+            if (data.meta.numModules > MaxModules()) {
+                data.meta.numModules = MaxModules();
             }
         }
         UpdateText();
     }
 
     public void IncrementHeight() {
-        LevelData.height++;
+        data.meta.height++;
         UpdateText();
     }
 
     public void DecrementHeight() {
-        if (LevelData.height > 0) {
-            LevelData.height--;
-            if (LevelData.numModules > MaxModules()) {
-                LevelData.numModules = MaxModules();
+        if (data.meta.height > 1) {
+            data.meta.height--;
+            if (data.meta.numModules > MaxModules()) {
+                data.meta.numModules = MaxModules();
             }
         }
         UpdateText();
     }
 
     private int MaxModules() {
-        return LevelData.width * LevelData.height * 2 - 1;
+        return data.meta.width * data.meta.height * 2 - 1;
     }
 
     private void UpdateText() {
+        print(BombInfoPanel.GetComponent<Text>());
         BombInfoPanel.GetComponent<Text>().text = 
             "Overall Score: " + PlayerData.score.ToString() + "\n" +
-            "Modules: " + LevelData.numModules.ToString() + "\n" +
-            "Width: " + LevelData.width.ToString() + "\n" +
-            "Height: " + LevelData.height.ToString() + "\n";
+            "Modules: " + data.meta.numModules.ToString() + "\n" +
+            "Width: " + data.meta.width.ToString() + "\n" +
+            "Height: " + data.meta.height.ToString() + "\n";
     }
 
     public void SetScreen(string name) {
@@ -104,22 +105,19 @@ public class StartScreenButtons : MonoBehaviour
     }
 
     public void PlaySingleModule(string name) {
-        data.width = 1;
-        data.height = 1;
-        data.numModules = 1;
-        data.time = 60;
-        data.SelectModule(name);
-        data.Use();
+        data.meta.width = 1;
+        data.meta.height = 1;
+        data.meta.numModules = 1;
+        data.meta.time = 60;
+        ModuleInfo mInfo = new ModuleInfo();
+        mInfo.name = name;
+        data.meta.modules = new List<ModuleInfo>();
+        data.meta.modules.Add(mInfo);
         Play();
     }
 
     public void WeightTest() {
-        data.width = 3;
-        data.height = 2;
-        data.numModules = 12;
-        data.SelectModule("boolean", 5);
-        data.SelectModule("addition", 1);
-        data.Use();
+        data.SetData("Assets/Generators/weighted.json");
         Play();
     }
 }

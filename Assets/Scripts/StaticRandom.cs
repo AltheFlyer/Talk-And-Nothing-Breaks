@@ -11,6 +11,10 @@ public static class StaticRandom
     public static int NextInt(int a) {
         return random.Next(a);
     }
+
+    public static int NextInt(int low, int a) {
+        return random.Next(a - low) + low;
+    }
 }
 
 

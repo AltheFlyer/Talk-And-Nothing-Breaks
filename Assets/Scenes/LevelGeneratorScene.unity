@@ -121,6 +121,24 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &75613119 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: a8b5593dc0cf0214ea9724ab38567144,
+    type: 3}
+  m_PrefabInstance: {fileID: 1729226109}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &75613123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75613119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6da5cdb860789a4c86c82511d5651a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &173595146
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,28 +278,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 704334964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29226f5e4caee6c47a8e5ee190ad838d, type: 3}
+  m_Script: {fileID: 11500000, guid: e440ac56a783adf40bc87c83e9e629a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timerModule: {fileID: 4219599296032187756, guid: d7740f801e59d49459d3906183f5e3ce,
     type: 3}
   blankModule: {fileID: 5736671204777040602, guid: 68f4bce216b59b3468822d8d0bdbab5e,
     type: 3}
-  booleanModule: {fileID: 3403677995477705013, guid: 2d6731f84cd5c11498b0667823d3eb5e,
-    type: 3}
-  additionModule: {fileID: 3801608779602073246, guid: fc12e446e4a135b489a9a9e6a7543155,
-    type: 3}
-  brightModule: {fileID: 5861293530552081046, guid: df8aceece5a4c5649b44a64070726051,
-    type: 3}
-  prefabModules:
-  - {fileID: 3403677995477705013, guid: 2d6731f84cd5c11498b0667823d3eb5e, type: 3}
-  - {fileID: 3801608779602073246, guid: fc12e446e4a135b489a9a9e6a7543155, type: 3}
-  - {fileID: 5861293530552081046, guid: df8aceece5a4c5649b44a64070726051, type: 3}
-  - {fileID: 6195395770200443799, guid: 8fe3677c7df324341827098bae762443, type: 3}
-  - {fileID: 4132655380056363045, guid: 6e7523c8641aae245813408b19fcca66, type: 3}
-  width: 3
-  height: 3
-  numModules: 12
+  width: 0
+  height: 0
+  numModules: 0
   strikes: 0
   id: 0
   idAsBinary: 

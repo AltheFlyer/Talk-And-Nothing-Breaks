@@ -5,18 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class LevelGenerator : MonoBehaviour
+public class BombManager : MonoBehaviour
 {
     
     //Prefabs
     public GameObject timerModule;
     public GameObject blankModule;
-    public GameObject booleanModule;
-    public GameObject additionModule;
-    public GameObject brightModule;
-
-    [SerializeField]
-    public List<GameObject> prefabModules;
 
     //Generator settings
     public int width;
@@ -56,7 +50,7 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         GenerateBomb();
-        GeneratorCodes();        
+        GenerateCodes();        
     }
 
     public void CheckCompletion() {
@@ -80,77 +74,96 @@ public class LevelGenerator : MonoBehaviour
         strikes = 0;
 
         int fullWeight = 0;
-        BombData data = null;
-
-        if (GameObject.Find("BombData")) {
-            data = GameObject.Find("BombData").GetComponent<BombData>();
+        BombData bombData = null;
+        //This try catch block is only necessary while in production
+        //So the game can still run from the level generation scene
+        try {
+            bombData = GameObject.Find("BombData").GetComponent<BombData>();
+        } catch {
+            UnityEngine.Object o = Resources.Load("BombData");
+            print(o);
+            GameObject oo = GameObject.Instantiate(o) as GameObject;
+            bombData = oo.GetComponent<BombData>();
+            //I shouldnt need this but screw me I guess
+            bombData.SetData("Assets/Generators/default.json");
+            bombData.Start();
         }
-        if (data) {
-            width = data.width;
-            height = data.height;
-            numModules = data.numModules;
-            prefabModules = data.modules;
-            data.Consume();
-            for (int i = 0; i < prefabModules.Count; i++) {
-                fullWeight += data.weights[i];
-            }
-        } else {
-            width = LevelData.width;
-            height = LevelData.height;
-            numModules = LevelData.numModules;
-            for (int i = 0; i < prefabModules.Count; i++) {
-                fullWeight += prefabModules[i].GetComponent<Module>().spawnWeight;
-            }
-        }
+        BombInfo generator = bombData.meta;
+        print(JsonUtility.ToJson(generator));
+        width = generator.width;
+        height = generator.height;
+        numModules = generator.numModules;
 
-        GameObject tmp;
-        System.Random rnd = new System.Random();
+        //Count number of modules generated pre-randomizer
+        int generatedModules = 0;
 
         //Generate a list of modules to make
         List<GameObject> genModules = new List<GameObject>();
+        //Always include timer module!
         genModules.Add(timerModule);
 
-        for (int i = 0; i < width * height * 2 - 1; ++i) {
-            if (i < numModules) {
-                double rand = StaticRandom.NextInt(fullWeight);
+        //Add weights to get a maximum weight value for random generation
+        for (int i = 0; i < generator.modules.Count; i++) {
+            fullWeight += generator.modules[i].weight;
+        }
+
+        //Ensure minimum module generation is done
+        foreach (ModuleInfo mInfo in generator.modules) {
+            for (int i = 0; i < mInfo.min; i++) {
+                genModules.Add(bombData.allModules[mInfo.name]);
+                generatedModules++;
+                mInfo.max--;
+            }
+        }
+
+        //Number of modules = width * height, front and back, minus 1 for timer module
+        for (int i = generatedModules; i < width * height * 2 - 1; ++i) {
+            if (i < numModules && generator.modules.Count > 0) {
+                int rand = StaticRandom.NextInt(fullWeight);
                 //Insert some fancy heuristic some other day
-                int counter = fullWeight;
-                //print("A");
-                for (int j = prefabModules.Count - 1; j >= 0; j--) {
-                    //TODO I REALLY want to remove this check, I'll do it after debug is over when BombData is required
-                    if (data) {
-                        if (rand >= counter - data.weights[j]) {
-                            genModules.Add(prefabModules[j]);
-                            break;
-                        } else {
-                            counter -= data.weights[j];
+                int weightCounter = fullWeight;
+                
+                //We can guarantee a certain module order from the fullWeight generation
+                for (int j = generator.modules.Count - 1; j >= 0; j--) {
+                    if (rand >= weightCounter - generator.modules[j].weight) {
+                        genModules.Add(bombData.allModules[generator.modules[j].name]);
+                        //Dirty maximum check
+                        //Note how this ignores maximum if <= 0 on startup
+                        //This IS intended
+                        generator.modules[j].max--;
+                        if (generator.modules[j].max == 0) {
+                            generator.modules.RemoveAt(j);
+                            //Regenrate the fullWeight value
+                            fullWeight = 0;
+                            for (int k = 0; k < generator.modules.Count; k++) {
+                                fullWeight += generator.modules[k].weight;
+                            }
                         }
+                        break;
                     } else {
-                        if (rand >= counter - prefabModules[j].GetComponent<Module>().spawnWeight) {
-                            genModules.Add(prefabModules[j]);
-                            break;
-                        } else {
-                            counter -= prefabModules[j].GetComponent<Module>().spawnWeight;
-                        }
+                        weightCounter -= generator.modules[j].weight;
                     }
                 }
-                //print("B");
+                
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
                 genModules.Add(blankModule);
             }
         }
 
-        modules = new Module[width, height * 2];
         //Shuffle the list
         //WARNING: This needs to be changed if interdependent modules exist
+        //Used for shuffling modules
+        GameObject tmp;
         for (int i = 0; i < width * height * 2; ++i) {
-            int j = rnd.Next(i, width * height * 2);
+            int j = StaticRandom.NextInt(i, width * height * 2);
             tmp = genModules[i];
             genModules[i] = genModules[j];
             genModules[j] = tmp;
         }
 
+        //Now we actually fill the bomb with modules
+        modules = new Module[width, height * 2];
         for (int x = 0; x < width; ++x) {
             for (int z = 0; z < height; ++z) {
                 GameObject model = Instantiate(moduleHolder, new Vector3(edgeConstant + x * moduleHolderWidth - ((moduleHolderWidth / 2) * width - 1), 0.5f, edgeConstant + z * moduleHolderWidth - ((moduleHolderWidth / 2) * height - 1)), Quaternion.Euler(-90, 0, 0));
@@ -185,14 +198,12 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        if (data) {
-            loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft = data.time;
-        } else {
-            loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft = 300;
-        }
+        loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft = generator.time;
+
+        bombData.Consume();
     }
 
-    public void GeneratorCodes() {
+    public void GenerateCodes() {
         string codeLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string vowels = "AEIOU";
         string codeNumbers = "0123456789";

@@ -62,7 +62,7 @@ public class AlchemyModuleScript: Module
 
     void Update() {
         if (!moduleComplete) {
-                if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(0)) {
                 for (int i = 0; i < 3; i++) {
                     if (IsMouseOver(functionButtons[i])) {
                         currentSymbol = symbolNeighbours[currentSymbol, i];
@@ -71,15 +71,15 @@ public class AlchemyModuleScript: Module
                     }
                 }
             }
-        }
 
-        if (currentSymbol == passSymbols[startSymbol]) {
-            DeactivateModule();
-        } else if (currentSymbol == failSymbols[startSymbol]) {
-            currentSymbol = startSymbol;
-            //symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
-            mainIcon.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", symbolTextures[currentSymbol]);
-            AddStrike();
+            if (currentSymbol == passSymbols[startSymbol]) {
+                DeactivateModule();
+            } else if (currentSymbol == failSymbols[startSymbol]) {
+                currentSymbol = startSymbol;
+                //symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
+                mainIcon.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", symbolTextures[currentSymbol]);
+                AddStrike();
+            }
         }
     }
 }

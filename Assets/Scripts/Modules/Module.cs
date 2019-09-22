@@ -6,7 +6,7 @@ public class Module: MonoBehaviour
 {
 
     public bool moduleComplete;
-    public LevelGenerator bombSource;
+    public BombManager bombSource;
     public int spawnWeight;
 
     GameObject completionLED;
