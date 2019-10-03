@@ -104,7 +104,7 @@ public class AdditionModuleScript: Module
                         
                         //(sum);
                     } else {
-                        AddStrike();
+                        AddStrike("Binary Addition");
                         //print(sum);
                     }
                 } else {

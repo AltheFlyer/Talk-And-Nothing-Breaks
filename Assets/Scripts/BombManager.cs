@@ -66,6 +66,9 @@ public class BombManager : MonoBehaviour
         }
         if (isComplete) {
             print("Hooray!");
+            PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;
+            PlayerData.totalScore += PlayerData.currentScore;
+            PlayerData.win = true;
             SceneManager.LoadScene("GameMenuScene");
         }
     }
@@ -255,10 +258,13 @@ public class BombManager : MonoBehaviour
         //serialTag.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.01f, modules[0, 0].transform.position.y - 0.5f, modules[0, 0].transform.position.z);
     }
 
-    public void AddStrike() {
+    public void AddStrike(string module) {
         strikes++;
         loadedTimerModule.GetComponent<BombTimerScript>().AddStrike(strikes);
         if (strikes >= 3) {
+            PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;
+            PlayerData.death = module;
+            PlayerData.win = false;
             Kill();
         }
     }

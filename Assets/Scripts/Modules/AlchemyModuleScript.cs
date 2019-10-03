@@ -78,7 +78,7 @@ public class AlchemyModuleScript: Module
                 currentSymbol = startSymbol;
                 //symbolText.GetComponent<TMP_Text>().text = symbol[currentSymbol];
                 mainIcon.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", symbolTextures[currentSymbol]);
-                AddStrike();
+                AddStrike("Alchemy");
             }
         }
     }
