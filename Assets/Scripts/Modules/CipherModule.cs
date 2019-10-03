@@ -94,6 +94,7 @@ public class CipherModule : Module
 
     void generateAnswer ()
     {
+        /* Hardcore version
         char[] word = decrypted.ToCharArray();
         int keywordIndex = 0;
         //Generate keyword based on number of strikes and number of vowels in serial code
@@ -136,6 +137,43 @@ public class CipherModule : Module
             int cipherOffset = alphabet.IndexOf(keyword[i % keyword.Length]);
             int letterOffset = alphabet.IndexOf(word[i]);
             int index = (cipherOffset + letterOffset) % 26;
+            word[i] = alphabet[index];
+        }
+        answerWord = new String(word);
+        encrypted.GetComponent<TMP_Text>().text = answerWord;
+        */
+        int shift = 0;
+        if (bombSource.strikes == 2) {
+            if (numVowels < 1) {
+                shift = 17;
+            } else if (numVowels < 3) {
+                shift = 14;
+            } else {
+                shift = 9;
+            }
+        } else if (bombSource.strikes == 1) {
+            if (numVowels < 1) {
+                shift = 23;
+            } else if (numVowels < 3) {
+                shift = 1;
+            } else {
+                shift = 20;
+            }
+        } else {
+            if (numVowels < 1) {
+                shift = 11;
+            } else if (numVowels < 3) {
+                shift = 6;
+            } else  {
+                shift = 16;
+            }
+        }
+        char[] word = decrypted.ToCharArray();
+        for (int i = 0; i < word.Length; i++) {
+            int index = alphabet.IndexOf(word[i]) - shift;
+            if (index < 0) {
+                index += 26;
+            }
             word[i] = alphabet[index];
         }
         answerWord = new String(word);
