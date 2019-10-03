@@ -170,10 +170,7 @@ public class CipherModule : Module
         }
         char[] word = decrypted.ToCharArray();
         for (int i = 0; i < word.Length; i++) {
-            int index = alphabet.IndexOf(word[i]) + shift;
-            if (index < 0) {
-                index += 26;
-            }
+            int index = (alphabet.IndexOf(word[i]) + shift) % 26;
             word[i] = alphabet[index];
         }
         answerWord = new String(word);
