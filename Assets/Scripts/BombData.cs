@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class BombData : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class BombData : MonoBehaviour
             allModules.Add(moduleNames[i], prefabModules[i]);
         }
         DontDestroyOnLoad(this);
-        WebManager.SendData();
+        SendData();
     }
 
     // Update is called once per frame
@@ -45,4 +46,32 @@ public class BombData : MonoBehaviour
             moduleConfig.Add(mf.name, mf);
         }
     }
+
+    //GOD OBJECT TIME
+    public void SendData() {
+        StartCoroutine(SD());
+    }       
+
+    public IEnumerator SD() {
+        string url = "https://plenary-totem-219601.appspot.com/tanbdata";
+    
+        /*
+        WWWForm form = new WWWForm();
+        form.AddField("id", playerID);
+        form.AddField("score", PlayerData.totalScore);
+        */
+        string urlNew = url + "?id=" + PlayerData.playerID + "&score=" + PlayerData.totalScore;
+        Debug.Log("Sending Data");
+        
+        using (var www = UnityWebRequest.Get(urlNew)) {
+            yield return www.SendWebRequest();
+            
+            if (www.isNetworkError || www.isHttpError) {
+                Debug.Log(www.error);
+            }
+            else {
+                Debug.Log("Finished Uploading Screenshot");
+            }
+        }
+    }  
 }
