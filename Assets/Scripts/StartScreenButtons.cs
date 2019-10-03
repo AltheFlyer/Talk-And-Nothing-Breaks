@@ -116,6 +116,11 @@ public class StartScreenButtons : MonoBehaviour
         Play();
     }
 
+    public void PlayLevel(string name) {
+        data.SetData("Assets/Generators/" + name + ".json");
+        Play();
+    }
+
     public void WeightTest() {
         data.SetData("Assets/Generators/weighted.json");
         Play();

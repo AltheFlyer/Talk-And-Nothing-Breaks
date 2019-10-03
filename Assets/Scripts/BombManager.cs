@@ -89,10 +89,14 @@ public class BombManager : MonoBehaviour
             bombData.Start();
         }
         BombInfo generator = bombData.meta;
-        print(JsonUtility.ToJson(generator));
+        //print(JsonUtility.ToJson(generator));
         width = generator.width;
         height = generator.height;
         numModules = generator.numModules;
+
+        //Merge modules and pools in generate
+        generator.MergePools();
+        print(JsonUtility.ToJson(generator));
 
         //Count number of modules generated pre-randomizer
         int generatedModules = 0;
@@ -102,49 +106,52 @@ public class BombManager : MonoBehaviour
         //Always include timer module!
         genModules.Add(timerModule);
 
+
         //Add weights to get a maximum weight value for random generation
-        for (int i = 0; i < generator.modules.Count; i++) {
-            fullWeight += generator.modules[i].weight;
+        for (int i = 0; i < generator.pools.Count; i++) {
+            fullWeight += generator.pools[i].weight;
         }
 
         //Ensure minimum module generation is done
-        foreach (ModuleInfo mInfo in generator.modules) {
-            for (int i = 0; i < mInfo.min; i++) {
-                genModules.Add(bombData.allModules[mInfo.name]);
+        foreach (PoolInfo pInfo in generator.pools) {
+            for (int i = 0; i < pInfo.min; i++) {
+                genModules.Add(bombData.allModules[pInfo.Generate()]);
                 generatedModules++;
-                mInfo.max--;
+                pInfo.max--;
             }
         }
 
         //Number of modules = width * height, front and back, minus 1 for timer module
         for (int i = generatedModules; i < width * height * 2 - 1; ++i) {
-            if (i < numModules && generator.modules.Count > 0) {
+            if (i < numModules && generator.pools.Count > 0) {
                 int rand = StaticRandom.NextInt(fullWeight);
                 //Insert some fancy heuristic some other day
                 int weightCounter = fullWeight;
                 
                 //We can guarantee a certain module order from the fullWeight generation
-                for (int j = generator.modules.Count - 1; j >= 0; j--) {
-                    if (rand >= weightCounter - generator.modules[j].weight) {
-                        genModules.Add(bombData.allModules[generator.modules[j].name]);
+                for (int j = generator.pools.Count - 1; j >= 0; j--) {
+                    if (rand >= weightCounter - generator.pools[j].weight) {
+                        string s = generator.pools[j].Generate();
+                        //print(s);
+                        genModules.Add(bombData.allModules[s]);
                         //Dirty maximum check
                         //Note how this ignores maximum if <= 0 on startup
                         //This IS intended
-                        generator.modules[j].max--;
-                        if (generator.modules[j].max == 0) {
-                            generator.modules.RemoveAt(j);
+                        generator.pools[j].max--;
+                        if (!generator.pools[j].Validate() || generator.pools[j].max == 0) {
+                            print("REMOVED A POOL");
+                            generator.pools.RemoveAt(j);
                             //Regenrate the fullWeight value
                             fullWeight = 0;
-                            for (int k = 0; k < generator.modules.Count; k++) {
-                                fullWeight += generator.modules[k].weight;
+                            for (int k = 0; k < generator.pools.Count; k++) {
+                                fullWeight += generator.pools[k].weight;
                             }
                         }
                         break;
                     } else {
-                        weightCounter -= generator.modules[j].weight;
+                        weightCounter -= generator.pools[j].weight;
                     }
-                }
-                
+                } 
             } else {
                 //When number of modules is exhausted, add blanks until the list is full
                 genModules.Add(blankModule);
@@ -154,6 +161,7 @@ public class BombManager : MonoBehaviour
         //Shuffle the list
         //WARNING: This needs to be changed if interdependent modules exist
         //Used for shuffling modules
+        Debug.Log("Shuffling");
         GameObject tmp;
         for (int i = 0; i < width * height * 2; ++i) {
             int j = StaticRandom.NextInt(i, width * height * 2);
@@ -161,6 +169,7 @@ public class BombManager : MonoBehaviour
             genModules[i] = genModules[j];
             genModules[j] = tmp;
         }
+        
 
         //Now we actually fill the bomb with modules
         modules = new Module[width, height * 2];

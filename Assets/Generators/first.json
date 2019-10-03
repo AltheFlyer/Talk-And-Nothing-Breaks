@@ -1,0 +1,19 @@
+{
+    "width": 3,
+    "height": 2,
+    "time": 600,
+    "numModules": 3,
+    "generatorType": "random",
+    "modules": [
+        {
+            "name": "boolean",
+            "min": 1,
+            "max": 2
+        },
+        {
+            "name": "addition",
+            "min": 1,
+            "max": 2
+        }
+    ]
+}

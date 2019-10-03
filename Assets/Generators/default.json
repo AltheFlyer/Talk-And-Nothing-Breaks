@@ -4,26 +4,26 @@
     "time": 600,
     "numModules": 11,
     "generatorType": "random",
-    "modules": [
+    "pools": [
         {
-            "name": "boolean",
-            "weight": 5
-        },
-        {
-            "name": "addition",
-            "weight": 5
-        },
-        {
-            "name": "bright",
-            "weight": 2
-        },
-        {
-            "name": "alchemy",
-            "weight": 4
-        },
-        {
-            "name": "cipher",
-            "weight": 2
+            "name": "all",
+            "modules": [
+                {
+                    "name": "alchemy"
+                },
+                {
+                    "name": "boolean"
+                },
+                {
+                    "name": "addition"
+                },
+                {
+                    "name": "bright"
+                },
+                {
+                    "name": "cipher"
+                }
+            ]
         }
     ]
 }
