@@ -24,7 +24,8 @@ public class BombData : MonoBehaviour
         for (int i = 0; i < moduleNames.Count; i++) {
             allModules.Add(moduleNames[i], prefabModules[i]);
         }
-        DontDestroyOnLoad(this);  
+        DontDestroyOnLoad(this);
+        WebManager.SendData();
     }
 
     // Update is called once per frame
