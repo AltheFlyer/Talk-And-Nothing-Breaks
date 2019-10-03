@@ -1,0 +1,42 @@
+Some values:
+(You can reference BombInfo, ModuleInfo, and PoolInfo classes)
+Remember that for json it's "key-name": "value"
+Lists should be in []
+Objects are contained within {}
+THIS INCLUDES THE ENTIRE GENERATOR OBJECT
+
+The rest of the doc will be formatted as:
+"key-name-w/o-quotes": <value-type> (default: default-value-if-applicable) //Comment
+Anything with a default value can be safely ignored except for:
+modules, and pools (only one can be empty)
+
+For all BombInfo (Main generator class):
+width:          <int>       (default: 3) 
+height:         <int>       (default: 2)
+time:           <int>       (default: 600) //Time allotted for defusal, in seconds
+numModules:     <int>       (default: 1) //The number of modules on a bomb
+generationType: <string>    (default: "random") //Useless for now (2019-10-02)
+modules:        <array of ModuleInfo>   //See ModuleInfo below
+pools:          <array of PoolInfo>     //See PoolInfo below
+
+For all ModuleInfo (Module data):
+name:           <string>    (default: "") //MUST BE A VALID MODULE NAME TO GENERATE
+//Valid module names are defined within the BombData prefab
+min:            <int>       (default: 0)
+max:            <int>       (default: -1) //Ignored if < 0
+weight:         <int>       (default: 1) //Should be positive
+
+For all PoolInfo (Module pools):
+name:           <string>    (default: "") //This is only for human readability
+min:            <int>       (default: 0)
+max:            <int>       (default: -1) //Ignored if < 0
+weight:         <int>       (default: 1) //Should be positive
+generationType: <string>    (default: "random") //Useless for now (2019-10-02)
+modules:        <array of ModuleInfo>   //See ModuleInfo above
+
+Now for some extra theory on generation
+(and why it may be confusing)
+Upon initialization, the list of modules gets converted to a list of pools with single modules
+The minimum number of each modules is chosen and added, then:
+Pools are chosen randomly based on weights (I hope), 
+And then a module is chosen from the pool, also based on weights
