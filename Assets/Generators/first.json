@@ -1,7 +1,7 @@
 {
     "width": 3,
     "height": 2,
-    "time": 600,
+    "time": 300,
     "numModules": 3,
     "generatorType": "random",
     "modules": [

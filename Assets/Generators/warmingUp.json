@@ -1,0 +1,55 @@
+{
+    "width": 3,
+    "height": 2,
+    "time": 300,
+    "numModules": 4,
+    "generatorType": "random",
+    "pools": [
+        {
+            "name": "easy",
+            "weight": "5",
+            "max": 3,
+            "min": 1,
+            "modules": [
+                {
+                    "name": "boolean",
+                    "weight": 5,
+                    "max": 2
+                },
+                {
+                    "name": "addition",
+                    "weight": 5,
+                    "max": 2
+                },
+                {
+                    "name": "alchemy",
+                    "weight": 1,
+                    "max": 1
+                }
+            ]
+        },
+        {
+            "name": "hard",
+            "weight": "2",
+            "max": 2,
+            "min": 1,
+            "modules": [
+                {
+                    "name": "alchemy",
+                    "weight": 4,
+                    "max": 1
+                },
+                {
+                    "name": "bright",
+                    "weight": 2,
+                    "max": 1
+                },
+                {
+                    "name": "cipher",
+                    "weight": 2,
+                    "max": 1
+                }
+            ]
+        }
+    ]
+}

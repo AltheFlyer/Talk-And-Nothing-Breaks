@@ -1,0 +1,12 @@
+{
+    "width": 3,
+    "height": 2,
+    "time": 180,
+    "numModules": 1,
+    "generatorType": "random",
+    "modules": [
+        {
+            "name": "bright"
+        }
+    ]
+}
