@@ -53,24 +53,22 @@ public class BombData : MonoBehaviour
     }       
 
     public IEnumerator SD() {
-        string url = "https://plenary-totem-219601.appspot.com/tanbdata";
-    
-        /*
+
+        
         WWWForm form = new WWWForm();
-        form.AddField("id", playerID);
+        form.AddField("id", PlayerData.playerID);
         form.AddField("score", PlayerData.totalScore);
-        */
-        string urlNew = url + "?id=" + PlayerData.playerID + "&score=" + PlayerData.totalScore;
+        
         Debug.Log("Sending Data");
         
-        using (var www = UnityWebRequest.Get(urlNew)) {
+        using (var www = UnityWebRequest.Post(WebManager.url, form)) {
             yield return www.SendWebRequest();
             
             if (www.isNetworkError || www.isHttpError) {
                 Debug.Log(www.error);
             }
             else {
-                Debug.Log("Finished Uploading Screenshot");
+                Debug.Log("Score Data Sent");
             }
         }
     }  
