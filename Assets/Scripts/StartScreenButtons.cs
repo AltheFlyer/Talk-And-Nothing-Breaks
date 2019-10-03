@@ -88,7 +88,7 @@ public class StartScreenButtons : MonoBehaviour
     private void UpdateText() {
         print(BombInfoPanel.GetComponent<Text>());
         BombInfoPanel.GetComponent<Text>().text = 
-            "Overall Score: " + PlayerData.score.ToString() + "\n" +
+            "Overall Score: " + PlayerData.totalScore.ToString() + "\n" +
             "Modules: " + data.meta.numModules.ToString() + "\n" +
             "Width: " + data.meta.width.ToString() + "\n" +
             "Height: " + data.meta.height.ToString() + "\n";

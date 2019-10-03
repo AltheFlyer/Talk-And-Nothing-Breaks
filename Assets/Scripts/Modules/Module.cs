@@ -52,7 +52,7 @@ public class Module: MonoBehaviour
         obj.GetComponent<Renderer>().material.SetColor(type, c);
     }
 
-    public void AddStrike() {
-        bombSource.AddStrike();
+    public void AddStrike(string module) {
+        bombSource.AddStrike(module);
     }
 }

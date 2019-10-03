@@ -69,7 +69,7 @@ public class CipherModule : Module
                     DeactivateModule();
                 }
                 else {
-                    AddStrike();
+                    AddStrike("Caesar Cipher");
                 }
             }
 

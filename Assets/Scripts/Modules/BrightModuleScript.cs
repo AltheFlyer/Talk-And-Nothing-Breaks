@@ -126,7 +126,7 @@ public class BrightModuleScript : Module
                 if (CheckAnswer()) {
                     DeactivateModule();
                 } else {
-                    AddStrike();
+                    AddStrike("Bright Bot");
                 }
             }
 
