@@ -114,10 +114,14 @@ public class BombManager : MonoBehaviour
 
         //Ensure minimum module generation is done
         foreach (PoolInfo pInfo in generator.pools) {
+            List<string> poolSpecificModules = pInfo.GetMinModules();
+            foreach (string moduleName in poolSpecificModules) {
+                genModules.Add(bombData.allModules[moduleName]);
+                generatedModules++;
+            }
             for (int i = 0; i < pInfo.min; i++) {
                 genModules.Add(bombData.allModules[pInfo.Generate()]);
                 generatedModules++;
-                pInfo.max--;
             }
         }
 
@@ -137,7 +141,6 @@ public class BombManager : MonoBehaviour
                         //Dirty maximum check
                         //Note how this ignores maximum if <= 0 on startup
                         //This IS intended
-                        generator.pools[j].max--;
                         if (!generator.pools[j].Validate() || generator.pools[j].max == 0) {
                             print("REMOVED A POOL");
                             generator.pools.RemoveAt(j);
@@ -230,7 +233,7 @@ public class BombManager : MonoBehaviour
         }
 
         GameObject idPlate = transform.Find("ID Plate").gameObject;
-        idPlate.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - 1.1f, modules[0, 0].transform.position.y, modules[0, 0].transform.position.z);
+        idPlate.transform.localPosition = new Vector3(modules[0, 0].transform.position.x - (1.1f + edgeConstant), modules[0, 0].transform.position.y, modules[0, 0].transform.position.z);
 
 
         idTag = idPlate.transform.Find("ID").gameObject;

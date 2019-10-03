@@ -2,21 +2,29 @@
     "width": 3,
     "height": 2,
     "time": 600,
-    "numModules": 3,
+    "numModules": 4,
     "generatorType": "random",
     "modules": [
         {
-            "name": "boolean",
-            "min": 1,
-            "max": 1
-        },
-        {
-            "name": "addition",
+            "name": "cipher",
             "min": 1,
             "max": 1
         }
     ],
     "pools": [
+        {
+            "name": "easy-modules",
+            "min": 3,
+            "max": 3,
+            "modules": [
+                {
+                    "name": "boolean"
+                },
+                {
+                    "name": "addition"
+                }
+            ]
+        },
         {
             "name": "advanced-modules",
             "min": 1,
