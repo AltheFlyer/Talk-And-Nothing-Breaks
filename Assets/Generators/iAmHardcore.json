@@ -1,0 +1,40 @@
+{
+    "width": 3,
+    "height": 2,
+    "time": 300,
+    "numModules": 6,
+    "generatorType": "random",
+    "pools": [
+        {
+            "name": "dont-spam",
+            "modules": [
+                {
+                    "name": "addition"
+                },
+                {
+                    "name": "bright"
+                }
+            ]
+        },
+        {
+            "name": "easy",
+            "modules": [
+                {
+                    "name": "boolean",
+                    "weight": 10,
+                    "max": 1
+                },
+                {
+                    "name": "alchemy",
+                    "weight": 10,
+                    "max": 1
+                },
+                {
+                    "name": "cipher",
+                    "weight": 3,
+                    "max": 1
+                }
+            ]
+        }
+    ]
+}

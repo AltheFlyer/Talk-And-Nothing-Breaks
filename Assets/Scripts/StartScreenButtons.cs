@@ -29,7 +29,7 @@ public class StartScreenButtons : MonoBehaviour
         levelScreen = transform.Find("Levels").gameObject;
 
         currentSubScreen = mainScreen;
-        levelScreen.SetActive(false);
+        //levelScreen.SetActive(false);
         UpdateText();
     }
 
