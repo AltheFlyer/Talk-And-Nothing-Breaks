@@ -32,17 +32,18 @@ public class EndScreenButtons : MonoBehaviour
             cause.SetActive(false);
             causeTitle.SetActive(false);
             defused.SetActive(true);
-
+            StartCoroutine(MakeWinRequest());
         } else {
             cause.SetActive(true);
             causeTitle.SetActive(true);
             defused.SetActive(false);
             cause.GetComponent<Text>().text = PlayerData.death;
+            StartCoroutine(MakeKaboomRequest());
         }
 
         PlayerData.UpdateLevelStats(name);
         pause = Time.time;
-        StartCoroutine(MakeRequest());
+        StartCoroutine(MakeKaboomRequest());
 
     }
 
@@ -67,7 +68,7 @@ public class EndScreenButtons : MonoBehaviour
         SceneManager.LoadScene("GameMenuScene");
     }
 
-    public IEnumerator MakeRequest() {
+    public IEnumerator MakeKaboomRequest() {
         WWWForm form = new WWWForm();
         form.AddField("user", PlayerData.playerID);
         form.AddField("death", PlayerData.death);
@@ -76,6 +77,27 @@ public class EndScreenButtons : MonoBehaviour
         Debug.Log("Sending Data");
         
         using (var www = UnityWebRequest.Post(WebManager.kaboomUrl, form)) {
+            yield return www.SendWebRequest();
+            
+            if (www.isNetworkError || www.isHttpError) {
+                Debug.Log(www.error);
+            }
+            else {
+                Debug.Log("Score Data Sent");
+            }
+        }
+    }
+
+    public IEnumerator MakeWinRequest() {
+        WWWForm form = new WWWForm();
+        form.AddField("user", PlayerData.playerID);
+        form.AddField("level", PlayerData.currentLevel);
+        form.AddField("timeLeft", PlayerData.time.ToString());
+        form.AddField("strikes", PlayerData.currentStrikes.ToString());
+        
+        Debug.Log("Sending Data");
+        
+        using (var www = UnityWebRequest.Post(WebManager.winUrl, form)) {
             yield return www.SendWebRequest();
             
             if (www.isNetworkError || www.isHttpError) {
