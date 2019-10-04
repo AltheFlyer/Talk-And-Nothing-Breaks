@@ -273,14 +273,14 @@ public class BombManager : MonoBehaviour
         audio.PlayOneShot(eer);
         PlayerData.currentStrikes++;
         if (strikes >= 3) {
-            PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;
-            PlayerData.death = module;
-            PlayerData.win = false;
-            Kill();
+            Kill(module);
         }
     }
 
-    public void Kill() {
+    public void Kill(string module) {
+        PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;
+        PlayerData.death = module;
+        PlayerData.win = false;
         SceneManager.LoadScene("GameOverScene");
     }
 }

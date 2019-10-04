@@ -139,7 +139,7 @@ public class BombTimerScript : NeutralModule
             }
             yield return null;
         }
-        bombSource.Kill();
+        bombSource.Kill("Out of Time");
 
         StopCoroutine(countDown);
     }
