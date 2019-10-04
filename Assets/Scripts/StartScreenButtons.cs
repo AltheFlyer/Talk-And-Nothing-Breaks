@@ -22,6 +22,9 @@ public class StartScreenButtons : MonoBehaviour
     public Text scoreText;
     public Text titleText;
     public Text descText;
+    public Text timeText;
+    public Text levelScoreText;
+    public Text completeText;
 
     //Button sets
     public GameObject currentSubScreen;
@@ -36,10 +39,13 @@ public class StartScreenButtons : MonoBehaviour
         scoreText = levelScreen.transform.Find("Additional Info").Find("Score Display").GetComponent<Text>();
         titleText = levelScreen.transform.Find("Additional Info").Find("Level Title").GetComponent<Text>();
         descText = levelScreen.transform.Find("Additional Info").Find("Level Description").GetComponent<Text>();
-        
+        timeText = levelScreen.transform.Find("Additional Info").Find("Best Time").GetComponent<Text>();
+        levelScoreText = levelScreen.transform.Find("Additional Info").Find("Level Score").GetComponent<Text>();
+        completeText = levelScreen.transform.Find("Additional Info").Find("Complete").GetComponent<Text>();
+
         currentSubScreen = levelScreen;
         //levelScreen.SetActive(false);
-        scoreText.text = "Score: " + PlayerData.totalScore;
+        scoreText.text = "Total Score: " + PlayerData.totalScore;
         UpdateText();
     }
 
@@ -143,5 +149,24 @@ public class StartScreenButtons : MonoBehaviour
         BombInfo tempData = JsonUtility.FromJson<BombInfo>(FileIO.ReadString("Assets/Generators/" + name + ".json"));
         titleText.text = tempData.name;
         descText.text = tempData.description;
+        if (PlayerData.stats.ContainsKey(name))
+        {
+            if (PlayerData.stats[name].win)
+            {
+                timeText.text = "Best Time: " + ((int)(PlayerData.stats[name].time / 60)).ToString("00") + ":" + (PlayerData.stats[name].time % 60).ToString("00.00");
+                completeText.text = "Complete: ✓";
+            }
+            else
+            {
+                timeText.text = "Best Time: N/A";
+                completeText.text = "Complete: ✘";
+            }
+            levelScoreText.text = "Best Score: " + PlayerData.stats[name].score;
+        } else
+        {
+            timeText.text = "Best Time: N/A";
+            levelScoreText.text = "Best Score: N/A";
+            completeText.text = "Complete: ✘";
+        }
     }
 }
