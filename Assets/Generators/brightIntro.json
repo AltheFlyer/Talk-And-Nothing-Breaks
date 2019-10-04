@@ -1,4 +1,6 @@
 {
+    "name": "Bright Intro",
+    "description": "3 lights. 1 'simple' diagram. 1 mean module.",
     "width": 3,
     "height": 2,
     "time": 180,
