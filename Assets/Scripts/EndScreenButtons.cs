@@ -8,26 +8,43 @@ using UnityEngine.UI;
 public class EndScreenButtons : MonoBehaviour
 {
     [SerializeField]
-    GameObject level, time, cause, score;
+    GameObject level, time, causeTitle, cause, score, defused;
     BombData data;
 
     // Start is called before the first frame update
     void Start()
     {
-        level.GetComponent<Text>().text = "Level: " + PlayerData.currentLevel;
-        time.GetComponent<Text>().text = (int)(PlayerData.time / 60) + ":" + PlayerData.time % 60;
-        cause.GetComponent<Text>().text = PlayerData.death;
+        string name = PlayerData.currentLevel;
+        data = GameObject.Find("BombData").GetComponent<BombData>();
+        data.SetData("Assets/Generators/" + name + ".json");
+        level.GetComponent<Text>().text = "Level: " + data.meta.name;
+        /*string time = "";
+        if ((int)(PlayerData.time / 60) > 10)
+        {
+            time = "0";
+        }*/
+        time.GetComponent<Text>().text = ((int)(PlayerData.time / 60)).ToString("00") + ":" + (PlayerData.time % 60).ToString("00.00");
         score.GetComponent<Text>().text = "Level Score:" + PlayerData.currentScore;
 
-        data = GameObject.Find("BombData").GetComponent<BombData>();
+        if (PlayerData.win) {
+            cause.SetActive(false);
+            causeTitle.SetActive(false);
+            defused.SetActive(true);
+
+        } else {
+            cause.SetActive(true);
+            causeTitle.SetActive(true);
+            defused.SetActive(false);
+            cause.GetComponent<Text>().text = PlayerData.death;
+        }
+
+        
 
     }
 
     public void PlayLevel()
     {
-        string name = PlayerData.currentLevel;
-        data.SetData("Assets/Generators/" + name + ".json");
-        PlayerData.currentLevel = name;
+        PlayerData.currentScore = 0;
         SceneManager.LoadScene("LevelGeneratorScene");
     }
 
