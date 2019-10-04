@@ -133,20 +133,15 @@ public class StartScreenButtons : MonoBehaviour
     }
 
     public void PlayLevel(string name) {
-        data.SetData("Assets/Generators/" + name + ".json");
+        data.SetData(name);
         PlayerData.currentLevel = name;
         PlayerData.currentScore = 0;
         PlayerData.currentStrikes = 0;
         Play();
     }
 
-    public void WeightTest() {
-        data.SetData("Assets/Generators/weighted.json");
-        Play();
-    }
-
     public void SetAdditionalInfo(string name) {
-        BombInfo tempData = JsonUtility.FromJson<BombInfo>(FileIO.ReadString("Assets/Generators/" + name + ".json"));
+        BombInfo tempData = JsonUtility.FromJson<BombInfo>(Levels.GetGenerator(name));
         titleText.text = tempData.name;
         descText.text = tempData.description;
         if (PlayerData.stats.ContainsKey(name))

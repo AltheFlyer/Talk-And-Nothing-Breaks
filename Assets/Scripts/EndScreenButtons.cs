@@ -25,9 +25,13 @@ public class EndScreenButtons : MonoBehaviour
         }
         string name = PlayerData.currentLevel;
         data = GameObject.Find("BombData").GetComponent<BombData>();
-        data.SetData("Assets/Generators/" + name + ".json");
+        data.SetData(name);
         level.GetComponent<Text>().text = "Level: " + data.meta.name;
-        time.GetComponent<Text>().text = ((int)(PlayerData.time / 60)).ToString("00") + ":" + (PlayerData.time % 60).ToString("00.00");
+        if (PlayerData.death == "Out of Time") {
+            time.GetComponent<Text>().text = "00:00.00";
+        } else {
+            time.GetComponent<Text>().text = ((int)(PlayerData.time / 60)).ToString("00") + ":" + (PlayerData.time % 60).ToString("00.00");
+        }
         score.GetComponent<Text>().text = "Level Score:" + PlayerData.currentScore;
 
         if (PlayerData.win) {

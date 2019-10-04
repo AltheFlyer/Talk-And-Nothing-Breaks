@@ -92,7 +92,7 @@ public class BooleanModuleScript : Module
         if (trialsLeft == 3) {
             operation = StaticRandom.NextInt(4);
         } else {
-            operation = StaticRandom.NextInt(7);
+            operation = StaticRandom.NextInt(4);
         }
         //Operations:
         //NOT, AND, OR, XOR, NAND, NOR, XNOR

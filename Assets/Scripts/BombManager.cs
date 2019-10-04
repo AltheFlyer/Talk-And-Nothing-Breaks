@@ -94,7 +94,7 @@ public class BombManager : MonoBehaviour
             GameObject oo = GameObject.Instantiate(o) as GameObject;
             bombData = oo.GetComponent<BombData>();
             //I shouldnt need this but screw me I guess
-            bombData.SetData("Assets/Generators/default.json");
+            bombData.SetData("");
             bombData.Start();
         }
         BombInfo generator = bombData.meta;

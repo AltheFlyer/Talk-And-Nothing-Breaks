@@ -21,7 +21,7 @@ public class BombData : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        meta = JsonUtility.FromJson<BombInfo>(FileIO.ReadString("Assets/Generators/default.json"));
+        meta = JsonUtility.FromJson<BombInfo>(Levels.GetGenerator(""));
         for (int i = 0; i < moduleNames.Count; i++) {
             allModules.Add(moduleNames[i], prefabModules[i]);
         }
@@ -41,7 +41,7 @@ public class BombData : MonoBehaviour
 
     public void SetData(string jsonPath) {
         /*"Assets/Generators/test.json"*/
-        meta = JsonUtility.FromJson<BombInfo>(FileIO.ReadString(jsonPath));
+        meta = JsonUtility.FromJson<BombInfo>(Levels.GetGenerator(jsonPath));
         /*
         foreach (ModuleInfo mf in meta.modules) {
             moduleConfig.Add(mf.name, mf);
