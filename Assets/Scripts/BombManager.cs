@@ -74,7 +74,6 @@ public class BombManager : MonoBehaviour
         if (isComplete) {
             print("Hooray!");
             PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;
-            PlayerData.totalScore += PlayerData.currentScore;
             PlayerData.win = true;
             SceneManager.LoadScene("GameOverScene");
         }

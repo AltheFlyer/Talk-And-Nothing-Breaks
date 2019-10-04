@@ -34,8 +34,10 @@ public static class PlayerData
     {
         if (stats.ContainsKey(name)) {
             stats[name].UpdateStats(time, currentStrikes, currentScore, win);
+            
         } else {
             stats.Add(name, new LevelStats(time, currentStrikes, currentScore, win));
+            totalScore += currentScore;
         }
     }
 
@@ -57,6 +59,7 @@ public static class PlayerData
         public void UpdateStats (float time, int strikes, int score, bool win)
         {
             if (score > this.score) {
+                totalScore += score - this.score;
                 this.score = score;
             }
             if (win) {

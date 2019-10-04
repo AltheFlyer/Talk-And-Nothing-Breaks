@@ -20,7 +20,9 @@ public class EndScreenButtons : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audio.PlayOneShot(boom);
+        if (!PlayerData.win) {
+            audio.PlayOneShot(boom);
+        }
         string name = PlayerData.currentLevel;
         data = GameObject.Find("BombData").GetComponent<BombData>();
         data.SetData("Assets/Generators/" + name + ".json");
