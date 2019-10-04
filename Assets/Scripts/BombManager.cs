@@ -273,6 +273,6 @@ public class BombManager : MonoBehaviour
     }
 
     public void Kill() {
-        SceneManager.LoadScene("GameMenuScene");
+        SceneManager.LoadScene("GameOverScene");
     }
 }
