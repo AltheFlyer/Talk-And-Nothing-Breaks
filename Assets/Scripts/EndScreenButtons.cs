@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
 
@@ -35,6 +36,7 @@ public class EndScreenButtons : MonoBehaviour
 
         PlayerData.UpdateLevelStats(name);
 
+        StartCoroutine(MakeRequest());
     }
 
     public void PlayLevel()
@@ -49,5 +51,25 @@ public class EndScreenButtons : MonoBehaviour
         print("yes");
         data.Consume();
         SceneManager.LoadScene("GameMenuScene");
+    }
+
+    public IEnumerator MakeRequest() {
+        WWWForm form = new WWWForm();
+        form.AddField("user", PlayerData.playerID);
+        form.AddField("death", PlayerData.death);
+        form.AddField("level", PlayerData.currentLevel);
+        
+        Debug.Log("Sending Data");
+        
+        using (var www = UnityWebRequest.Post(WebManager.kaboomUrl, form)) {
+            yield return www.SendWebRequest();
+            
+            if (www.isNetworkError || www.isHttpError) {
+                Debug.Log(www.error);
+            }
+            else {
+                Debug.Log("Score Data Sent");
+            }
+        }
     }
 }

@@ -19,6 +19,7 @@ public class StartScreenButtons : MonoBehaviour
     public BombData data;
 
     public Text additionalInfo;
+    public Text scoreText;
     public Text titleText;
     public Text descText;
 
@@ -32,11 +33,13 @@ public class StartScreenButtons : MonoBehaviour
         mainScreen = transform.Find("Main").gameObject;
         levelScreen = transform.Find("Levels").gameObject;
         additionalInfo = levelScreen.transform.Find("Additional Info").Find("Panel Title").GetComponent<Text>();
+        scoreText = levelScreen.transform.Find("Additional Info").Find("Score Display").GetComponent<Text>();
         titleText = levelScreen.transform.Find("Additional Info").Find("Level Title").GetComponent<Text>();
         descText = levelScreen.transform.Find("Additional Info").Find("Level Description").GetComponent<Text>();
         
         currentSubScreen = levelScreen;
         //levelScreen.SetActive(false);
+        scoreText.text = "Score: " + PlayerData.totalScore;
         UpdateText();
     }
 
@@ -125,7 +128,7 @@ public class StartScreenButtons : MonoBehaviour
 
     public void PlayLevel(string name) {
         data.SetData("Assets/Generators/" + name + ".json");
-        PlayerData.currentLevel = name;
+        PlayerData.currentLevel = data.meta.name;
         PlayerData.currentScore = 0;
         PlayerData.currentStrikes = 0;
         Play();
