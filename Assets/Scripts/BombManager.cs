@@ -215,7 +215,7 @@ public class BombManager : MonoBehaviour
 
         loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft = generator.time;
 
-        bombData.Consume();
+        //bombData.Consume();
     }
 
     public void GenerateCodes() {

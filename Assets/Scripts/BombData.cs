@@ -16,7 +16,7 @@ public class BombData : MonoBehaviour
     public BombInfo meta;
 
     
-    public Dictionary<string, ModuleInfo> moduleConfig = new Dictionary<string, ModuleInfo>();
+    //public Dictionary<string, ModuleInfo> moduleConfig = new Dictionary<string, ModuleInfo>();
 
     // Start is called before the first frame update
     public void Start()
@@ -42,9 +42,11 @@ public class BombData : MonoBehaviour
     public void SetData(string jsonPath) {
         /*"Assets/Generators/test.json"*/
         meta = JsonUtility.FromJson<BombInfo>(FileIO.ReadString(jsonPath));
+        /*
         foreach (ModuleInfo mf in meta.modules) {
             moduleConfig.Add(mf.name, mf);
         }
+        */
     }
 
     //GOD OBJECT TIME
@@ -52,9 +54,7 @@ public class BombData : MonoBehaviour
         StartCoroutine(SD());
     }       
 
-    public IEnumerator SD() {
-
-        
+    public IEnumerator SD() {  
         WWWForm form = new WWWForm();
         form.AddField("id", PlayerData.playerID);
         form.AddField("score", PlayerData.totalScore);

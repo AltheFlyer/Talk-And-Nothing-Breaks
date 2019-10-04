@@ -34,6 +34,7 @@ public class EndScreenButtons : MonoBehaviour
     public void ReturnToMenu()
     {
         print("yes");
+        data.Consume();
         SceneManager.LoadScene("GameMenuScene");
     }
 }
