@@ -7,6 +7,7 @@ public static class PlayerData
 
     public static int totalScore = 0;
     public static int currentScore = 0;
+    public static string currentLevel = "";
     public static float time = 0;
     public static string death = "";
     public static bool win = false;
