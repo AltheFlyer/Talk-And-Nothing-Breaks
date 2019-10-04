@@ -128,7 +128,7 @@ public class StartScreenButtons : MonoBehaviour
 
     public void PlayLevel(string name) {
         data.SetData("Assets/Generators/" + name + ".json");
-        PlayerData.currentLevel = data.meta.name;
+        PlayerData.currentLevel = name;
         PlayerData.currentScore = 0;
         PlayerData.currentStrikes = 0;
         Play();
