@@ -18,6 +18,10 @@ public class StartScreenButtons : MonoBehaviour
 
     public BombData data;
 
+    public Text additionalInfo;
+    public Text titleText;
+    public Text descText;
+
     //Button sets
     public GameObject currentSubScreen;
     public GameObject mainScreen;
@@ -27,8 +31,11 @@ public class StartScreenButtons : MonoBehaviour
         data = GameObject.Find("BombData").GetComponent<BombData>();
         mainScreen = transform.Find("Main").gameObject;
         levelScreen = transform.Find("Levels").gameObject;
-
-        currentSubScreen = mainScreen;
+        additionalInfo = levelScreen.transform.Find("Additional Info").Find("Panel Title").GetComponent<Text>();
+        titleText = levelScreen.transform.Find("Additional Info").Find("Level Title").GetComponent<Text>();
+        descText = levelScreen.transform.Find("Additional Info").Find("Level Description").GetComponent<Text>();
+        
+        currentSubScreen = levelScreen;
         //levelScreen.SetActive(false);
         UpdateText();
     }
@@ -124,5 +131,11 @@ public class StartScreenButtons : MonoBehaviour
     public void WeightTest() {
         data.SetData("Assets/Generators/weighted.json");
         Play();
+    }
+
+    public void SetAdditionalInfo(string name) {
+        BombInfo tempData = JsonUtility.FromJson<BombInfo>(FileIO.ReadString("Assets/Generators/" + name + ".json"));
+        titleText.text = tempData.name;
+        descText.text = tempData.description;
     }
 }
