@@ -56,17 +56,18 @@ public static class PlayerData
 
         public void UpdateStats (float time, int strikes, int score, bool win)
         {
-            if (time < this.time) {
-                this.time = time;
-            }
-            if (strikes < this.strikes) {
-                this.strikes = strikes;
-            }
             if (score > this.score) {
                 this.score = score;
             }
             if (win) {
                 this.win = win;
+                if (time < this.time) {
+                    this.time = time;
+                }
+                if (strikes < this.strikes) {
+                    this.strikes = strikes;
+                }
+                
             }
         }
     }
