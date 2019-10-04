@@ -19,11 +19,6 @@ public class EndScreenButtons : MonoBehaviour
         data = GameObject.Find("BombData").GetComponent<BombData>();
         data.SetData("Assets/Generators/" + name + ".json");
         level.GetComponent<Text>().text = "Level: " + data.meta.name;
-        /*string time = "";
-        if ((int)(PlayerData.time / 60) > 10)
-        {
-            time = "0";
-        }*/
         time.GetComponent<Text>().text = ((int)(PlayerData.time / 60)).ToString("00") + ":" + (PlayerData.time % 60).ToString("00.00");
         score.GetComponent<Text>().text = "Level Score:" + PlayerData.currentScore;
 
@@ -31,6 +26,7 @@ public class EndScreenButtons : MonoBehaviour
             cause.SetActive(false);
             causeTitle.SetActive(false);
             defused.SetActive(true);
+            StartCoroutine(MakeWinRequest());
         } else {
             cause.SetActive(true);
             causeTitle.SetActive(true);
@@ -38,11 +34,14 @@ public class EndScreenButtons : MonoBehaviour
             cause.GetComponent<Text>().text = PlayerData.death;
             StartCoroutine(MakeKaboomRequest());
         }
+
+        PlayerData.UpdateLevelStats(name);
     }
 
     public void PlayLevel()
     {
         PlayerData.currentScore = 0;
+        PlayerData.currentStrikes = 0;
         SceneManager.LoadScene("LevelGeneratorScene");
     }
 
@@ -61,7 +60,7 @@ public class EndScreenButtons : MonoBehaviour
         
         Debug.Log("Sending Data");
         
-        using (var www = UnityWebRequest.Post(WebManager.winUrl, form)) {
+        using (var www = UnityWebRequest.Post(WebManager.kaboomUrl, form)) {
             yield return www.SendWebRequest();
             
             if (www.isNetworkError || www.isHttpError) {
@@ -77,12 +76,12 @@ public class EndScreenButtons : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("user", PlayerData.playerID);
         form.AddField("level", PlayerData.currentLevel);
-        form.AddField("timeLeft", PlayerData.time);
-        form.AddField("strikes", );
+        form.AddField("timeLeft", PlayerData.time.ToString());
+        form.AddField("strikes", PlayerData.currentStrikes.ToString());
         
         Debug.Log("Sending Data");
         
-        using (var www = UnityWebRequest.Post(WebManager.kaboomUrl, form)) {
+        using (var www = UnityWebRequest.Post(WebManager.winUrl, form)) {
             yield return www.SendWebRequest();
             
             if (www.isNetworkError || www.isHttpError) {

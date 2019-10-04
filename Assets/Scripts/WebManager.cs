@@ -7,5 +7,5 @@ public static class WebManager {
 
     public static string url = "https://plenary-totem-219601.appspot.com/tanbdata";
     public static string kaboomUrl = "https://plenary-totem-219601.appspot.com/tanbdata/kaboom";
-    public static string kaboomUrl = "https://plenary-totem-219601.appspot.com/tanbdata/win";
+    public static string winUrl = "https://plenary-totem-219601.appspot.com/tanbdata/win";
  }

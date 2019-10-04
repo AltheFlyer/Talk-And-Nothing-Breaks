@@ -264,6 +264,7 @@ public class BombManager : MonoBehaviour
     public void AddStrike(string module) {
         strikes++;
         loadedTimerModule.GetComponent<BombTimerScript>().AddStrike(strikes);
+        PlayerData.currentStrikes++;
         if (strikes >= 3) {
             PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;
             PlayerData.death = module;
