@@ -7,6 +7,7 @@ public static class PlayerData
 
     public static int totalScore = 0;
     public static int currentScore = 0;
+    public static int currentStrikes = 0;
     public static string currentLevel = "";
     public static float time = 0;
     public static string death = "";
@@ -29,14 +30,23 @@ public static class PlayerData
         currentScore += a;    
     }
 
+    public static void UpdateLevelStats (string name)
+    {
+        if (stats.ContainsKey(name)) {
+            stats[name].UpdateStats(time, currentStrikes, currentScore, win);
+        } else {
+            stats.Add(name, new LevelStats(time, currentStrikes, currentScore, win));
+        }
+    }
+
     public class LevelStats
     {
-        public int time;
+        public float time;
         public int strikes;
         public int score;
         public bool win;
 
-        public LevelStats (int time, int strikes, int score, bool win)
+        public LevelStats (float time, int strikes, int score, bool win)
         {
             this.time = time;
             this.strikes = strikes;
@@ -44,22 +54,18 @@ public static class PlayerData
             this.win = win;
         }
 
-        public void UpdateStats (int time, int strikes, int score, bool win)
+        public void UpdateStats (float time, int strikes, int score, bool win)
         {
-            if (time < this.time)
-            {
+            if (time < this.time) {
                 this.time = time;
             }
-            if (strikes < this.strikes)
-            {
+            if (strikes < this.strikes) {
                 this.strikes = strikes;
             }
-            if (score > this.score)
-            {
+            if (score > this.score) {
                 this.score = score;
             }
-            if (win)
-            {
+            if (win) {
                 this.win = win;
             }
         }

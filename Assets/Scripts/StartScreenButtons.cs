@@ -127,6 +127,7 @@ public class StartScreenButtons : MonoBehaviour
         data.SetData("Assets/Generators/" + name + ".json");
         PlayerData.currentLevel = name;
         PlayerData.currentScore = 0;
+        PlayerData.currentStrikes = 0;
         Play();
     }
 

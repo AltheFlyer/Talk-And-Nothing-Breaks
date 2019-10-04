@@ -18,11 +18,6 @@ public class EndScreenButtons : MonoBehaviour
         data = GameObject.Find("BombData").GetComponent<BombData>();
         data.SetData("Assets/Generators/" + name + ".json");
         level.GetComponent<Text>().text = "Level: " + data.meta.name;
-        /*string time = "";
-        if ((int)(PlayerData.time / 60) > 10)
-        {
-            time = "0";
-        }*/
         time.GetComponent<Text>().text = ((int)(PlayerData.time / 60)).ToString("00") + ":" + (PlayerData.time % 60).ToString("00.00");
         score.GetComponent<Text>().text = "Level Score:" + PlayerData.currentScore;
 
@@ -38,13 +33,14 @@ public class EndScreenButtons : MonoBehaviour
             cause.GetComponent<Text>().text = PlayerData.death;
         }
 
-        
+        PlayerData.UpdateLevelStats(name);
 
     }
 
     public void PlayLevel()
     {
         PlayerData.currentScore = 0;
+        PlayerData.currentStrikes = 0;
         SceneManager.LoadScene("LevelGeneratorScene");
     }
 
