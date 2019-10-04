@@ -12,7 +12,7 @@ public static class PlayerData
     public static string death = "";
     public static bool win = false;
     public static string playerID;
-
+    public static Dictionary<string, LevelStats> stats = new Dictionary<string, LevelStats>();
 
     static PlayerData()
     {
@@ -27,6 +27,42 @@ public static class PlayerData
 
     public static void IncreaseScore(int a) {
         currentScore += a;    
+    }
+
+    public class LevelStats
+    {
+        public int time;
+        public int strikes;
+        public int score;
+        public bool win;
+
+        public LevelStats (int time, int strikes, int score, bool win)
+        {
+            this.time = time;
+            this.strikes = strikes;
+            this.score = score;
+            this.win = win;
+        }
+
+        public void UpdateStats (int time, int strikes, int score, bool win)
+        {
+            if (time < this.time)
+            {
+                this.time = time;
+            }
+            if (strikes < this.strikes)
+            {
+                this.strikes = strikes;
+            }
+            if (score > this.score)
+            {
+                this.score = score;
+            }
+            if (win)
+            {
+                this.win = win;
+            }
+        }
     }
     
 }

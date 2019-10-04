@@ -69,7 +69,7 @@ public class BombManager : MonoBehaviour
             PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;
             PlayerData.totalScore += PlayerData.currentScore;
             PlayerData.win = true;
-            SceneManager.LoadScene("GameMenuScene");
+            SceneManager.LoadScene("GameOverScene");
         }
     }
 
