@@ -1,4 +1,6 @@
 {
+    "name": "Cipher Intro",
+    "description": "Ciphers are everyone's favorite way to encode data! Your experts should probably have the alphabet written out for this.",
     "width": 3,
     "height": 2,
     "time": 300,

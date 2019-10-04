@@ -1,4 +1,6 @@
 {
+    "name": "Not So Bad",
+    "description": "Your first dive into bomb defusal! You've got plenty of time to deal with a few modules.",
     "width": 3,
     "height": 2,
     "time": 300,
@@ -7,13 +9,11 @@
     "modules": [
         {
             "name": "boolean",
-            "min": 1,
             "max": 2
         },
         {
             "name": "addition",
-            "min": 1,
-            "max": 2
+            "max": 1
         }
     ]
 }

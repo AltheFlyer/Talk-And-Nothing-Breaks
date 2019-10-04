@@ -1,4 +1,6 @@
 {
+    "name": "I Am Hardcore",
+    "description": "The ultimate test!",
     "width": 3,
     "height": 2,
     "time": 300,
@@ -18,20 +20,21 @@
         },
         {
             "name": "easy",
+            "max": 2,
             "modules": [
                 {
                     "name": "boolean",
-                    "weight": 10,
+                    "weight": 7,
                     "max": 1
                 },
                 {
                     "name": "alchemy",
-                    "weight": 10,
+                    "weight": 8,
                     "max": 1
                 },
                 {
                     "name": "cipher",
-                    "weight": 3,
+                    "weight": 10,
                     "max": 1
                 }
             ]

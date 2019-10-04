@@ -9,6 +9,8 @@ public class BombInfo {
     public int time = 600;
     public int numModules = 1;
     public string generationType = "random";
+    public string name = "";
+    public string description = "";
     ///modules gets converted into pools at runtime for backwards compat
     public List<ModuleInfo> modules = new List<ModuleInfo>();
     public List<PoolInfo> pools = new List<PoolInfo>();

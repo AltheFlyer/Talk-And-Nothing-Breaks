@@ -1,4 +1,6 @@
 {
+    "name": "Enter Alchemy",
+    "description": "The Alchemy Module can have difficult to identify glyphs. Be prepared!",
     "width": 3,
     "height": 2,
     "time": 300,
