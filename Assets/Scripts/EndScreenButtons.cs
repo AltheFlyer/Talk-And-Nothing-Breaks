@@ -31,17 +31,13 @@ public class EndScreenButtons : MonoBehaviour
             cause.SetActive(false);
             causeTitle.SetActive(false);
             defused.SetActive(true);
-
         } else {
             cause.SetActive(true);
             causeTitle.SetActive(true);
             defused.SetActive(false);
             cause.GetComponent<Text>().text = PlayerData.death;
+            StartCoroutine(MakeKaboomRequest());
         }
-
-        
-
-        StartCoroutine(MakeRequest());
     }
 
     public void PlayLevel()
@@ -57,11 +53,32 @@ public class EndScreenButtons : MonoBehaviour
         SceneManager.LoadScene("GameMenuScene");
     }
 
-    public IEnumerator MakeRequest() {
+    public IEnumerator MakeKaboomRequest() {
         WWWForm form = new WWWForm();
         form.AddField("user", PlayerData.playerID);
         form.AddField("death", PlayerData.death);
         form.AddField("level", PlayerData.currentLevel);
+        
+        Debug.Log("Sending Data");
+        
+        using (var www = UnityWebRequest.Post(WebManager.winUrl, form)) {
+            yield return www.SendWebRequest();
+            
+            if (www.isNetworkError || www.isHttpError) {
+                Debug.Log(www.error);
+            }
+            else {
+                Debug.Log("Score Data Sent");
+            }
+        }
+    }
+
+    public IEnumerator MakeWinRequest() {
+        WWWForm form = new WWWForm();
+        form.AddField("user", PlayerData.playerID);
+        form.AddField("level", PlayerData.currentLevel);
+        form.AddField("timeLeft", PlayerData.time);
+        form.AddField("strikes", );
         
         Debug.Log("Sending Data");
         
