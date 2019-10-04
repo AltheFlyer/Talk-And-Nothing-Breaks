@@ -46,6 +46,13 @@ public class BombManager : MonoBehaviour
     [SerializeField]
     GameObject cornerModuleHolder;
 
+    //Audio Stuff
+
+    [SerializeField]
+    AudioSource audio;
+    [SerializeField]
+    AudioClip eer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -264,6 +271,7 @@ public class BombManager : MonoBehaviour
     public void AddStrike(string module) {
         strikes++;
         loadedTimerModule.GetComponent<BombTimerScript>().AddStrike(strikes);
+        audio.PlayOneShot(eer);
         PlayerData.currentStrikes++;
         if (strikes >= 3) {
             PlayerData.time = loadedTimerModule.GetComponent<BombTimerScript>().secondsLeft;

@@ -9,12 +9,18 @@ using UnityEngine.UI;
 public class EndScreenButtons : MonoBehaviour
 {
     [SerializeField]
-    GameObject level, time, causeTitle, cause, score, defused;
+    GameObject level, time, causeTitle, cause, score, defused, fade;
+    [SerializeField]
+    AudioSource audio;
+    [SerializeField]
+    AudioClip boom;
     BombData data;
+    float pause;
 
     // Start is called before the first frame update
     void Start()
     {
+        audio.PlayOneShot(boom);
         string name = PlayerData.currentLevel;
         data = GameObject.Find("BombData").GetComponent<BombData>();
         data.SetData("Assets/Generators/" + name + ".json");
@@ -35,8 +41,16 @@ public class EndScreenButtons : MonoBehaviour
         }
 
         PlayerData.UpdateLevelStats(name);
-
+        pause = Time.time;
         StartCoroutine(MakeRequest());
+
+    }
+
+    public void Update ()
+    {
+        if (Time.time - pause > 2 && fade.GetComponent<Image>().color.a > 0) {
+            fade.GetComponent<Image>().color = new Color(0, 0, 0, (float)(fade.GetComponent<Image>().color.a - 0.1 * Time.deltaTime));
+        }
     }
 
     public void PlayLevel()
