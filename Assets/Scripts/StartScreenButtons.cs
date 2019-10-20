@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class StartScreenButtons : MonoBehaviour
 {
@@ -26,15 +27,21 @@ public class StartScreenButtons : MonoBehaviour
     public Text levelScoreText;
     public Text completeText;
 
+    public InputField userField;
+    public InputField passField;
+
     //Button sets
     public GameObject currentSubScreen;
     public GameObject mainScreen;
     public GameObject levelScreen;
+    public GameObject loginScreen;
 
     public void Start() {
         data = GameObject.Find("BombData").GetComponent<BombData>();
         mainScreen = transform.Find("Main").gameObject;
         levelScreen = transform.Find("Levels").gameObject;
+        loginScreen = transform.Find("Login").gameObject;
+
         additionalInfo = levelScreen.transform.Find("Additional Info").Find("Panel Title").GetComponent<Text>();
         scoreText = levelScreen.transform.Find("Additional Info").Find("Score Display").GetComponent<Text>();
         titleText = levelScreen.transform.Find("Additional Info").Find("Level Title").GetComponent<Text>();
@@ -43,8 +50,17 @@ public class StartScreenButtons : MonoBehaviour
         levelScoreText = levelScreen.transform.Find("Additional Info").Find("Level Score").GetComponent<Text>();
         completeText = levelScreen.transform.Find("Additional Info").Find("Complete").GetComponent<Text>();
 
-        currentSubScreen = levelScreen;
-        //levelScreen.SetActive(false);
+        userField = loginScreen.transform.Find("Username Input").GetComponent<InputField>();
+        passField = loginScreen.transform.Find("Password Input").GetComponent<InputField>();
+
+        if (PlayerData.playerID == null) {
+            currentSubScreen = loginScreen;
+            //currentSubScreen = levelScreen;
+            levelScreen.SetActive(false);
+        } else {
+            currentSubScreen = levelScreen;
+            SetScreen("levels");
+        }
         scoreText.text = "Total Score: " + PlayerData.totalScore;
         UpdateText();
     }
@@ -116,6 +132,7 @@ public class StartScreenButtons : MonoBehaviour
             currentSubScreen = mainScreen;
         } else if (name == "levels") {
             currentSubScreen = levelScreen;
+            data.SendData();
         }
         currentSubScreen.SetActive(true);
     }
@@ -162,6 +179,38 @@ public class StartScreenButtons : MonoBehaviour
             timeText.text = "Best Time: N/A";
             levelScoreText.text = "Best Score: N/A";
             completeText.text = "Complete: ✘";
+        }
+    }
+
+    public void LoginToGame() {
+        
+
+        StartCoroutine(SD());
+    }
+
+    public IEnumerator SD() {
+        string username = userField.text;
+        string password = passField.text;
+
+        WWWForm form = new WWWForm();
+        form.AddField("user", username);
+        form.AddField("password", password);
+        
+        Debug.Log("Sending Data");
+        
+        using (var www = UnityWebRequest.Post(WebManager.loginCheck, form)) {
+            yield return www.SendWebRequest();
+            
+            if (www.isNetworkError || www.isHttpError) {
+                Debug.Log("ERROR");
+            }
+            else {
+                Debug.Log(www.downloadHandler.text);
+                if (www.downloadHandler.text == "SUCCESS") {
+                    PlayerData.playerID = username;
+                    SetScreen("levels");
+                }
+            }
         }
     }
 }
