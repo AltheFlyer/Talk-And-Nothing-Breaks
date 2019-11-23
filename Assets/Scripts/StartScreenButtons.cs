@@ -59,6 +59,7 @@ public class StartScreenButtons : MonoBehaviour
             levelScreen.SetActive(false);
         } else {
             currentSubScreen = levelScreen;
+            loginScreen.SetActive(false);
             SetScreen("levels");
         }
         scoreText.text = "Total Score: " + PlayerData.totalScore;

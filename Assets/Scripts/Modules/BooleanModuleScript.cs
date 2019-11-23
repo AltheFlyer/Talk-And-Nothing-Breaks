@@ -89,11 +89,8 @@ public class BooleanModuleScript : Module
 
         //Puzzle and answer are generated
         //The first trial will never have the not combined operators (NOR, NAND, XNOR)
-        if (trialsLeft == 3) {
-            operation = StaticRandom.NextInt(4);
-        } else {
-            operation = StaticRandom.NextInt(4);
-        }
+        operation = StaticRandom.NextInt(4);
+    
         //Operations:
         //NOT, AND, OR, XOR, NAND, NOR, XNOR
 

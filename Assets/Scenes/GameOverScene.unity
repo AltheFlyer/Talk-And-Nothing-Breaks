@@ -647,7 +647,8 @@ MonoBehaviour:
   defused: {fileID: 2062466341}
   fade: {fileID: 40901258}
   audio: {fileID: 436387134}
-  boom: {fileID: 8300000, guid: cde5658d56f4d4842b3ee580e674b3d0, type: 3}
+  boom: {fileID: 8300000, guid: 6e5071ce76a53b541babf8ae41fa7d62, type: 3}
+  victory: {fileID: 8300000, guid: 566543f5dec2d29499201ee379245bca, type: 3}
 --- !u!114 &436387130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1214,7 +1215,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Cause of Explosion:'
+  m_Text: 'Cause of Game Over:'
 --- !u!222 &1566730565
 CanvasRenderer:
   m_ObjectHideFlags: 0

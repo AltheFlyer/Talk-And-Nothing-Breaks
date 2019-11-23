@@ -14,6 +14,8 @@ public class EndScreenButtons : MonoBehaviour
     AudioSource audio;
     [SerializeField]
     AudioClip boom;
+    [SerializeField]
+    AudioClip victory;
     BombData data;
     float pause;
 
@@ -22,6 +24,8 @@ public class EndScreenButtons : MonoBehaviour
     {
         if (!PlayerData.win) {
             audio.PlayOneShot(boom);
+        } else {
+            audio.PlayOneShot(victory);
         }
         string name = PlayerData.currentLevel;
         data = GameObject.Find("BombData").GetComponent<BombData>();
@@ -49,8 +53,6 @@ public class EndScreenButtons : MonoBehaviour
 
         PlayerData.UpdateLevelStats(name);
         pause = Time.time;
-        StartCoroutine(MakeKaboomRequest());
-
     }
 
     public void Update ()
