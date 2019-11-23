@@ -71,7 +71,6 @@ public class EndScreenButtons : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        print("yes");
         data.Consume();
         SceneManager.LoadScene("GameMenuScene");
     }
@@ -86,13 +85,6 @@ public class EndScreenButtons : MonoBehaviour
         
         using (var www = UnityWebRequest.Post(WebManager.kaboomUrl, form)) {
             yield return www.SendWebRequest();
-            
-            if (www.isNetworkError || www.isHttpError) {
-                Debug.Log(www.error);
-            }
-            else {
-                Debug.Log("Score Data Sent");
-            }
         }
     }
 
@@ -107,13 +99,6 @@ public class EndScreenButtons : MonoBehaviour
         
         using (var www = UnityWebRequest.Post(WebManager.winUrl, form)) {
             yield return www.SendWebRequest();
-            
-            if (www.isNetworkError || www.isHttpError) {
-                Debug.Log(www.error);
-            }
-            else {
-                Debug.Log("Score Data Sent");
-            }
         }
     }
 }

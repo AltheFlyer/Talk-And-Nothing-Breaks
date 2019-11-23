@@ -21,8 +21,6 @@ public class PoolInfo {
     public List<string> GetMinModules() {
         List<string> moduleSet = new List<string>();
         foreach (ModuleInfo mInfo in modules) {
-            Debug.Log("Module Count in Pool");
-            Debug.Log(modules.Count);
             for (int i = 0; i < mInfo.min; i++) {
                 moduleSet.Add(mInfo.name);
                 mInfo.max--;
@@ -48,9 +46,7 @@ public class PoolInfo {
             fullWeight += mInfo.weight;
         }
 
-        Debug.Log("In Generate Function");
         int rand = StaticRandom.NextInt(fullWeight);
-        Debug.Log("Outside Generate Function");
 
         int weightCounter = fullWeight;
 

@@ -11,13 +11,11 @@ public static class StaticRandom
 
     public static int NextInt(int a) {
         int n = random.Next(a);
-        Debug.Log(n);
         return n;
     }
 
     public static int NextInt(int low, int a) {
         int n = random.Next(a - low) + low;
-        Debug.Log(n);
         return n;
     }
 }

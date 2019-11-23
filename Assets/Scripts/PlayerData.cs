@@ -17,13 +17,6 @@ public static class PlayerData
 
     static PlayerData()
     {
-        string chars = "1234567890";
-        for (int i = 0; i < 16; i++) {
-            int rand = StaticRandom.NextInt(chars.Length);
-            //playerID += chars[rand];
-        }
-        Debug.Log("PLAYER ID");
-        Debug.Log(playerID);
     }
 
     public static void IncreaseScore(int a) {

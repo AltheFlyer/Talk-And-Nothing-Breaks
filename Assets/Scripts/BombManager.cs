@@ -90,7 +90,6 @@ public class BombManager : MonoBehaviour
             bombData = GameObject.Find("BombData").GetComponent<BombData>();
         } catch {
             UnityEngine.Object o = Resources.Load("BombData");
-            print(o);
             GameObject oo = GameObject.Instantiate(o) as GameObject;
             bombData = oo.GetComponent<BombData>();
             //I shouldnt need this but screw me I guess
@@ -105,7 +104,6 @@ public class BombManager : MonoBehaviour
 
         //Merge modules and pools in generate
         generator.MergePools();
-        print(JsonUtility.ToJson(generator));
 
         //Count number of modules generated pre-randomizer
         int generatedModules = 0;
@@ -151,7 +149,6 @@ public class BombManager : MonoBehaviour
                         //Note how this ignores maximum if <= 0 on startup
                         //This IS intended
                         if (!generator.pools[j].Validate() || generator.pools[j].max == 0) {
-                            print("REMOVED A POOL");
                             generator.pools.RemoveAt(j);
                             //Regenrate the fullWeight value
                             fullWeight = 0;
@@ -173,7 +170,6 @@ public class BombManager : MonoBehaviour
         //Shuffle the list
         //WARNING: This needs to be changed if interdependent modules exist
         //Used for shuffling modules
-        Debug.Log("Shuffling");
         GameObject tmp;
         for (int i = 0; i < width * height * 2; ++i) {
             int j = StaticRandom.NextInt(i, width * height * 2);
